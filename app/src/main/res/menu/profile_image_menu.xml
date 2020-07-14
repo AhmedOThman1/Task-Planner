@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item
+        android:id="@+id/view_image"
+        android:title="@string/view_profile_picture" />
+    <item
+        android:id="@+id/change_image"
+        android:title="@string/change_profile_picture">
+        <menu>
+            <item
+                android:id="@+id/open_cam"
+                android:title="@string/take_photo_from_camera" />
+            <item
+                android:id="@+id/open_gal"
+                android:title="@string/select_photo_from_gallery" />
+
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/change_name_job"
+        android:title="@string/change_name_job">
+        <menu>
+            <item
+                android:id="@+id/change_name"
+                android:title="@string/change_name" />
+            <item
+                android:id="@+id/change_job"
+                android:title="@string/change_job" />
+
+        </menu>
+    </item>
+</menu>

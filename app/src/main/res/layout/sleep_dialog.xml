@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_yellowsq"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp">
+
+    <TextView
+        android:id="@+id/sltxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/you_should_be_sleep_at_this_time"
+        android:textSize="17sp"
+        android:textColor="@color/black"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/ok_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sltxt"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/ok_i_will_sleep_change_the_time"
+        android:textSize="14sp"
+        android:layout_centerHorizontal="true"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:background="@drawable/background_bluesq"
+        android:textColor="#FFF"
+        />
+
+    <TextView
+        android:id="@+id/cancel_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ok_dialog"
+        android:layout_centerHorizontal="true"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/ignore_i_wont_sleep"
+        android:textSize="15sp"
+        android:background="@drawable/background_redsq"
+        android:textColor="#FFF"
+        android:layout_marginBottom="16dp"/>
+
+
+</RelativeLayout>

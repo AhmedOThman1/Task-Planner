@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:id="@+id/step1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/background_yellowsq">
+
+        <RelativeLayout
+            android:id="@+id/check"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+
+            <ImageView
+                android:id="@+id/check_circle"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/circle_shape2dp" />
+
+            <ImageView
+                android:id="@+id/check_image"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_check" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/step_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_toStartOf="@id/delete"
+            android:layout_toEndOf="@id/check"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Step Name"
+            android:textColor="@color/black"
+            android:visibility="gone" />
+
+        <!--    <View-->
+        <!--        android:id="@+id/line"-->
+        <!--        android:layout_width="6dp"-->
+        <!--        android:layout_height="200dp"-->
+        <!--        android:layout_below="@id/check"-->
+        <!--        android:layout_alignParentBottom="true"-->
+        <!--        android:layout_marginStart="22dp"-->
+        <!--        android:background="@color/black"-->
+        <!--        android:visibility="gone" />-->
+
+
+        <EditText
+            android:id="@+id/step_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/delete"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@id/check"
+            android:fontFamily="@font/poppins_medium"
+            android:hint="Step name"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:textColor="@color/black"
+            tools:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/delete"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_close" />
+
+        <EditText
+            android:id="@+id/step_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/step_title"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="8dp"
+            android:layout_toEndOf="@id/check"
+            android:fontFamily="@font/poppins_medium"
+            android:hint="Step description"
+            android:imeOptions="actionDone"
+            android:inputType="textMultiLine"
+            android:textColor="@color/black"
+            tools:visibility="visible" />
+
+    </RelativeLayout>
+    <com.google.android.material.chip.Chip
+        android:id="@+id/add_new_step"
+        style="@style/Widget.MaterialComponents.Chip.Action"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/step1"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="16dp"
+        android:text="Add new step"
+        android:textColor="#FFF"
+        app:chipBackgroundColor="@color/zeti" />
+</RelativeLayout>

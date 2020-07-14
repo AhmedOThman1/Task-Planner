@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "570222374888",
+    "firebase_url": "https://task-planner-6062e.firebaseio.com",
+    "project_id": "task-planner-6062e",
+    "storage_bucket": "task-planner-6062e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:570222374888:android:69afce351f31656a5efe5d",
+        "android_client_info": {
+          "package_name": "com.example.taskplanner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "570222374888-t0k40m29vf7h1nva6s9qtmpsvdkg34is.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.taskplanner",
+            "certificate_hash": "257b7f1876ab897d087723a7694f8a2ba451d034"
+          }
+        },
+        {
+          "client_id": "570222374888-3bbcbva83cmq9vfs1f2eturk2jkplu9j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLoEsan745GKrzAhK_GM3m7_79GyaDDBk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "570222374888-3bbcbva83cmq9vfs1f2eturk2jkplu9j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

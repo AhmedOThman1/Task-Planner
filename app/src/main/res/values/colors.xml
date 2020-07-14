@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#F9BE7C</color>
+    <color name="colorPrimaryDark">#F9BE7C</color>
+    <color name="colorAccent">#0D253F</color>
+
+    <color name="white">#FFF</color>
+    <color name="black">#0D253F</color>
+    <color name="zeti">#309397</color>
+    <color name="blue">#6488E4</color>
+    <color name="red">#E46472</color>
+    <color name="yellow">#F9BE7C</color>
+    <color name="yellowhite">#FFF9EC</color>
+    <color name="text_time_yellow_card">#EEE</color>
+    <color name="defualt_textview_color">#606060</color>
+
+
+    <color name="background_love" >#303030</color>
+    <color name="text_love">#FFF</color>
+
+    <color name="image_border">#1100FF</color>
+    <color name="no_image_border">#FF0000</color>
+
+</resources>
