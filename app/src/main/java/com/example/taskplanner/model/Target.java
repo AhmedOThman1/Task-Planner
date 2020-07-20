@@ -12,7 +12,7 @@ public class Target {
     private String note;
     private String day;
     private ArrayList<Step> steps;
-    private double progress;
+    private int progress;
 
     public Target(String name, String day) {
         this.name = name;
@@ -42,11 +42,11 @@ public class Target {
         this.steps = new ArrayList<>(steps);
     }
 
-    public double getProgress() {
+    public int getProgress() {
         return progress;
     }
 
-    public void setProgress(double progress) {
+    public void setProgress(int progress) {
         this.progress = progress;
     }
 

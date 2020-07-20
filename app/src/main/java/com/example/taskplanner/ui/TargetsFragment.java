@@ -174,9 +174,7 @@ public class TargetsFragment extends Fragment {
 
                     Log.w("Log","target "+i+" Step Size : "+Targets.get(i).getSteps().size());
                     if(Targets.get(i).getSteps().size()!=0)
-                Targets.get(i).setProgress(process * 100.0 / Targets.get(i).getSteps().size());
-                    Log.w("LOG","progress : "+process +" * "+ 100.0 +" / "+ Targets.get(i).getSteps().size()+
-                            " = "+process*100.0+" / "+Targets.get(i).getSteps().size()+" = " +Targets.get(i).getProgress());
+                Targets.get(i).setProgress(process * 100 / Targets.get(i).getSteps().size());
             }
         }
         adapter.setTargets(Targets);
