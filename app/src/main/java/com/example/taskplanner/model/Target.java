@@ -12,7 +12,7 @@ public class Target {
     private String note;
     private String day;
     private ArrayList<Step> steps;
-    private int progress;
+    private double progress;
 
     public Target(String name, String day) {
         this.name = name;
@@ -24,7 +24,7 @@ public class Target {
     public Target(String name, String day, ArrayList<Step> steps) {
         this.name = name;
         this.day = day;
-        this.steps = (ArrayList<Step>) steps.clone();
+        this.steps = new ArrayList<>(steps);
         this.note = "";
     }
 
@@ -39,14 +39,14 @@ public class Target {
         this.name = name;
         this.note = note;
         this.day = day;
-        this.steps = (ArrayList<Step>) steps.clone();
+        this.steps = new ArrayList<>(steps);
     }
 
-    public int getProgress() {
+    public double getProgress() {
         return progress;
     }
 
-    public void setProgress(int progress) {
+    public void setProgress(double progress) {
         this.progress = progress;
     }
 
@@ -79,7 +79,7 @@ public class Target {
     }
 
     public void setSteps(ArrayList<Step> steps) {
-        this.steps = (ArrayList<Step>) steps.clone();
+        this.steps = new ArrayList<> (steps);
     }
 
 

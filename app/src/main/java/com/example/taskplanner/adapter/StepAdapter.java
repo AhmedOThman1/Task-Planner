@@ -7,6 +7,7 @@ import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -50,14 +51,23 @@ public class StepAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         Target.Step currentstep = Steps.get(position);
         final StepViewHolder viewHolder = (StepViewHolder) holder;
 
-        viewHolder.step_description.setMaxHeight((int)(130 * ((float) activity.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT)));
+//        viewHolder.step_description.setMaxHeight((int)(130 * ((float) activity.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT)));
         viewHolder.step_title.setText(currentstep.getName());
         viewHolder.step_content.setText(currentstep.getName());
         viewHolder.step_description.setText(currentstep.getDescription());
 
         if (position == Steps.size() - 1) {
             viewHolder.add_new_step.setVisibility(View.VISIBLE);
-
+            viewHolder.step_description.setMaxHeight((int)(130 * ((float) activity.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT)));
+            viewHolder.step_description.setOnTouchListener((v, event) -> {
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                switch (event.getAction() & MotionEvent.ACTION_MASK) {
+                    case MotionEvent.ACTION_UP:
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+                return false;
+            });
             viewHolder.step_title.setVisibility(View.VISIBLE);
             viewHolder.step_description.setVisibility(View.VISIBLE);
             viewHolder.step_title.setEnabled(true);

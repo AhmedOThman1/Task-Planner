@@ -94,6 +94,8 @@ public class OneTargetFragment extends Fragment {
 
         Log.w("Log","pos:::: "+position);
         oneTargetStepAdapter = new OneTargetStepAdapter(getActivity(), Targets.get(position).getSteps());
+        oneTargetStepAdapter.setIndx(position);
+        oneTargetStepAdapter.setTargets(Targets);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         one_target_recyclerview.setAdapter(oneTargetStepAdapter);
         one_target_recyclerview.setLayoutManager(manager);

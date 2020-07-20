@@ -34,6 +34,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -41,11 +42,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.taskplanner.R;
+import com.example.taskplanner.RecyclerViewTouchListener;
 import com.example.taskplanner.adapter.ProjectsRecyclerViewAdapter;
 import com.example.taskplanner.model.Activeprojects;
 import com.example.taskplanner.model.Tasks;
@@ -80,6 +85,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 import static com.example.taskplanner.ui.CreateNewTaskFragment.StringToCalendar;
+import static com.example.taskplanner.ui.CreateNewTaskFragment.uploadProject;
 import static com.example.taskplanner.ui.Launcher.DONE_TASKS;
 import static com.example.taskplanner.ui.Launcher.IN_TASKS;
 import static com.example.taskplanner.ui.Launcher.MAIN_PROGRESS;
@@ -264,6 +270,25 @@ public class HomeFragment extends Fragment {
         active_projects_recyclerview.setAdapter(adapter);
         active_projects_recyclerview.setLayoutManager(manager);
 
+        active_projects_recyclerview.addOnItemTouchListener(new RecyclerViewTouchListener(getContext(), active_projects_recyclerview, new RecyclerViewTouchListener.RecyclerViewClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+
+                Fragment tasks_fragment = new TasksFragment();
+                Bundle bundle= new Bundle();
+                bundle.putString("project name", Projects.get(position).getTitle());
+                bundle.putString("color", "" + position % 4);
+                tasks_fragment.setArguments(bundle);
+                ((FragmentActivity)getActivity()).getSupportFragmentManager().beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out).replace(R.id.frameLayout, tasks_fragment).commit();
+
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+                deleteProject(position);
+            }
+        }));
         if (Projects.size() != 0)
             setMainProgress();
 
@@ -333,6 +358,37 @@ public class HomeFragment extends Fragment {
 
         return view;
     }
+      AlertDialog.Builder builder;
+    private void deleteProject(int position) {
+
+        builder = new AlertDialog.Builder(getContext());
+
+        View sleep_dialog = getLayoutInflater().inflate(R.layout.delete_dialog, null);
+
+        TextView back_dialog = sleep_dialog.findViewById(R.id.back_dialog),
+                delete_dialog = sleep_dialog.findViewById(R.id.delete_dialog);
+
+        back_dialog.setOnClickListener(v -> {
+            Toast.makeText(getContext(), "Ok ♥️", Toast.LENGTH_LONG).show();
+            dialog.dismiss();
+        });
+
+        delete_dialog.setOnClickListener(v -> {
+            Projects.remove(position);
+            adapter.notifyDataSetChanged();
+            uploadProject(currentUser);
+            Toast.makeText(getContext(), "project deleted \uD83D\uDE0D\uD83D\uDE48\uD83D\uDE48♥️", Toast.LENGTH_LONG).show();
+            dialog.dismiss();
+        });
+
+        builder.setView(sleep_dialog).setCancelable(false);
+        dialog = builder.create();
+        dialog.show();
+        Window window = dialog.getWindow();
+        //window.setLayout( ViewGroup.LayoutParams.MATCH_PARENT , ViewGroup.LayoutParams.WRAP_CONTENT);
+        assert window != null;
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+    }
 
     private void retrieveProfilePicture() {
         myDbRef = FirebaseDatabase.getInstance().getReference();
@@ -351,28 +407,28 @@ public class HomeFragment extends Fragment {
 //                        profile_image.setImageURI(savedImageURI);
 //                    }
 //                }else
-//                    Glide.with(HomeFragment.this)
-//                            .load(pic)
-//                            .diskCacheStrategy(DiskCacheStrategy.DATA)
-//                            .into(profile_image);
+                    Glide.with(HomeFragment.this)
+                            .load(pic)
+                            .diskCacheStrategy(DiskCacheStrategy.DATA)
+                            .into(profile_image);
 
-                Picasso.with(getContext()).load(pic)
-                        .networkPolicy(NetworkPolicy.OFFLINE).into(profile_image, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        Log.w("Logg", "SUCCESS picasso");
-
-                    }
-
-                    @Override
-                    public void onError() {
-                        Picasso.with(getContext()).load(pic)
-                                .into(profile_image);
-                        Log.w("Logg", "ERROR picasso");
-
-                    }
-
-                });
+//                Picasso.with(getContext()).load(pic)
+//                        .networkPolicy(NetworkPolicy.OFFLINE).into(profile_image, new Callback() {
+//                    @Override
+//                    public void onSuccess() {
+//                        Log.w("Logg", "SUCCESS picasso");
+//
+//                    }
+//
+//                    @Override
+//                    public void onError() {
+//                        Picasso.with(getContext()).load(pic)
+//                                .into(profile_image);
+//                        Log.w("Logg", "ERROR picasso");
+//
+//                    }
+//
+//                });
             }
 
             @Override

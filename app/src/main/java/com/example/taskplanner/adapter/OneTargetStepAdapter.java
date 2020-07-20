@@ -16,17 +16,27 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.taskplanner.R;
 import com.example.taskplanner.model.Target;
 import com.google.android.material.chip.Chip;
-
+import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
-
+import static com.example.taskplanner.ui.CreateNewTargetFragment.uploadTarget;
 public class OneTargetStepAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Activity activity;
-    private ArrayList<Target.Step> Steps;
-    private StepViewHolder viewHolder;
+    private ArrayList<Target.Step> Steps = new ArrayList<>();
+    private ArrayList<Target> Targets=new ArrayList<>();
+    private int indx;
+
+    public void setIndx(int indx) {
+        this.indx = indx;
+    }
+
     public OneTargetStepAdapter(Activity context , ArrayList<Target.Step> steps) {
         activity = context;
         Steps = steps;
+    }
+
+    public void setTargets(ArrayList<Target> targets) {
+        Targets = targets;
     }
 
     @NonNull
@@ -40,7 +50,7 @@ public class OneTargetStepAdapter extends RecyclerView.Adapter<RecyclerView.View
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
 
         final Target.Step currentstep = Steps.get(position);
-        viewHolder = (StepViewHolder) holder;
+        StepViewHolder viewHolder = (StepViewHolder) holder;
 
         viewHolder.pos=position;
         viewHolder.step_title.setText(currentstep.getName());
@@ -50,49 +60,59 @@ public class OneTargetStepAdapter extends RecyclerView.Adapter<RecyclerView.View
         viewHolder.delete.setVisibility(View.GONE);
         viewHolder.step_title.setEnabled(false);
         viewHolder.step_description.setEnabled(false);
-        stepCheck(Steps.get(position).isCheck());
-
-        viewHolder.check.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                Log.w("Lol", "check " + position + " , "+viewHolder.pos+" <- pos");
-                if (viewHolder.step_title.getVisibility() == View.VISIBLE && !viewHolder.step_title.getText().toString().trim().isEmpty()) {
-                    viewHolder.step_title.setVisibility(View.GONE);
-                    viewHolder.step_description.setVisibility(View.GONE);
-                    viewHolder.step_content.setVisibility(View.VISIBLE);
-                } else {
-                    viewHolder.step_title.setVisibility(View.VISIBLE);
-                    viewHolder.step_description.setVisibility(View.VISIBLE);
-                    viewHolder.step_content.setVisibility(View.GONE);
-                }
-                return true;
-            }
-        });
-
-        viewHolder.check.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.w("Lol", "check " + position + " , "+viewHolder.pos+" <- pos");
-
-                Steps.get(position).setCheck(!Steps.get(position).isCheck());
-                viewHolder.step_title.setVisibility(View.GONE);
-                viewHolder.step_description.setVisibility(View.GONE);
-                viewHolder.step_content.setVisibility(View.VISIBLE);
-                stepCheck(Steps.get(position).isCheck());
-            }
-        });
-
-    }
-
-    void stepCheck(boolean check){
-        if(check){
+        if(Steps.get(position).isCheck()){
             viewHolder.check_circle.setImageResource(R.drawable.background_green_circle);
             viewHolder.check_image.setImageResource(R.drawable.ic_white_check);
         } else{
             viewHolder.check_circle.setImageResource(R.drawable.circle_shape2dp);
             viewHolder.check_image.setImageResource(R.drawable.ic_check);
         }
+
+        viewHolder.check.setOnLongClickListener(v -> {
+            Log.w("Lol", "check " + position + " , "+viewHolder.pos+" <- pos");
+            if (viewHolder.step_title.getVisibility() == View.VISIBLE && !viewHolder.step_title.getText().toString().trim().isEmpty()) {
+                viewHolder.step_title.setVisibility(View.GONE);
+                viewHolder.step_description.setVisibility(View.GONE);
+                viewHolder.step_content.setVisibility(View.VISIBLE);
+            } else {
+                viewHolder.step_title.setVisibility(View.VISIBLE);
+                viewHolder.step_description.setVisibility(View.VISIBLE);
+                viewHolder.step_content.setVisibility(View.GONE);
+            }
+            return true;
+        });
+
+        viewHolder.check.setOnClickListener(v -> {
+            Log.w("Lol", "check " + position + " , "+viewHolder.pos+" <- pos");
+
+            Steps.get(position).setCheck(!Steps.get(position).isCheck());
+            Targets.get(indx).setSteps(Steps);
+            viewHolder.step_title.setVisibility(View.GONE);
+            viewHolder.step_description.setVisibility(View.GONE);
+            viewHolder.step_content.setVisibility(View.VISIBLE);
+            if(Steps.get(position).isCheck()){
+                viewHolder.check_circle.setImageResource(R.drawable.background_green_circle);
+                viewHolder.check_image.setImageResource(R.drawable.ic_white_check);
+            } else{
+                viewHolder.check_circle.setImageResource(R.drawable.circle_shape2dp);
+                viewHolder.check_image.setImageResource(R.drawable.ic_check);
+            }
+
+            uploadTarget(FirebaseAuth.getInstance().getCurrentUser());
+//            stepCheck(Steps.get(position).isCheck());
+        });
+
     }
+
+//    void stepCheck(boolean check){
+//        if(check){
+//            viewHolder.check_circle.setImageResource(R.drawable.background_green_circle);
+//            viewHolder.check_image.setImageResource(R.drawable.ic_white_check);
+//        } else{
+//            viewHolder.check_circle.setImageResource(R.drawable.circle_shape2dp);
+//            viewHolder.check_image.setImageResource(R.drawable.ic_check);
+//        }
+//    }
 
     @Override
     public int getItemCount() {

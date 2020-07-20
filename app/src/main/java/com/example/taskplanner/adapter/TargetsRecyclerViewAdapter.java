@@ -56,23 +56,23 @@ public class TargetsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         String[] startArr = currenttarget.getDay().split(",");
         String day = startArr[2] + "/" + (Integer.parseInt(startArr[1]) + 1) + "/" + startArr[0];
         ViewHolder.time.setText(day);
-        ViewHolder.progressBar.setProgress(currenttarget.getProgress());
+        ViewHolder.progressBar.setProgress((int) currenttarget.getProgress());
         ViewHolder.target_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!Targets.get(position).getNote().equals("") || Targets.get(position).getSteps().size() != 0) {
-
-                    Fragment one_target_fragment = new OneTargetFragment();
-                    Bundle bundle= new Bundle();
-                    bundle.putInt("project pos", position);
-                    bundle.putInt("color", position % 4);
-                    one_target_fragment.setArguments(bundle);
-                    ((FragmentActivity)activity).getSupportFragmentManager().beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out).replace(R.id.frameLayout, one_target_fragment).commit();
-
-                } else{
-                    Toast.makeText(activity, "This target has no details to show.", Toast.LENGTH_SHORT).show();
-                    Log.w("Log","pos : "+position+" , ste3p Size "+ Targets.get(position).getSteps().size() );
-                }
+//                if (!Targets.get(position).getNote().equals("") || Targets.get(position).getSteps().size() != 0) {
+//
+//                    Fragment one_target_fragment = new OneTargetFragment();
+//                    Bundle bundle= new Bundle();
+//                    bundle.putInt("project pos", position);
+//                    bundle.putInt("color", position % 4);
+//                    one_target_fragment.setArguments(bundle);
+//                    ((FragmentActivity)activity).getSupportFragmentManager().beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out).replace(R.id.frameLayout, one_target_fragment).commit();
+//
+//                } else{
+//                    Toast.makeText(activity, "This target has no details to show.", Toast.LENGTH_SHORT).show();
+//                    Log.w("Log","pos : "+position+" , ste3p Size "+ Targets.get(position).getSteps().size() );
+//                }
             }
         });
 

@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -62,6 +63,7 @@ public class CreateNewTaskFragment extends Fragment {
     TextView start_time_tv, end_time_tv, start_am_pm, end_am_pm;
     ImageView startLineError, endLineError;
     public static Calendar calendar_selected_day, calendar, start_calender, end_calendar;
+    boolean sleep1 = false , sleep2 = false;
     AlertDialog.Builder builder;
     AlertDialog dialog;
 
@@ -128,6 +130,16 @@ public class CreateNewTaskFragment extends Fragment {
                 open_drawer.setImageResource(R.drawable.ic_back);
                 isDrawerOpen = true;
             }
+        });
+
+        description.getEditText().setOnTouchListener((v, event) -> {
+            v.getParent().requestDisallowInterceptTouchEvent(true);
+            switch (event.getAction() & MotionEvent.ACTION_MASK) {
+                case MotionEvent.ACTION_UP:
+                    v.getParent().requestDisallowInterceptTouchEvent(false);
+                    break;
+            }
+            return false;
         });
 
 /// to show date picker and select date & put it in date TextView
@@ -244,10 +256,10 @@ public class CreateNewTaskFragment extends Fragment {
                 description.setError(null);
 
                 Toast.makeText(getContext(), "this task time is interrupt with " + checkTask.getTask_name() + " task time", Toast.LENGTH_SHORT).show();
-            } else if (start_calender.get(Calendar.HOUR_OF_DAY) < 7) {
+            } else if (!sleep1 && start_calender.get(Calendar.HOUR_OF_DAY) < 7) {
                 // you should be sleep
                 shouldSleep("start");
-            } else if (end_calendar.get(Calendar.HOUR_OF_DAY) < 7) {
+            } else if (!sleep2 && end_calendar.get(Calendar.HOUR_OF_DAY) < 7) {
                 // you should be sleep
                 shouldSleep("end");
             } else {
@@ -438,6 +450,9 @@ public class CreateNewTaskFragment extends Fragment {
 
         cancel.setOnClickListener(v -> {
             Toast.makeText(getContext(), "Ok️\uD83D\uDE25", Toast.LENGTH_LONG).show();
+            if (time.equals("start"))
+                sleep1 = true;
+            else sleep2 = true;
             dialog.dismiss();
         });
 

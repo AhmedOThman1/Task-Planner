@@ -41,7 +41,7 @@ public class TargetViewModel extends ViewModel {
                             data.child("note").getValue(String.class),
                             data.child("day").getValue(String.class)
                     );
-                    target.setProgress(data.child("progress").getValue(Integer.class));
+                    target.setProgress(data.child("progress").getValue(float.class));
                     Targets.add(target);
                     getThisTargetStepsFromDatabase(data.getKey(), currentUser);
                 }

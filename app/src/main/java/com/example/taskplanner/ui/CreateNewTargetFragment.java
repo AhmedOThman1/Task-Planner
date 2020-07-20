@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -100,6 +101,15 @@ public class CreateNewTargetFragment extends Fragment {
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
+        note.getEditText().setOnTouchListener((v, event) -> {
+            v.getParent().requestDisallowInterceptTouchEvent(true);
+            switch (event.getAction() & MotionEvent.ACTION_MASK) {
+                case MotionEvent.ACTION_UP:
+                    v.getParent().requestDisallowInterceptTouchEvent(false);
+                    break;
+            }
+            return false;
+        });
 
         init();
 /// to show date picker and select date & put it in date TextView

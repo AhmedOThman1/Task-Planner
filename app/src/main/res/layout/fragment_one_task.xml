@@ -189,7 +189,9 @@
                 android:fontFamily="@font/poppins_medium"
                 android:inputType="textMultiLine"
                 android:textColor="@color/black"
-                tools:text="this is a long long long very long description" />
+                tools:text="this is a long long long very long description"
+                android:overScrollMode="always"
+                android:scrollbarStyle="insideInset"/>
         </com.google.android.material.textfield.TextInputLayout>
 
     </RelativeLayout>

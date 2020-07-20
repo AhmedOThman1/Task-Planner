@@ -57,13 +57,13 @@ public class ProjectsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
         ViewHolder.project_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Fragment tasks_fragment = new TasksFragment();
-                Bundle bundle= new Bundle();
-                bundle.putString("project name", Projects.get(position).getTitle());
-                bundle.putString("color", "" + position % 4);
-                tasks_fragment.setArguments(bundle);
-                ((FragmentActivity)activity).getSupportFragmentManager().beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out).replace(R.id.frameLayout, tasks_fragment).commit();
+//
+//                Fragment tasks_fragment = new TasksFragment();
+//                Bundle bundle= new Bundle();
+//                bundle.putString("project name", Projects.get(position).getTitle());
+//                bundle.putString("color", "" + position % 4);
+//                tasks_fragment.setArguments(bundle);
+//                ((FragmentActivity)activity).getSupportFragmentManager().beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out).replace(R.id.frameLayout, tasks_fragment).commit();
 
             }
         });

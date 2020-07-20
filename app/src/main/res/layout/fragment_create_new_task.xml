@@ -251,7 +251,8 @@
                     android:minHeight="75dp"
                     android:textColor="@color/enable_false_color"
                     android:textColorHint="@color/enable_false_hintcolor"
-
+                    android:overScrollMode="always"
+                    android:scrollbarStyle="insideInset"
                     />
             </com.google.android.material.textfield.TextInputLayout>
 

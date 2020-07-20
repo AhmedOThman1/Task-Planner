@@ -97,7 +97,10 @@
             android:imeOptions="actionDone"
             android:inputType="textMultiLine"
             android:textColor="@color/black"
-            tools:visibility="visible" />
+            tools:visibility="visible"
+            android:overScrollMode="always"
+            android:scrollbarStyle="insideInset"
+            />
 
     </RelativeLayout>
     <com.google.android.material.chip.Chip
