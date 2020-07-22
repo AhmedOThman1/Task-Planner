@@ -3,9 +3,13 @@ package com.example.taskplanner.ui.fragments;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +22,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,6 +36,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Collections;
 
+import static com.example.taskplanner.ui.activities.MainActivity.Projects;
 import static com.example.taskplanner.ui.fragments.CreateNewTargetFragment.uploadTarget;
 import static com.example.taskplanner.ui.activities.MainActivity.Targets;
 import static com.example.taskplanner.ui.fragments.HomeFragment.calculateNoOfColumns;
@@ -112,7 +118,11 @@ public class TargetsFragment extends Fragment {
 
             @Override
             public void onLongClick(View view, int position) {
-                deleteTarget(position);
+                CardView card = view.findViewById(R.id.active_projects_card);
+                if (card != null) {
+                    card.setCardBackgroundColor(getResources().getColor(R.color.black));
+                    deleteTarget(position, card);
+                }
             }
         }));
         grid_targets_recyclerview.setAdapter(adapter);
@@ -127,21 +137,32 @@ public class TargetsFragment extends Fragment {
     AlertDialog.Builder builder;
     AlertDialog dialog;
 
-    private void deleteTarget(int position) {
+    private void deleteTarget(int position, CardView card) {
 
         builder = new AlertDialog.Builder(getContext());
 
-        View sleep_dialog = getLayoutInflater().inflate(R.layout.delete_dialog, null);
+        View delete_dialog = getLayoutInflater().inflate(R.layout.delete_dialog, null);
 
-        TextView back_dialog = sleep_dialog.findViewById(R.id.back_dialog),
-                delete_dialog = sleep_dialog.findViewById(R.id.delete_dialog);
+        TextView back = delete_dialog.findViewById(R.id.back_dialog),
+                delete = delete_dialog.findViewById(R.id.delete_dialog),
+        del_text = delete_dialog.findViewById(R.id.deltxt);
 
-        back_dialog.setOnClickListener(v -> {
+        String s = "Are you sure you want to delete " + Targets.get(position).getName()
+                + " target with all steps inside it( " + Targets.get(position).getSteps().size() + " step ) ?";
+
+        SpannableString del_message = new SpannableString(s);
+        StyleSpan boldSpan = new StyleSpan(Typeface.BOLD);
+
+        del_message.setSpan(boldSpan, 32, 32+Targets.get(position).getName().length()+1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        del_text.setText(del_message);
+
+        back.setOnClickListener(v -> {
             Toast.makeText(getContext(), "Ok ♥️", Toast.LENGTH_LONG).show();
             dialog.dismiss();
         });
 
-        delete_dialog.setOnClickListener(v -> {
+        delete.setOnClickListener(v -> {
             Targets.remove(position);
             adapter.notifyDataSetChanged();
             uploadTarget(FirebaseAuth.getInstance().getCurrentUser());
@@ -149,9 +170,21 @@ public class TargetsFragment extends Fragment {
             dialog.dismiss();
         });
 
-        builder.setView(sleep_dialog).setCancelable(false);
+        builder.setView(delete_dialog);
         dialog = builder.create();
         dialog.show();
+        dialog.setOnDismissListener(dialog -> {
+            if (card != null)
+                if (position % 4 == 0) {
+                    card.setCardBackgroundColor(getActivity().getResources().getColor(R.color.zeti));
+                } else if (position % 4 == 1) {
+                    card.setCardBackgroundColor(getActivity().getResources().getColor(R.color.red));
+                } else if (position % 4 == 2) {
+                    card.setCardBackgroundColor(getActivity().getResources().getColor(R.color.yellow));
+                } else if (position % 4 == 3) {
+                    card.setCardBackgroundColor(getActivity().getResources().getColor(R.color.blue));
+                }
+        });
         Window window = dialog.getWindow();
         //window.setLayout( ViewGroup.LayoutParams.MATCH_PARENT , ViewGroup.LayoutParams.WRAP_CONTENT);
         assert window != null;

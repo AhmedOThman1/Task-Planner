@@ -12,7 +12,7 @@
         android:id="@+id/deltxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_bold"
+        android:fontFamily="@font/poppins_medium"
         tools:text="Are you sure you want to delete Banking app project with all tasks inside it ?"
         android:textSize="17sp"
         android:textColor="@color/black"

@@ -3,6 +3,7 @@ package com.example.taskplanner.ui.fragments;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -10,12 +11,16 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.StyleSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -37,6 +42,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -282,15 +288,19 @@ public class HomeFragment extends Fragment {
             @Override
             public void onLongClick(View view, int position) {
 
-                view.setBackgroundColor(getResources().getColor(R.color.black));
-                deleteProject(position);
+                CardView card = view.findViewById(R.id.active_projects_card);
+                if (card != null) {
+
+                    card.setCardBackgroundColor(getResources().getColor(R.color.black));
+                    deleteProject(position, card);
+                }
             }
         }));
         if (Projects.size() != 0)
             setMainProgress();
-//
-//        active_projects_recyclerview.addItemDecoration(new ItemDecorationAlbumColumns(
-//                getResources().getDimensionPixelSize(R.dimen.photos_list_spacing), calculateNoOfColumns(getContext())));
+
+        active_projects_recyclerview.addItemDecoration(new ItemDecorationAlbumColumns(
+                getResources().getDimensionPixelSize(R.dimen.photos_list_spacing), calculateNoOfColumns(getContext())));
 
         if (Projects.size() == 0)
             NoProjects.setVisibility(View.VISIBLE);
@@ -358,7 +368,7 @@ public class HomeFragment extends Fragment {
 
     AlertDialog.Builder builder;
 
-    private void deleteProject(int position) {
+    private void deleteProject(int position, CardView card) {
 
         builder = new AlertDialog.Builder(getContext());
 
@@ -368,8 +378,13 @@ public class HomeFragment extends Fragment {
                 delete = delete_dialog.findViewById(R.id.delete_dialog),
                 del_text = delete_dialog.findViewById(R.id.deltxt);
 
-        String del_message = "Are you sure you want to delete " + Projects.get(position).getTitle()
+        String s = "Are you sure you want to delete " + Projects.get(position).getTitle()
                 + " project with all tasks inside it( " + Projects.get(position).getProject_tasks().size() + " task ) ?";
+        SpannableString del_message = new SpannableString(s);
+        StyleSpan boldSpan = new StyleSpan(Typeface.BOLD);
+
+        del_message.setSpan(boldSpan, 32, 32+Projects.get(position).getTitle().length()+1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
         del_text.setText(del_message);
         back.setOnClickListener(v -> {
             Toast.makeText(getContext(), "Ok ♥️nothing deleted", Toast.LENGTH_LONG).show();
@@ -388,6 +403,18 @@ public class HomeFragment extends Fragment {
         builder.setView(delete_dialog);
         dialog = builder.create();
         dialog.show();
+        dialog.setOnDismissListener(dialog -> {
+            if (card != null)
+                if (position % 4 == 0) {
+                    card.setCardBackgroundColor(getActivity().getResources().getColor(R.color.zeti));
+                } else if (position % 4 == 1) {
+                    card.setCardBackgroundColor(getActivity().getResources().getColor(R.color.red));
+                } else if (position % 4 == 2) {
+                    card.setCardBackgroundColor(getActivity().getResources().getColor(R.color.yellow));
+                } else if (position % 4 == 3) {
+                    card.setCardBackgroundColor(getActivity().getResources().getColor(R.color.blue));
+                }
+        });
         Window window = dialog.getWindow();
         //window.setLayout( ViewGroup.LayoutParams.MATCH_PARENT , ViewGroup.LayoutParams.WRAP_CONTENT);
         assert window != null;

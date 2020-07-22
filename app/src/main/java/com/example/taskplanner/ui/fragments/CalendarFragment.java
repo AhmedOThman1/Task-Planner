@@ -260,7 +260,7 @@ public class CalendarFragment extends Fragment {
     void DrawTasks(Calendar now) {
         Calendar yesterday = (Calendar) now.clone();
         yesterday.add(Calendar.DAY_OF_MONTH, -1);
-
+        boolean thereAreTasksBefore7AM = false;
         for (int i = 0; i < Projects.size(); i++)
             for (int j = 0; j < Projects.get(i).getProject_tasks().size(); j++) {
 
@@ -293,13 +293,7 @@ public class CalendarFragment extends Fragment {
                             Log.w("Lol2", "calendar G" + k + "G");
 
                         }
-                    } else {
-
-                        for (int k = 1; k <= 6; k++) {
-                            hours_arr_tv.get(k).setVisibility(View.GONE);
-                            hours_arr_iv.get(k).setVisibility(View.GONE);
-                        }
-
+                        thereAreTasksBefore7AM = true;
                     }
 
                     RelativeLayout newRelative = (RelativeLayout) getLayoutInflater().inflate(R.layout.task_card, null);
@@ -415,6 +409,7 @@ public class CalendarFragment extends Fragment {
                         end_calendar.get(Calendar.DAY_OF_MONTH) == now.get(Calendar.DAY_OF_MONTH) &&
                         start_calendar.get(Calendar.DAY_OF_MONTH) == yesterday.get(Calendar.DAY_OF_MONTH)) {
 
+                    thereAreTasksBefore7AM = true;
                     long difference = end_calendar.getTimeInMillis() - temp.getTimeInMillis();
                     int minutes = (int) (difference / (1000 * 60));
 
@@ -516,6 +511,15 @@ public class CalendarFragment extends Fragment {
                 }
 
             }
+
+        if (!thereAreTasksBefore7AM)
+            for (int k = 0; k <= 6; k++) {
+                hours_arr_tv.get(k).setVisibility(View.GONE);
+                hours_arr_iv.get(k).setVisibility(View.GONE);
+                Log.w("Lol2", "calendar GGG" + k);
+            }
+
+
     }
 
     void close_keyboard() {

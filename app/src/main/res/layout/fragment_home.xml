@@ -325,7 +325,8 @@
                 android:layout_marginBottom="16dp"
                 android:divider="@android:color/transparent"
                 android:dividerHeight="8dp"
-                android:scrollbars="none" />
+                android:scrollbars="none"
+                />
 
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
