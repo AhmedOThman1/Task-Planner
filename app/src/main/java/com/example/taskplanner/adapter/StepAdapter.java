@@ -22,11 +22,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.taskplanner.R;
 import com.example.taskplanner.model.Target;
 import com.google.android.material.chip.Chip;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
-import static com.example.taskplanner.ui.CreateNewTargetFragment.stepAdapter;
-import static com.example.taskplanner.ui.CreateNewTargetFragment.tempFun;
+import static com.example.taskplanner.ui.fragments.CreateNewTargetFragment.stepAdapter;
+import static com.example.taskplanner.ui.fragments.CreateNewTargetFragment.tempFun;
+import static com.example.taskplanner.ui.fragments.CreateNewTargetFragment.unSavedTarget;
+import static com.example.taskplanner.ui.fragments.CreateNewTargetFragment.uploadUnSavedTarget;
 
 public class StepAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -103,6 +106,11 @@ public class StepAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 if (temp && position == Steps.size() - 1) {
                     Steps.get(position).setName(viewHolder.step_title.getText().toString().trim());
                     Log.w("Lol", "name after : " + position);
+                    if(unSavedTarget!=null)
+                    {
+                        unSavedTarget.setSteps(Steps);
+                        uploadUnSavedTarget(FirebaseAuth.getInstance().getCurrentUser());
+                    }
                 }
             }
         });
@@ -121,74 +129,75 @@ public class StepAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             public void afterTextChanged(Editable s) {
                 if (temp && position == Steps.size() - 1) {
                     Steps.get(position).setDescription(viewHolder.step_description.getText().toString().trim());
+                    if(unSavedTarget!=null)
+                    {
+                        unSavedTarget.setSteps(Steps);
+                        uploadUnSavedTarget(FirebaseAuth.getInstance().getCurrentUser());
+                    }
                     Log.w("Lol", "des after : " + position);
                 }
             }
         });
-        viewHolder.delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.w("Lol", "delete " + position + " <- pos ");
+        viewHolder.delete.setOnClickListener(v -> {
+            Log.w("Lol", "delete " + position + " <- pos ");
 //                if(position==Steps.size()-1)
-                    temp = false;
+                temp = false;
 //                else
 //                    temp = true;
-                Steps.remove(position);
-                stepAdapter.notifyDataSetChanged();
-                if (Steps.size() == 0)
-                {
-                    tempFun();
-                    temp = true ;
-                }
+            Steps.remove(position);
+            if(unSavedTarget!=null)
+            {
+                unSavedTarget.setSteps(Steps);
+                uploadUnSavedTarget(FirebaseAuth.getInstance().getCurrentUser());
+            }
+            stepAdapter.notifyDataSetChanged();
+            if (Steps.size() == 0)
+            {
+                tempFun();
+                temp = true ;
             }
         });
-        viewHolder.check.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.w("Lol", "check " + position + " <- pos");
-                if (viewHolder.step_title.getVisibility() == View.VISIBLE && !viewHolder.step_title.getText().toString().trim().isEmpty()) {
-                    viewHolder.step_title.setVisibility(View.GONE);
-                    viewHolder.step_description.setVisibility(View.GONE);
-                    viewHolder.step_content.setVisibility(View.VISIBLE);
-                    viewHolder.step_content.setText(viewHolder.step_title.getText().toString().trim());
-                } else {
+        viewHolder.check.setOnClickListener(v -> {
+            Log.w("Lol", "check " + position + " <- pos");
+            if (viewHolder.step_title.getVisibility() == View.VISIBLE && !viewHolder.step_title.getText().toString().trim().isEmpty()) {
+                viewHolder.step_title.setVisibility(View.GONE);
+                viewHolder.step_description.setVisibility(View.GONE);
+                viewHolder.step_content.setVisibility(View.VISIBLE);
+                viewHolder.step_content.setText(viewHolder.step_title.getText().toString().trim());
+            } else {
+                viewHolder.step_title.setVisibility(View.VISIBLE);
+                viewHolder.step_description.setVisibility(View.VISIBLE);
+                viewHolder.step_content.setVisibility(View.GONE);
+            }
+        });
+        viewHolder.add_new_step.setOnClickListener(v -> {
+            if (viewHolder.step_title.getText().toString().trim().isEmpty()) {
+                viewHolder.step_title.requestFocus();
+                viewHolder.step_title.setError("Can't be empty");
+                open_keyboard(viewHolder.step_title);
+            } else if (viewHolder.step_description.getText().toString().trim().isEmpty()) {
+
+                if (viewHolder.step_description.getVisibility() == View.GONE) {
                     viewHolder.step_title.setVisibility(View.VISIBLE);
                     viewHolder.step_description.setVisibility(View.VISIBLE);
                     viewHolder.step_content.setVisibility(View.GONE);
                 }
-            }
-        });
-        viewHolder.add_new_step.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (viewHolder.step_title.getText().toString().trim().isEmpty()) {
-                    viewHolder.step_title.requestFocus();
-                    viewHolder.step_title.setError("Can't be empty");
-                    open_keyboard(viewHolder.step_title);
-                } else if (viewHolder.step_description.getText().toString().trim().isEmpty()) {
 
-                    if (viewHolder.step_description.getVisibility() == View.GONE) {
-                        viewHolder.step_title.setVisibility(View.VISIBLE);
-                        viewHolder.step_description.setVisibility(View.VISIBLE);
-                        viewHolder.step_content.setVisibility(View.GONE);
-                    }
-
-                    viewHolder.step_description.requestFocus();
-                    viewHolder.step_description.setError("Can't be empty");
-                    open_keyboard(viewHolder.step_description);
-                } else {
+                viewHolder.step_description.requestFocus();
+                viewHolder.step_description.setError("Can't be empty");
+                open_keyboard(viewHolder.step_description);
+            } else {
 //                    viewHolder.add_new_step.setVisibility(View.GONE);
-                    Steps.get(Steps.size() - 1).setName(viewHolder.step_title.getText().toString().trim());
-                    Steps.get(Steps.size() - 1).setDescription(viewHolder.step_description.getText().toString().trim());
-                    for (int i = 0; i < Steps.size(); i++) {
-                        Log.w("Lol", "--- i : " + i + " , name : " + Steps.get(i).getName() + " , des : " + Steps.get(i).getDescription());
-                    }
-                    Steps.add(new Target.Step("", ""));
-//                    Steps.add(new Target.Step(viewHolder.step_title.getText().toString().trim() , viewHolder.step_description.getText().toString().trim() ));
-                    stepAdapter.notifyDataSetChanged();
+                Steps.get(Steps.size() - 1).setName(viewHolder.step_title.getText().toString().trim());
+                Steps.get(Steps.size() - 1).setDescription(viewHolder.step_description.getText().toString().trim());
+                for (int i = 0; i < Steps.size(); i++) {
+                    Log.w("Lol", "--- i : " + i + " , name : " + Steps.get(i).getName() + " , des : " + Steps.get(i).getDescription());
                 }
-
+                Steps.add(new Target.Step("", ""));
+//                    Steps.add(new Target.Step(viewHolder.step_title.getText().toString().trim() , viewHolder.step_description.getText().toString().trim() ));
+                stepAdapter.notifyDataSetChanged();
             }
+
         });
     }
 

@@ -18,12 +18,12 @@ import com.example.taskplanner.model.Target;
 import com.google.android.material.chip.Chip;
 import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
-import static com.example.taskplanner.ui.CreateNewTargetFragment.uploadTarget;
+import static com.example.taskplanner.ui.fragments.CreateNewTargetFragment.uploadTarget;
+import static com.example.taskplanner.ui.activities.MainActivity.Targets;
 public class OneTargetStepAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Activity activity;
-    private ArrayList<Target.Step> Steps = new ArrayList<>();
-    private ArrayList<Target> Targets=new ArrayList<>();
+    private ArrayList<Target.Step> Steps;
     private int indx;
 
     public void setIndx(int indx) {
@@ -33,10 +33,6 @@ public class OneTargetStepAdapter extends RecyclerView.Adapter<RecyclerView.View
     public OneTargetStepAdapter(Activity context , ArrayList<Target.Step> steps) {
         activity = context;
         Steps = steps;
-    }
-
-    public void setTargets(ArrayList<Target> targets) {
-        Targets = targets;
     }
 
     @NonNull

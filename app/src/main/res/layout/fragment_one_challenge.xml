@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.OneTargetFragment">
+    tools:context=".ui.fragments.OneTargetFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -70,6 +70,7 @@
         android:layout_below="@id/circle_challenge"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -80,14 +81,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="66dp"
                 android:fontFamily="@font/poppins_bold"
                 android:text="number of days to ..."
-                android:layout_centerVertical="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginEnd="66dp"
-                android:textSize="16sp"/>
+                android:textColor="@color/black"
+                android:textSize="16sp" />
         </RelativeLayout>
+
         <RelativeLayout
             android:id="@+id/first_circle_day"
             android:layout_width="50dp"
@@ -115,9 +117,10 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@id/first_card"
-        android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -128,14 +131,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="66dp"
                 android:fontFamily="@font/poppins_bold"
                 android:text="number of days lasts"
-                android:layout_centerVertical="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginEnd="66dp"
-                android:textSize="16sp"/>
+                android:textColor="@color/black"
+                android:textSize="16sp" />
         </RelativeLayout>
+
         <RelativeLayout
             android:id="@+id/second_circle_day"
             android:layout_width="50dp"

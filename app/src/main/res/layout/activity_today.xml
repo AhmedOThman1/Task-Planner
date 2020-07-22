@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/yellowhite"
-    tools:context=".ui.TodayActivity">
+    tools:context=".ui.activities.TodayActivity">
     <!-- Scrollable view here -->
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/AppBarL"

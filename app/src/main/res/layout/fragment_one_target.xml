@@ -5,14 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".ui.OneTargetFragment">
+    tools:context=".ui.fragments.OneTargetFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:elevation="10dp"
-        />
+        android:elevation="10dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/one_target_recyclerview"
@@ -20,11 +19,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbar"
         android:layout_margin="8dp"
-        android:scrollbars="none"
         android:divider="@android:color/transparent"
         android:dividerHeight="8dp"
         android:focusableInTouchMode="false"
-        android:isScrollContainer="false" />
+        android:isScrollContainer="false"
+        android:scrollbars="none" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/target_note"
@@ -42,13 +41,13 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:autoLink="all"
+            android:enabled="false"
             android:fontFamily="@font/poppins_medium"
             android:inputType="textMultiLine"
             android:minHeight="75dp"
             android:textColor="@color/enable_false_color"
-            android:textColorHint="@color/enable_false_hintcolor"
-            android:enabled="false"
-            />
+            android:textColorHint="@color/enable_false_hintcolor" />
     </com.google.android.material.textfield.TextInputLayout>
 
 </RelativeLayout>

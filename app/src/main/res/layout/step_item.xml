@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:id="@+id/step1"
@@ -92,17 +92,18 @@
             android:layout_marginStart="16dp"
             android:layout_marginBottom="8dp"
             android:layout_toEndOf="@id/check"
+            android:autoLink="all"
             android:fontFamily="@font/poppins_medium"
             android:hint="Step description"
             android:imeOptions="actionDone"
             android:inputType="textMultiLine"
-            android:textColor="@color/black"
-            tools:visibility="visible"
             android:overScrollMode="always"
             android:scrollbarStyle="insideInset"
-            />
+            android:textColor="@color/black"
+            tools:visibility="visible" />
 
     </RelativeLayout>
+
     <com.google.android.material.chip.Chip
         android:id="@+id/add_new_step"
         style="@style/Widget.MaterialComponents.Chip.Action"

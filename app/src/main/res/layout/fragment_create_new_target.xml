@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/yellowhite"
-    tools:context=".ui.CreateNewTargetFragment">
+    tools:context=".ui.fragments.CreateNewTargetFragment">
     <!-- Scrollable view here -->
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/AppBarL"
@@ -102,15 +102,16 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"  >
+                app:layout_collapseMode="pin">
+
                 <ImageView
                     android:id="@+id/open_drawer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_menu"
-                    android:paddingEnd="8dp"
                     android:paddingTop="8dp"
-                    android:paddingBottom="8dp"/>
+                    android:paddingEnd="8dp"
+                    android:paddingBottom="8dp"
+                    android:src="@drawable/ic_menu" />
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
@@ -128,38 +129,38 @@
             android:layout_marginEnd="8dp">
 
 
-<!--            <RelativeLayout-->
-<!--                android:id="@+id/stepper"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="16dp"-->
-<!--                android:visibility="gone">-->
-<!--                <RelativeLayout-->
-<!--                    android:id="@+id/small_stepper"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content" />-->
-<!--                <androidx.recyclerview.widget.RecyclerView-->
-<!--                    android:id="@+id/steps_recycler"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content" />-->
-<!--                <com.google.android.material.chip.Chip-->
-<!--                    android:id="@+id/add_new_step"-->
-<!--                    style="@style/Widget.MaterialComponents.Chip.Action"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_below="@id/small_stepper"-->
-<!--                    android:layout_alignParentEnd="true"-->
-<!--                    android:layout_marginEnd="16dp"-->
-<!--                    android:text="Add new step"-->
-<!--                    android:textColor="#FFF"-->
-<!--                    app:chipBackgroundColor="@color/zeti" />-->
-<!--            </RelativeLayout>-->
+            <!--            <RelativeLayout-->
+            <!--                android:id="@+id/stepper"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="16dp"-->
+            <!--                android:visibility="gone">-->
+            <!--                <RelativeLayout-->
+            <!--                    android:id="@+id/small_stepper"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content" />-->
+            <!--                <androidx.recyclerview.widget.RecyclerView-->
+            <!--                    android:id="@+id/steps_recycler"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content" />-->
+            <!--                <com.google.android.material.chip.Chip-->
+            <!--                    android:id="@+id/add_new_step"-->
+            <!--                    style="@style/Widget.MaterialComponents.Chip.Action"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_below="@id/small_stepper"-->
+            <!--                    android:layout_alignParentEnd="true"-->
+            <!--                    android:layout_marginEnd="16dp"-->
+            <!--                    android:text="Add new step"-->
+            <!--                    android:textColor="#FFF"-->
+            <!--                    app:chipBackgroundColor="@color/zeti" />-->
+            <!--            </RelativeLayout>-->
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/steps_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"/>
+                android:layout_marginTop="16dp" />
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -178,15 +179,15 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:autoLink="all"
                     android:fontFamily="@font/poppins_medium"
                     android:inputType="textMultiLine"
                     android:maxHeight="130dp"
                     android:minHeight="75dp"
-                    android:textColor="@color/enable_false_color"
-                    android:textColorHint="@color/enable_false_hintcolor"
                     android:overScrollMode="always"
                     android:scrollbarStyle="insideInset"
-                    />
+                    android:textColor="@color/enable_false_color"
+                    android:textColorHint="@color/enable_false_hintcolor" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <ImageView
@@ -199,7 +200,7 @@
                 android:layout_marginBottom="-46dp"
                 android:src="@drawable/ic_close"
                 android:visibility="gone"
-                tools:visibility="visible"/>
+                tools:visibility="visible" />
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/two_chips"

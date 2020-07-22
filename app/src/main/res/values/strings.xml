@@ -104,6 +104,9 @@
     <string name="you_should_be_sleep_at_this_time">you should be sleep at this time! 🥺</string>
     <string name="ok_i_will_sleep_change_the_time">OK i will sleep ,change the time ♥️</string>
     <string name="ignore_i_wont_sleep">ignore i wont sleep🥺</string>
+    <string name="back">back</string>
+    <string name="delete">delete</string>
+    <string name="profile_picture">Profile Picture</string>
 
     <string-array name="for_until_array">
         <item>Forever</item>

@@ -5,34 +5,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFF"
-    tools:context=".ui.Launcher">
+    tools:context=".ui.activities.Launcher">
 
     <ImageView
         android:id="@+id/image_splash"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/splash"
         android:layout_marginTop="120dp"
-        />
+        android:src="@drawable/splash" />
 
     <TextView
         android:id="@+id/app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/image_splash"
-        android:layout_marginTop="-75dp"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="-75dp"
         android:text="Task Planner"
         android:textColor="#000"
-        android:textSize="30dp"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:fontFamily="@font/coiny" />
+
     <ProgressBar
         android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:layout_below="@id/app_name"
         android:layout_centerHorizontal="true"
-        />
+        android:layout_marginTop="16dp" />
 </RelativeLayout>

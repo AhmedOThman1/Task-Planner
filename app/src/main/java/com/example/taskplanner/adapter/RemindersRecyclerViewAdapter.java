@@ -23,8 +23,8 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.Calendar;
 import java.util.List;
 
-import static com.example.taskplanner.ui.CreateNewReminderFragment.uploadReminders;
-import static com.example.taskplanner.ui.RemindersFragment.remindersAdapter;
+import static com.example.taskplanner.ui.fragments.CreateNewReminderFragment.uploadReminders;
+import static com.example.taskplanner.ui.fragments.RemindersFragment.remindersAdapter;
 
 public class RemindersRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 

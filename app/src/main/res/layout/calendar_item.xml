@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingEnd="8dp"
-    android:paddingStart="8dp">
+    android:paddingStart="8dp"
+    android:paddingEnd="8dp">
 
     <TextView
         android:id="@+id/day_name"
@@ -12,9 +13,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:fontFamily="@font/poppins_medium"
-        android:text="Sun"
+        android:gravity="center"
         android:textSize="18sp"
-        android:gravity="center"/>
+        tools:text="Sun" />
 
     <TextView
         android:id="@+id/day_num"
@@ -22,8 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:fontFamily="@font/poppins_bold"
-        android:text="5"
         android:textColor="@color/black"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        tools:text="5" />
 
 </LinearLayout>

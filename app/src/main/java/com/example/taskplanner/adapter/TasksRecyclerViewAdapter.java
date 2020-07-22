@@ -1,12 +1,10 @@
 package com.example.taskplanner.adapter;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -18,9 +16,9 @@ import com.example.taskplanner.model.Tasks;
 import java.util.Calendar;
 import java.util.List;
 
-import static com.example.taskplanner.ui.CreateNewTaskFragment.StringToCalendar;
-import static com.example.taskplanner.ui.CreateNewTaskFragment.months;
-import static com.example.taskplanner.ui.TodayActivity.days;
+import static com.example.taskplanner.ui.fragments.CreateNewTaskFragment.StringToCalendar;
+import static com.example.taskplanner.ui.fragments.CreateNewTaskFragment.months;
+import static com.example.taskplanner.ui.activities.TodayActivity.days;
 
 public class TasksRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 

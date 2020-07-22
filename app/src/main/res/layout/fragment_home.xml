@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.HomeFragment"
-    android:background="#FFF">
+    android:background="#FFF"
+    tools:context=".ui.fragments.HomeFragment">
     <!-- Scrollable view here -->
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/AppBarL"
@@ -17,14 +17,14 @@
             android:id="@+id/coolToolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@android:color/transparent"
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleGravity="top"
             app:expandedTitleMarginStart="132dp"
             app:expandedTitleMarginTop="60dp"
             app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Headline"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-            app:title="Ahmed Osman"
-            android:background="@android:color/transparent">
+            app:title="Ahmed Osman">
 
             <LinearLayout
                 android:id="@+id/profile"
@@ -51,7 +51,7 @@
                         android:layout_width="70dp"
                         android:layout_height="70dp"
                         android:layout_centerInParent="true"
-                        android:src="@drawable/osman"
+                        tools:src="@drawable/osman"
                         app:layout_collapseMode="parallax"
                         app:layout_collapseParallaxMultiplier="0.5" />
                 </RelativeLayout>
@@ -79,8 +79,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:maxLines="1"
                         android:gravity="top"
+                        android:maxLines="1"
                         android:text="Android developer"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -90,15 +90,16 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin" >
+                app:layout_collapseMode="pin">
+
                 <ImageView
                     android:id="@+id/open_drawer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_menu"
-                    android:paddingEnd="8dp"
                     android:paddingTop="8dp"
-                    android:paddingBottom="8dp"/>
+                    android:paddingEnd="8dp"
+                    android:paddingBottom="8dp"
+                    android:src="@drawable/ic_menu" />
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
@@ -303,15 +304,15 @@
                     android:adjustViewBounds="true"
                     android:maxHeight="300dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/no_active_projects"/>
+                    android:src="@drawable/no_active_projects" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/imageNo"
                     android:layout_centerHorizontal="true"
-                    android:text="@string/no_projects_found"
-                    android:layout_marginTop="-48dp"/>
+                    android:layout_marginTop="-48dp"
+                    android:text="@string/no_projects_found" />
             </RelativeLayout>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -324,7 +325,7 @@
                 android:layout_marginBottom="16dp"
                 android:divider="@android:color/transparent"
                 android:dividerHeight="8dp"
-                android:scrollbars="none"/>
+                android:scrollbars="none" />
 
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton

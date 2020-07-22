@@ -5,64 +5,61 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="8dp"
-    tools:background="@drawable/background_yellowsq"
-    >
+    tools:background="@drawable/background_yellowsq">
+
     <LinearLayout
         android:id="@+id/time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        >
+        android:layout_marginStart="16dp">
+
         <TextView
             android:id="@+id/clock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins"
-            tools:text="7:20"
             android:layout_gravity="bottom"
+            android:fontFamily="@font/poppins"
             android:gravity="bottom"
-            android:textSize="32sp"
             android:textColor="@color/black"
-            />
+            android:textSize="32sp"
+            tools:text="7:20" />
 
         <TextView
             android:id="@+id/time_AM_PM"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
             android:layout_marginStart="4dp"
             android:fontFamily="@font/poppins"
-            tools:text="AM"
-            android:textSize="14sp"
             android:textColor="@color/black"
-            android:layout_gravity="bottom"
-            />
+            android:textSize="14sp"
+            tools:text="AM" />
 
         <TextView
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/poppins"
-            tools:text="31/12/2020"
-            android:textSize="24sp"
             android:textColor="@color/black"
-            android:layout_marginStart="48dp"
-            />
+            android:textSize="24sp"
+            tools:text="31/12/2020" />
 
 
     </LinearLayout>
 
     <TextView
-    android:id="@+id/title"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    tools:text="Wake up! wake up!"
-    android:textSize="14sp"
-    android:textColor="@color/black"
-    android:fontFamily="@font/poppins"
-    android:layout_below="@id/time"
-    android:layout_marginStart="16dp"/>
-
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/time"
+        android:layout_marginStart="16dp"
+        android:autoLink="all"
+        android:fontFamily="@font/poppins"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        tools:text="Wake up! wake up!" />
 
 
     <ImageView

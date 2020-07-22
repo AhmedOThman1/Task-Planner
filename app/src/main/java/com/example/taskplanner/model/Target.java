@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
 
-import static com.example.taskplanner.ui.CreateNewTaskFragment.StringToCalendar;
+import static com.example.taskplanner.ui.fragments.CreateNewTaskFragment.StringToCalendar;
 
 public class Target {
 
@@ -12,13 +12,21 @@ public class Target {
     private String note;
     private String day;
     private ArrayList<Step> steps;
-    private int progress;
+    private Integer progress;
+
+    public Target() {
+        name = null;
+        note = null;
+        day = null;
+        steps = null;
+        progress = null;
+    }
 
     public Target(String name, String day) {
         this.name = name;
         this.day = day;
         this.note = "";
-        this.steps =  new ArrayList<>();
+        this.steps = new ArrayList<>();
     }
 
     public Target(String name, String day, ArrayList<Step> steps) {
@@ -42,11 +50,13 @@ public class Target {
         this.steps = new ArrayList<>(steps);
     }
 
-    public int getProgress() {
+    public Integer getProgress() {
+        if(progress==null)
+            return 0;
         return progress;
     }
 
-    public void setProgress(int progress) {
+    public void setProgress(Integer progress) {
         this.progress = progress;
     }
 
@@ -79,9 +89,11 @@ public class Target {
     }
 
     public void setSteps(ArrayList<Step> steps) {
-        this.steps = new ArrayList<> (steps);
+        if (steps != null)
+            this.steps = new ArrayList<>(steps);
+        else
+            this.steps = new ArrayList<>();
     }
-
 
 
     // sorting by target deadline
@@ -93,14 +105,13 @@ public class Target {
                     target2_deadline = (Calendar) StringToCalendar(target2.getDay()).clone();
             return target1_deadline.compareTo(target2_deadline);
         }
-    } ;
+    };
 
 
-
-    public static class Step{
-        private String name ;
+    public static class Step {
+        private String name;
         private String description;
-        private boolean check;
+        private Boolean check;
 
         public Step(String name, String description) {
             this.name = name;
@@ -108,11 +119,11 @@ public class Target {
             this.check = false;
         }
 
-        public boolean isCheck() {
+        public Boolean isCheck() {
             return check;
         }
 
-        public void setCheck(boolean check) {
+        public void setCheck(Boolean check) {
             this.check = check;
         }
 

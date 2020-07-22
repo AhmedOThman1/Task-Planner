@@ -5,7 +5,7 @@
     android:id="@+id/navigationDrawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MainActivity">
+    tools:context=".ui.activities.MainActivity">
 
 
     <ScrollView
@@ -30,13 +30,12 @@
                     android:id="@+id/textItem1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_marginStart="40dp"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="16dp"
                     android:fontFamily="@font/poppins_bold"
-                    android:gravity="end"
                     android:text="@string/home"
                     android:textColor="@color/white"
                     android:textSize="13sp" />
@@ -154,9 +153,9 @@
                 android:layout_below="@id/card5"
                 android:layout_marginTop="8dp"
                 android:translationX="-10dp"
+                android:visibility="gone"
                 app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="7dp"
-                android:visibility="gone">
+                app:cardCornerRadius="7dp">
 
                 <TextView
                     android:id="@+id/textItem6"
@@ -233,9 +232,9 @@
                 android:layout_below="@id/card8"
                 android:layout_marginTop="8dp"
                 android:translationX="-10dp"
+                android:visibility="gone"
                 app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="7dp"
-                android:visibility="gone">
+                app:cardCornerRadius="7dp">
 
                 <TextView
                     android:id="@+id/textItem9"
@@ -260,9 +259,9 @@
                 android:layout_below="@id/card9"
                 android:layout_marginTop="8dp"
                 android:translationX="-10dp"
+                android:visibility="gone"
                 app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="7dp"
-                android:visibility="gone">
+                app:cardCornerRadius="7dp">
 
                 <TextView
                     android:id="@+id/textItem10"
@@ -314,7 +313,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:translationX="222dp"
-        tools:translationY="88dp" >
+        tools:translationY="88dp">
 
         <FrameLayout
             android:id="@+id/frameLayout"
@@ -326,6 +325,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
-            android:visibility="gone"/>
+            android:visibility="gone" />
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

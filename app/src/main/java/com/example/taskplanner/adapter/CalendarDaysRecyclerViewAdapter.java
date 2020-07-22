@@ -14,8 +14,8 @@ import com.example.taskplanner.R;
 import java.util.Calendar;
 import java.util.List;
 
-import static com.example.taskplanner.ui.CalendarFragment.days;
-import static com.example.taskplanner.ui.CalendarFragment.last_selected_day;
+import static com.example.taskplanner.ui.fragments.CalendarFragment.days;
+import static com.example.taskplanner.ui.fragments.CalendarFragment.last_selected_day;
 
 public class CalendarDaysRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 

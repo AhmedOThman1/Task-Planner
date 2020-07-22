@@ -16,9 +16,9 @@
         android:layout_weight="1"
         android:fontFamily="@font/poppins_bold"
         android:gravity="center"
-        tools:text="Done"
         android:textColor="@color/black"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        tools:text="Done" />
 
     <TextView
         android:id="@+id/snack2"
@@ -27,9 +27,9 @@
         android:layout_weight="1"
         android:fontFamily="@font/poppins_bold"
         android:gravity="center"
-        tools:text="In progress"
         android:textColor="@color/black"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        tools:text="In progress" />
 
     <TextView
         android:id="@+id/snack3_delete"

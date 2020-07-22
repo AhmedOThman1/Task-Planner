@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
- xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/task_card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="15dp"
-    app:cardBackgroundColor="@color/yellow"
     android:layout_margin="4dp"
-    tools:context=".ui.CreateNewTaskFragment">
+    app:cardBackgroundColor="@color/yellow"
+    app:cardCornerRadius="15dp"
+    tools:context=".ui.fragments.CreateNewTaskFragment">
 
 
     <ScrollView
@@ -17,184 +16,186 @@
         android:layout_height="match_parent"
 
         >
-    <RelativeLayout
-        android:layout_marginBottom="32dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/yellow"
-            app:layout_collapseMode="pin"
-            android:visibility="gone">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp">
 
-            <ImageView
-                android:id="@+id/open_drawer"
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/yellow"
+                android:visibility="gone"
+                app:layout_collapseMode="pin">
+
+                <ImageView
+                    android:id="@+id/open_drawer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingBottom="8dp"
+                    android:src="@drawable/ic_menu" />
+            </androidx.appcompat.widget.Toolbar>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/task_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/toolbar"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:hint="@string/title"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusBottomEnd="7dp"
+                app:boxCornerRadiusBottomStart="7dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusTopStart="12dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textColor="@color/black"
+                    tools:text="task title 1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/task_project_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/task_title"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:hint="Project name"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusBottomEnd="7dp"
+                app:boxCornerRadiusBottomStart="7dp"
+                app:boxCornerRadiusTopEnd="7dp"
+                app:boxCornerRadiusTopStart="7dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textColor="@color/black"
+                    tools:text="Project 1 " />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/task_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/task_project_name"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:hint="@string/date"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusBottomEnd="7dp"
+                app:boxCornerRadiusBottomStart="7dp"
+                app:boxCornerRadiusTopEnd="7dp"
+                app:boxCornerRadiusTopStart="7dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textColor="@color/black"
+                    tools:text="13/7/2020" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_below="@id/task_date"
+                android:layout_centerHorizontal="true" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/task_start_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="8dp"
-                android:paddingEnd="8dp"
-                android:paddingBottom="8dp"
-                android:src="@drawable/ic_menu" />
-        </androidx.appcompat.widget.Toolbar>
+                android:layout_below="@id/task_date"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_toStartOf="@id/view"
+                android:hint="@string/start_time"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusBottomStart="7dp"
+                app:boxCornerRadiusTopStart="7dp">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/task_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/toolbar"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:hint="@string/title"
-            app:boxBackgroundMode="outline"
-            app:boxCornerRadiusBottomEnd="7dp"
-            app:boxCornerRadiusBottomStart="7dp"
-            app:boxCornerRadiusTopEnd="12dp"
-            app:boxCornerRadiusTopStart="12dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:fontFamily="@font/poppins_medium"
+                    android:padding="16dp"
+                    android:textColor="@color/black"
+                    tools:text="6:00 AM" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_medium"
-                android:enabled="false"
-                android:textColor="@color/black"
-                tools:text="task title 1" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/task_project_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/task_title"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:hint="Project name"
-            app:boxBackgroundMode="outline"
-            app:boxCornerRadiusBottomEnd="7dp"
-            app:boxCornerRadiusBottomStart="7dp"
-            app:boxCornerRadiusTopEnd="7dp"
-            app:boxCornerRadiusTopStart="7dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:enabled="false"
-                android:fontFamily="@font/poppins_medium"
-                android:textColor="@color/black"
-                tools:text="Project 1 " />
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/task_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/task_project_name"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:hint="@string/date"
-            app:boxBackgroundMode="outline"
-            app:boxCornerRadiusBottomEnd="7dp"
-            app:boxCornerRadiusBottomStart="7dp"
-            app:boxCornerRadiusTopEnd="7dp"
-            app:boxCornerRadiusTopStart="7dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:enabled="false"
-                android:fontFamily="@font/poppins_medium"
-                android:textColor="@color/black"
-                tools:text="13/7/2020" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <View
-            android:id="@+id/view"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_below="@id/task_date"
-            android:layout_centerHorizontal="true" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/task_start_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/task_date"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_toStartOf="@id/view"
-            android:hint="@string/start_time"
-            app:boxBackgroundMode="outline"
-            app:boxCornerRadiusBottomStart="7dp"
-            app:boxCornerRadiusTopStart="7dp">
-
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/task_end_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:enabled="false"
-                android:fontFamily="@font/poppins_medium"
-                android:padding="16dp"
-                android:textColor="@color/black"
-                tools:text="6:00 AM" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_below="@id/task_date"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_toEndOf="@id/view"
+                android:hint="@string/end_time"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusBottomEnd="7dp"
+                app:boxCornerRadiusTopEnd="7dp">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/task_end_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/task_date"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_toEndOf="@id/view"
-            android:hint="@string/end_time"
-            app:boxBackgroundMode="outline"
-            app:boxCornerRadiusBottomEnd="7dp"
-            app:boxCornerRadiusTopEnd="7dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:enabled="false"
-                android:fontFamily="@font/poppins_medium"
-                android:padding="16dp"
-                android:textColor="@color/black"
-                tools:text="8:00 AM" />
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:fontFamily="@font/poppins_medium"
+                    android:padding="16dp"
+                    android:textColor="@color/black"
+                    tools:text="8:00 AM" />
+            </com.google.android.material.textfield.TextInputLayout>
 
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/task_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/task_start_time"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:hint="@string/description"
-            app:boxBackgroundMode="outline"
-            app:boxCornerRadiusBottomEnd="12dp"
-            app:boxCornerRadiusBottomStart="12dp"
-            app:boxCornerRadiusTopEnd="7dp"
-            app:boxCornerRadiusTopStart="7dp">
-
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/task_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:enabled="false"
-                android:fontFamily="@font/poppins_medium"
-                android:inputType="textMultiLine"
-                android:textColor="@color/black"
-                tools:text="this is a long long long very long description"
-                android:overScrollMode="always"
-                android:scrollbarStyle="insideInset"/>
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_below="@id/task_start_time"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:hint="@string/description"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusBottomEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusTopEnd="7dp"
+                app:boxCornerRadiusTopStart="7dp">
 
-    </RelativeLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autoLink="all"
+                    android:enabled="false"
+                    android:fontFamily="@font/poppins_medium"
+                    android:inputType="textMultiLine"
+                    android:overScrollMode="always"
+                    android:scrollbarStyle="insideInset"
+                    android:textColor="@color/black"
+                    tools:text="this is a long long long very long description" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </RelativeLayout>
     </ScrollView>
 
 </androidx.cardview.widget.CardView>

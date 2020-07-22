@@ -20,20 +20,20 @@
         android:name=".TaskPlanner"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.PhotoActivity"/>
-        <activity android:name=".ui.MainActivity" >
+            android:name=".ui.activities.PhotoActivity"/>
+        <activity android:name=".ui.activities.MainActivity" >
 
         </activity>
         <activity
-            android:name=".ui.TodayActivity"/>
-        <activity android:name=".ui.Launcher">
+            android:name=".ui.activities.TodayActivity"/>
+        <activity android:name=".ui.activities.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.Login" >
+        <activity android:name=".ui.activities.Login" >
 
         </activity>
         <receiver android:name=".AlarmReceiver" />

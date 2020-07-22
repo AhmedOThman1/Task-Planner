@@ -1,4 +1,5 @@
 package com.example.taskplanner.model;
+
 import java.util.Comparator;
 
 public class Tasks {
@@ -8,6 +9,15 @@ public class Tasks {
     private String end_calendar;
     private String task_description;
     private String toindone;
+
+    public Tasks() {
+        projectName = null;
+        task_name = null;
+        start_calendar = null;
+        end_calendar = null;
+        task_description = null;
+        toindone = "To Do";
+    }
 
     public Tasks(String projectName, String task_name, String start_calendar, String end_calendar, String task_description) {
         this.projectName = projectName;
@@ -75,17 +85,13 @@ public class Tasks {
         this.toindone = toindone;
     }
 
-    // sorting by project title
-    public static Comparator<Tasks> tasksComparator = new Comparator<Tasks>() {
-        @Override
-        public int compare(Tasks tasks1, Tasks tasks2) {
+    // sorting by task time
+    public static Comparator<Tasks> tasksComparator = (tasks1, tasks2) -> {
 
-            String tasks1Start_calendar = tasks1.getStart_calendar(),
-                    tasks2End_calendar = tasks2.getEnd_calendar();
-            return tasks1Start_calendar.compareTo(tasks2End_calendar);
-        }
-    } ;
-
+        String tasks1Start_calendar = tasks1.getStart_calendar(),
+                tasks2Start_calendar = tasks2.getStart_calendar();
+        return tasks1Start_calendar.compareTo(tasks2Start_calendar);
+    };
 
 
 }

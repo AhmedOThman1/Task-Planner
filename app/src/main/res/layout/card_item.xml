@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/active_projects_card"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:id="@+id/active_projects_card"
     app:cardBackgroundColor="#309397"
     app:cardCornerRadius="25dp">
 
@@ -25,9 +26,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="25%"
                 android:textColor="#FFF"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="25%" />
 
             <ProgressBar
                 android:id="@+id/progressBar"
@@ -38,34 +39,33 @@
                 android:indeterminate="false"
                 android:max="100"
                 android:progress="65"
-                android:progressDrawable="@drawable/circular_progress_bar"
-                />
+                android:progressDrawable="@drawable/circular_progress_bar" />
         </RelativeLayout>
 
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Medical App"
+            android:layout_below="@id/circular_progress_bar"
+            android:layout_marginStart="16dp"
             android:maxWidth="123dp"
             android:textColor="#FFF"
-            android:textStyle="bold"
             android:textSize="16sp"
-            android:layout_marginStart="16dp"
-            android:layout_below="@id/circular_progress_bar"/>
+            android:textStyle="bold"
+            tools:text="Medical App" />
+
         <TextView
             android:id="@+id/time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/title"
             android:layout_marginStart="16dp"
             android:layout_marginBottom="16dp"
-            android:text="9 hours progress"
-            android:maxWidth="120dp"
             android:ellipsize="end"
+            android:maxWidth="120dp"
             android:textColor="#CCC"
             android:textSize="13sp"
-            android:layout_below="@id/title"
-            />
+            tools:text="9 hours progress" />
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

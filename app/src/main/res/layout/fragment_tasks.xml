@@ -4,14 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".ui.TasksFragment">
+    tools:context=".ui.fragments.TasksFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:elevation="10dp"
-        />
+        android:elevation="10dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tasks_recyclerview"
@@ -19,12 +18,12 @@
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar"
         android:layout_margin="8dp"
-        android:scrollbars="none"
-        tools:listitem="@layout/task_item"
         android:divider="@android:color/transparent"
         android:dividerHeight="16dp"
         android:focusableInTouchMode="false"
-        android:isScrollContainer="false" />
+        android:isScrollContainer="false"
+        android:scrollbars="none"
+        tools:listitem="@layout/task_item" />
 
 
     <View
@@ -32,15 +31,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/transparent"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
-    <include layout="@layout/tasks_snack"
+    <include
         android:id="@+id/task_snack"
+        layout="@layout/tasks_snack"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:elevation="10dp"
         android:visibility="gone"
-        tools:visibility="visible"
-        />
+        tools:visibility="visible" />
 </RelativeLayout>
