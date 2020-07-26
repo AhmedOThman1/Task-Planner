@@ -11,11 +11,15 @@
         android:layout_height="?attr/actionBarSize"
         android:elevation="10dp">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/open_drawer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
+            android:layout_alignParentStart="true"
             android:paddingTop="8dp"
             android:paddingEnd="8dp"
             android:paddingBottom="8dp"
@@ -26,8 +30,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:fontFamily="@font/poppins_bold"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/open_drawer"
             android:text="@string/reminders"
             android:textColor="@color/black" />
+        </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView

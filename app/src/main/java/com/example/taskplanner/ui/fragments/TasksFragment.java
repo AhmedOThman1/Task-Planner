@@ -240,14 +240,14 @@ public class TasksFragment extends Fragment {
                 tasks_snack.setVisibility(View.VISIBLE);
                 clickToCancel.setVisibility(View.VISIBLE);
                 if (project_name.equals("todo") || (!btemp && project_tasks.get(position).getToindone().equals("To Do"))) {
-                    snack1.setText("Done");
-                    snack2.setText("In progress");
+                    snack1.setText(getActivity().getResources().getString(R.string.done));
+                    snack2.setText(getActivity().getResources().getString(R.string.in_progress));
                 } else if (project_name.equals("in progress") || (!btemp && project_tasks.get(position).getToindone().equals("In Progress"))) {
-                    snack1.setText("ToDo");
-                    snack2.setText("Done");
+                    snack1.setText(getActivity().getResources().getString(R.string.todo));
+                    snack2.setText(getActivity().getResources().getString(R.string.done));
                 } else if (project_name.equals("done") || (!btemp && project_tasks.get(position).getToindone().equals("Done"))) {
-                    snack1.setText("ToDo");
-                    snack2.setText("In progress");
+                    snack1.setText(getActivity().getResources().getString(R.string.todo));
+                    snack2.setText(getActivity().getResources().getString(R.string.in_progress));
                 }
                 snack1.setOnClickListener(v -> {
                     Tasks task = project_tasks.get(position);
@@ -305,7 +305,7 @@ public class TasksFragment extends Fragment {
                 if (task.equals(Projects.get(i).getProject_tasks().get(j))) {
                     Projects.get(i).getProject_tasks().get(j).setToindone(type);
                     setProjectsProcess();
-                    setProjectsTime();
+                    setProjectsTime(getActivity());
                     getToInDone(context);
 
                     switch (project_name) {
@@ -336,7 +336,7 @@ public class TasksFragment extends Fragment {
                 if (task.equals(Projects.get(i).getProject_tasks().get(j))) {
                     Projects.get(i).getProject_tasks().remove(j);
                     setProjectsProcess();
-                    setProjectsTime();
+                    setProjectsTime(getActivity());
                     getToInDone(context);
                     if (project_name.equals("todo"))
                         project_tasks = ToDo_tasks;
@@ -379,10 +379,10 @@ public class TasksFragment extends Fragment {
         editor.apply();
 
         if (HomeFragment.done_tasks_tv != null)
-            HomeFragment.done_tasks_tv.setText(Done_tasks.size() + " tasks now . ");
+            HomeFragment.done_tasks_tv.setText(Done_tasks.size() + " "+context.getResources().getString(R.string.tasks_now));
         if (HomeFragment.todo_tasks_tv != null)
-            HomeFragment.todo_tasks_tv.setText(ToDo_tasks.size() + " tasks now . ");
+            HomeFragment.todo_tasks_tv.setText(ToDo_tasks.size() + " "+context.getResources().getString(R.string.tasks_now));
         if (HomeFragment.inProgress_tasks_tv != null)
-            HomeFragment.inProgress_tasks_tv.setText(InProgress_tasks.size() + " tasks now . ");
+            HomeFragment.inProgress_tasks_tv.setText(InProgress_tasks.size() + " "+context.getResources().getString(R.string.tasks_now));
     }
 }

@@ -73,7 +73,7 @@ public class CreateNewReminderFragment extends Fragment {
     AlertDialog dialog;
     FirebaseUser currentUser;
     RelativeLayout repeat_content, every_rl;
-    TextView repeat_period, time, eventtv, until_date;
+    TextView repeat_period, time, eventtv, until_date, title;
     Spinner repeat_spinner;
     EditText for_num_of_events, repeat_number;
 
@@ -125,7 +125,7 @@ public class CreateNewReminderFragment extends Fragment {
         days[4] = view.findViewById(R.id.day6);
         days[5] = view.findViewById(R.id.day7);
         days[6] = view.findViewById(R.id.day1);
-
+        title = view.findViewById(R.id.title);
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -134,19 +134,16 @@ public class CreateNewReminderFragment extends Fragment {
 
         open_drawer = view.findViewById(R.id.open_drawer);
         isDrawerOpen = false;
-        open_drawer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isDrawerOpen) {
-                    hideNav();
-                    open_drawer.setImageResource(R.drawable.ic_menu);
-                    isDrawerOpen = false;
-                } else {
-                    close_keyboard();
-                    showNav();
-                    open_drawer.setImageResource(R.drawable.ic_back);
-                    isDrawerOpen = true;
-                }
+        open_drawer.setOnClickListener(v -> {
+            if (isDrawerOpen) {
+                hideNav();
+                open_drawer.setImageResource(R.drawable.ic_menu);
+                isDrawerOpen = false;
+            } else {
+                close_keyboard();
+                showNav();
+                open_drawer.setImageResource(R.drawable.ic_back);
+                isDrawerOpen = true;
             }
         });
 
@@ -167,69 +164,119 @@ public class CreateNewReminderFragment extends Fragment {
 //            }
 //        });
 /// to show date picker and select date & put it in date TextView
-        view.findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                choice_date();
+        view.findViewById(R.id.fab).setOnClickListener(v -> choice_date());
+        date.setOnClickListener(v -> choice_date());
+        date.getEditText().setOnClickListener(v -> choice_date());
+        time_set_time.setOnClickListener(v -> choice_time());
+        time_chips.setOnCheckedChangeListener((chipGroup, i) -> {
+            switch (i) {
+                case R.id.time_morning:
+                    time.setText("8:00 AM");
+                    calendar_selected_day.set(Calendar.HOUR_OF_DAY, 8);
+                    calendar_selected_day.set(Calendar.MINUTE, 0);
+                    calendar_selected_day.set(Calendar.SECOND, 0);
+                    calendar_selected_day.set(Calendar.MILLISECOND, 0);
+                    break;
+                case R.id.time_afternoon:
+                    time.setText("1:00 PM");
+                    calendar_selected_day.set(Calendar.HOUR_OF_DAY, 13);
+                    calendar_selected_day.set(Calendar.MINUTE, 0);
+                    calendar_selected_day.set(Calendar.SECOND, 0);
+                    calendar_selected_day.set(Calendar.MILLISECOND, 0);
+                    break;
+                case R.id.time_evening:
+                    time.setText("6:00 PM");
+                    calendar_selected_day.set(Calendar.HOUR_OF_DAY, 18);
+                    calendar_selected_day.set(Calendar.MINUTE, 0);
+                    calendar_selected_day.set(Calendar.SECOND, 0);
+                    calendar_selected_day.set(Calendar.MILLISECOND, 0);
+                    break;
+                case R.id.time_night:
+                    time.setText("9:00 PM");
+                    calendar_selected_day.set(Calendar.HOUR_OF_DAY, 21);
+                    calendar_selected_day.set(Calendar.MINUTE, 0);
+                    calendar_selected_day.set(Calendar.SECOND, 0);
+                    calendar_selected_day.set(Calendar.MILLISECOND, 0);
+                    break;
             }
         });
-        date.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                choice_date();
-            }
-        });
-        date.getEditText().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                choice_date();
-            }
-        });
-        time_set_time.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                choice_time();
-            }
-        });
-        time_chips.setOnCheckedChangeListener(new ChipGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(ChipGroup chipGroup, int i) {
-                switch (i) {
-                    case R.id.time_morning:
-                        time.setText("8:00 AM");
-                        calendar_selected_day.set(Calendar.HOUR_OF_DAY, 8);
-                        calendar_selected_day.set(Calendar.MINUTE, 0);
-                        calendar_selected_day.set(Calendar.SECOND, 0);
-                        calendar_selected_day.set(Calendar.MILLISECOND, 0);
+        week_days1.setOnCheckedChangeListener((chipGroup, i) -> {
+            if (i == -1) {
+                switch (Calendar.getInstance().get(Calendar.DAY_OF_WEEK)) {
+                    case 1:
+                        week_days1.check(R.id.day2);
                         break;
-                    case R.id.time_afternoon:
-                        time.setText("1:00 PM");
-                        calendar_selected_day.set(Calendar.HOUR_OF_DAY, 13);
-                        calendar_selected_day.set(Calendar.MINUTE, 0);
-                        calendar_selected_day.set(Calendar.SECOND, 0);
-                        calendar_selected_day.set(Calendar.MILLISECOND, 0);
+
+                    case 2:
+                        week_days1.check(R.id.day3);
                         break;
-                    case R.id.time_evening:
-                        time.setText("6:00 PM");
-                        calendar_selected_day.set(Calendar.HOUR_OF_DAY, 18);
-                        calendar_selected_day.set(Calendar.MINUTE, 0);
-                        calendar_selected_day.set(Calendar.SECOND, 0);
-                        calendar_selected_day.set(Calendar.MILLISECOND, 0);
+
+                    case 3:
+                        week_days1.check(R.id.day4);
                         break;
-                    case R.id.time_night:
-                        time.setText("9:00 PM");
-                        calendar_selected_day.set(Calendar.HOUR_OF_DAY, 21);
-                        calendar_selected_day.set(Calendar.MINUTE, 0);
-                        calendar_selected_day.set(Calendar.SECOND, 0);
-                        calendar_selected_day.set(Calendar.MILLISECOND, 0);
+
+                    case 7:
+                        week_days1.check(R.id.day1);
                         break;
                 }
             }
         });
-        week_days1.setOnCheckedChangeListener(new ChipGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(ChipGroup chipGroup, int i) {
-                if (i == -1) {
+        week_days2.setOnCheckedChangeListener((chipGroup, i) -> {
+            if (i == -1) {
+                switch (Calendar.getInstance().get(Calendar.DAY_OF_WEEK)) {
+                    case 4:
+                        week_days2.check(R.id.day5);
+                        break;
+
+                    case 5:
+                        week_days2.check(R.id.day6);
+                        break;
+
+                    case 6:
+                        week_days2.check(R.id.day7);
+                        break;
+
+                }
+            }
+        });
+        repeats_chips.setOnCheckedChangeListener((chipGroup, i) -> {
+            Log.w("Lol", "ChipId: " + i);
+            switch (i) {
+                case -1:
+                    repeats_chips.check(R.id.do_not_repeat);
+                    repeat_content.setVisibility(View.GONE);
+                    break;
+                case R.id.do_not_repeat:
+                    repeat_content.setVisibility(View.GONE);
+                    break;
+                case R.id.repeat_daily:
+                    repeat_period.setText(getActivity().getResources().getString(R.string.day));
+                    repeat_content.setVisibility(View.VISIBLE);
+                    every_rl.setVisibility(View.VISIBLE);
+                    week_days1.setVisibility(View.GONE);
+                    week_days2.setVisibility(View.GONE);
+                    break;
+                case R.id.repeat_monthly:
+                    repeat_period.setText(getActivity().getResources().getString(R.string.month));
+                    repeat_content.setVisibility(View.VISIBLE);
+                    every_rl.setVisibility(View.VISIBLE);
+                    week_days1.setVisibility(View.GONE);
+                    week_days2.setVisibility(View.GONE);
+                    break;
+                case R.id.repeat_yearly:
+                    repeat_period.setText(getActivity().getResources().getString(R.string.year));
+                    repeat_content.setVisibility(View.VISIBLE);
+                    every_rl.setVisibility(View.VISIBLE);
+                    week_days1.setVisibility(View.GONE);
+                    week_days2.setVisibility(View.GONE);
+                    break;
+                case R.id.repeat_weekly:
+                    repeat_period.setText(getActivity().getResources().getString(R.string.week));
+                    repeat_content.setVisibility(View.VISIBLE);
+                    week_days1.setVisibility(View.VISIBLE);
+                    week_days2.setVisibility(View.VISIBLE);
+                    every_rl.setVisibility(View.GONE);
+
                     switch (Calendar.getInstance().get(Calendar.DAY_OF_WEEK)) {
                         case 1:
                             week_days1.check(R.id.day2);
@@ -243,18 +290,6 @@ public class CreateNewReminderFragment extends Fragment {
                             week_days1.check(R.id.day4);
                             break;
 
-                        case 7:
-                            week_days1.check(R.id.day1);
-                            break;
-                    }
-                }
-            }
-        });
-        week_days2.setOnCheckedChangeListener(new ChipGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(ChipGroup chipGroup, int i) {
-                if (i == -1) {
-                    switch (Calendar.getInstance().get(Calendar.DAY_OF_WEEK)) {
                         case 4:
                             week_days2.check(R.id.day5);
                             break;
@@ -267,84 +302,14 @@ public class CreateNewReminderFragment extends Fragment {
                             week_days2.check(R.id.day7);
                             break;
 
+                        case 7:
+                            week_days1.check(R.id.day1);
+                            break;
+
+
                     }
-                }
-            }
-        });
-        repeats_chips.setOnCheckedChangeListener(new ChipGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(ChipGroup chipGroup, int i) {
-                Log.w("Lol", "ChipId: " + i);
-                switch (i) {
-                    case -1:
-                        repeats_chips.check(R.id.do_not_repeat);
-                        repeat_content.setVisibility(View.GONE);
-                        break;
-                    case R.id.do_not_repeat:
-                        repeat_content.setVisibility(View.GONE);
-                        break;
-                    case R.id.repeat_daily:
-                        repeat_period.setText("day");
-                        repeat_content.setVisibility(View.VISIBLE);
-                        every_rl.setVisibility(View.VISIBLE);
-                        week_days1.setVisibility(View.GONE);
-                        week_days2.setVisibility(View.GONE);
-                        break;
-                    case R.id.repeat_monthly:
-                        repeat_period.setText("month");
-                        repeat_content.setVisibility(View.VISIBLE);
-                        every_rl.setVisibility(View.VISIBLE);
-                        week_days1.setVisibility(View.GONE);
-                        week_days2.setVisibility(View.GONE);
-                        break;
-                    case R.id.repeat_yearly:
-                        repeat_period.setText("year");
-                        repeat_content.setVisibility(View.VISIBLE);
-                        every_rl.setVisibility(View.VISIBLE);
-                        week_days1.setVisibility(View.GONE);
-                        week_days2.setVisibility(View.GONE);
-                        break;
-                    case R.id.repeat_weekly:
-                        repeat_period.setText("week");
-                        repeat_content.setVisibility(View.VISIBLE);
-                        week_days1.setVisibility(View.VISIBLE);
-                        week_days2.setVisibility(View.VISIBLE);
-                        every_rl.setVisibility(View.GONE);
+                    break;
 
-                        switch (Calendar.getInstance().get(Calendar.DAY_OF_WEEK)) {
-                            case 1:
-                                week_days1.check(R.id.day2);
-                                break;
-
-                            case 2:
-                                week_days1.check(R.id.day3);
-                                break;
-
-                            case 3:
-                                week_days1.check(R.id.day4);
-                                break;
-
-                            case 4:
-                                week_days2.check(R.id.day5);
-                                break;
-
-                            case 5:
-                                week_days2.check(R.id.day6);
-                                break;
-
-                            case 6:
-                                week_days2.check(R.id.day7);
-                                break;
-
-                            case 7:
-                                week_days1.check(R.id.day1);
-                                break;
-
-
-                        }
-                        break;
-
-                }
             }
         });
         repeat_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -384,198 +349,183 @@ public class CreateNewReminderFragment extends Fragment {
             }
         });
 
-        until_date.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (tempbool) {
-                    close_keyboard();
-                    int year = calendar_selected_day.get(Calendar.YEAR);
-                    int month = calendar_selected_day.get(Calendar.MONTH);
-                    int day = calendar_selected_day.get(Calendar.DAY_OF_MONTH);
-                    DatePickerDialog pickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
-                        @Override
-                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                            untilCalendar = Calendar.getInstance();
-                            untilCalendar.set(Calendar.YEAR, year);
-                            untilCalendar.set(Calendar.MONTH, month);
-                            untilCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                            String thisday = untilCalendar.get(Calendar.DAY_OF_MONTH) + "/" + (untilCalendar.get(Calendar.MONTH) + 1) + "/" + untilCalendar.get(Calendar.YEAR);
-                            until_date.setText(thisday);
-
-
-                        }
-                    }, year, month, day);
-                    pickerDialog.getDatePicker().setMinDate(calendar_selected_day.getTimeInMillis() - 1000);
-                    pickerDialog.show();
-                }
-            }
-        });
-
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
-                if (Math.abs(i) == appBarLayout.getTotalScrollRange()) {
-                    coolToolbar.setTitle("Create new reminder");
-                    appBarLayout.setBackgroundResource(R.drawable.background_toolbar2);
-                } else if (Math.abs(i) < (appBarLayout.getTotalScrollRange()) / 2) {
-                    coolToolbar.setTitle("");
-                    appBarLayout.setBackgroundResource(R.drawable.background_toolbar);
-                } else {
-                    coolToolbar.setTitle("Create new reminder");
-                    appBarLayout.setBackgroundResource(R.drawable.background_toolbar);
-                }
-            }
-        });
-
-        title_input_layout.getEditText().setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (!title_input_layout.getEditText().getText().toString().isEmpty())
-                    title_input_layout.setError(null);
-
-                return false;
-            }
-        });
-
-        view.findViewById(R.id.create_reminder).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
+        until_date.setOnClickListener(v -> {
+            if (tempbool) {
                 close_keyboard();
-
-                calendar = Calendar.getInstance();
-                calendar.add(Calendar.MINUTE, 9);
-
-
-                if (title_input_layout.getEditText().getText().toString().trim().isEmpty()) {
-                    title_input_layout.setError("Can't be empty");
-                    title_input_layout.requestFocus();
-                    open_keyboard(title_input_layout.getEditText());
-                    appBarLayout.setExpanded(true);
-                } else if (time.getText().toString().isEmpty()) {
-                    title_input_layout.setError(null);
-                    Toast.makeText(getContext(), "Please select the time", Toast.LENGTH_SHORT).show();
-                    view.findViewById(R.id.time_layout).setBackground(getResources().getDrawable(R.drawable.background_error));
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            view.findViewById(R.id.time_layout).setBackgroundColor(getResources().getColor(android.R.color.transparent));
-                        }
-                    }, 1000);
-                } else if (calendar_selected_day.before(Calendar.getInstance())) {
-                    title_input_layout.setError(null);
-                    Toast.makeText(getContext(), "Reminder can't be in the past!", Toast.LENGTH_SHORT).show();
-                } else {
-                    title_input_layout.setError(null);
-                    AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(ALARM_SERVICE);
-                    Intent myIntent = new Intent(getContext(), AlarmReceiver.class);
-                    String thisday = calendar_selected_day.get(Calendar.DAY_OF_MONTH) + "/" + calendar_selected_day.get(Calendar.MONTH) + "/" + calendar_selected_day.get(Calendar.YEAR);
-                    String t = calendar_selected_day.get(Calendar.HOUR_OF_DAY) + ":" + calendar_selected_day.get(Calendar.MINUTE), type = "", AM_PM = "";
-                    myIntent.putExtra("Content", t);
-                    myIntent.putExtra("title", title_input_layout.getEditText().getText().toString().trim());
-
-                    calendar_selected_day.set(Calendar.SECOND, 0);
-                    calendar_selected_day.set(Calendar.MILLISECOND, 0);
+                int year = calendar_selected_day.get(Calendar.YEAR);
+                int month = calendar_selected_day.get(Calendar.MONTH);
+                int day = calendar_selected_day.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog pickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view1, int year, int month, int dayOfMonth) {
+                        untilCalendar = Calendar.getInstance();
+                        untilCalendar.set(Calendar.YEAR, year);
+                        untilCalendar.set(Calendar.MONTH, month);
+                        untilCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                        String thisday = untilCalendar.get(Calendar.DAY_OF_MONTH) + "/" + (untilCalendar.get(Calendar.MONTH) + 1) + "/" + untilCalendar.get(Calendar.YEAR);
+                        until_date.setText(thisday);
 
 
-                    if (repeats_chips.getCheckedChipId() == R.id.do_not_repeat) {
-                        assert alarmManager != null;
-                        myIntent.putExtra("type", "do_not");
-                        PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-                        alarmManager.set(AlarmManager.RTC, calendar_selected_day.getTimeInMillis(), pendingIntent);
-                        t = calendar_selected_day.get(Calendar.HOUR_OF_DAY) + ":" + calendar_selected_day.get(Calendar.MINUTE);
-                        AM_PM = (calendar_selected_day.get(Calendar.AM_PM) == Calendar.AM ? "AM" : "PM");
-                        Reminders.add(new Reminder(t, AM_PM, thisday, title_input_layout.getEditText().getText().toString().trim(), "do_not"));
-                        uploadReminders(currentUser);
-                        Toast.makeText(getContext(), "Done \uD83D\uDE0C♥️", Toast.LENGTH_SHORT).show();
-                        Log.w("Lol", "noti time :" + t);
-                    } else if (repeats_chips.getCheckedChipId() == R.id.repeat_daily || repeats_chips.getCheckedChipId() == R.id.repeat_weekly || repeats_chips.getCheckedChipId() == R.id.repeat_monthly || repeats_chips.getCheckedChipId() == R.id.repeat_yearly) {
-                        assert alarmManager != null;
-                        if (repeat_number.getText().toString().trim().isEmpty() && repeats_chips.getCheckedChipId() != R.id.repeat_weekly) {
-                            repeat_number.setError("Can't be empty");
-                        } else {
-                            if (repeat_spinner.getSelectedItemPosition() == 0) {
-                                myIntent.putExtra("type", "forever");
-                                type = "forever";
-                                if (repeats_chips.getCheckedChipId() != R.id.repeat_weekly) {
-                                    Reminders.add(new Reminder(t, AM_PM, thisday, title_input_layout.getEditText().getText().toString().trim(), "forever"));
-                                    uploadReminders(currentUser);
-                                }
+                    }
+                }, year, month, day);
+                pickerDialog.getDatePicker().setMinDate(calendar_selected_day.getTimeInMillis() - 1000);
+                pickerDialog.show();
+            }
+        });
 
-                            } else if (repeat_spinner.getSelectedItemPosition() == 1) {
+        appBarLayout.addOnOffsetChangedListener((appBarLayout, i) -> {
+            if (Math.abs(i) == appBarLayout.getTotalScrollRange()) {
+                coolToolbar.setTitle(getActivity().getResources().getString(R.string.create_new_reminder_title));
+                title.setVisibility(View.VISIBLE);
+                appBarLayout.setBackgroundResource(R.drawable.background_toolbar2);
+            } else if (Math.abs(i) < (appBarLayout.getTotalScrollRange()) / 2) {
+                coolToolbar.setTitle("");title.setVisibility(View.INVISIBLE);
+                appBarLayout.setBackgroundResource(R.drawable.background_toolbar);
+            } else {
+                coolToolbar.setTitle(getActivity().getResources().getString(R.string.create_new_reminder_title));
+                title.setVisibility(View.VISIBLE);
+                appBarLayout.setBackgroundResource(R.drawable.background_toolbar);
+            }
+        });
+
+        title_input_layout.getEditText().setOnEditorActionListener((v, actionId, event) -> {
+            if (!title_input_layout.getEditText().getText().toString().isEmpty())
+                title_input_layout.setError(null);
+
+            return false;
+        });
+
+        view.findViewById(R.id.create_reminder).setOnClickListener(v -> {
+
+            close_keyboard();
+
+            calendar = Calendar.getInstance();
+            calendar.add(Calendar.MINUTE, 9);
+
+
+            if (title_input_layout.getEditText().getText().toString().trim().isEmpty()) {
+                title_input_layout.setError(getActivity().getResources().getString(R.string.empty));
+                title_input_layout.requestFocus();
+                open_keyboard(title_input_layout.getEditText());
+                appBarLayout.setExpanded(true);
+            } else if (time.getText().toString().isEmpty()) {
+                title_input_layout.setError(null);
+                Toast.makeText(getContext(), getActivity().getResources().getString(R.string.please_select_the_time), Toast.LENGTH_SHORT).show();
+                view.findViewById(R.id.time_layout).setBackground(getResources().getDrawable(R.drawable.background_error));
+                new Handler().postDelayed(() -> view.findViewById(R.id.time_layout).setBackgroundColor(getResources().getColor(android.R.color.transparent)), 1000);
+            } else if (calendar_selected_day.before(Calendar.getInstance())) {
+                title_input_layout.setError(null);
+                Toast.makeText(getContext(), getActivity().getResources().getString(R.string.reminder_in_the_past), Toast.LENGTH_SHORT).show();
+            } else {
+                title_input_layout.setError(null);
+                AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(ALARM_SERVICE);
+                Intent myIntent = new Intent(getContext(), AlarmReceiver.class);
+                String thisday = calendar_selected_day.get(Calendar.DAY_OF_MONTH) + "/" + calendar_selected_day.get(Calendar.MONTH) + "/" + calendar_selected_day.get(Calendar.YEAR);
+                String t = calendar_selected_day.get(Calendar.HOUR_OF_DAY) + ":" + calendar_selected_day.get(Calendar.MINUTE), type = "", AM_PM = "";
+                myIntent.putExtra("Content", t);
+                myIntent.putExtra("title", title_input_layout.getEditText().getText().toString().trim());
+
+                calendar_selected_day.set(Calendar.SECOND, 0);
+                calendar_selected_day.set(Calendar.MILLISECOND, 0);
+
+
+                if (repeats_chips.getCheckedChipId() == R.id.do_not_repeat) {
+                    assert alarmManager != null;
+                    myIntent.putExtra("type", "do_not");
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    alarmManager.set(AlarmManager.RTC, calendar_selected_day.getTimeInMillis(), pendingIntent);
+                    t = calendar_selected_day.get(Calendar.HOUR_OF_DAY) + ":" + calendar_selected_day.get(Calendar.MINUTE);
+                    AM_PM = (calendar_selected_day.get(Calendar.AM_PM) == Calendar.AM ? "AM" : "PM");
+                    Reminders.add(new Reminder(t, AM_PM, thisday, title_input_layout.getEditText().getText().toString().trim(), "do_not"));
+                    uploadReminders(currentUser);
+                    Toast.makeText(getContext(), getActivity().getResources().getString(R.string.done_toast), Toast.LENGTH_SHORT).show();
+                    Log.w("Lol", "noti time :" + t);
+                } else if (repeats_chips.getCheckedChipId() == R.id.repeat_daily || repeats_chips.getCheckedChipId() == R.id.repeat_weekly || repeats_chips.getCheckedChipId() == R.id.repeat_monthly || repeats_chips.getCheckedChipId() == R.id.repeat_yearly) {
+                    assert alarmManager != null;
+                    if (repeat_number.getText().toString().trim().isEmpty() && repeats_chips.getCheckedChipId() != R.id.repeat_weekly) {
+                        repeat_number.setError(getActivity().getResources().getString(R.string.empty));
+                    } else {
+                        if (repeat_spinner.getSelectedItemPosition() == 0) {
+                            myIntent.putExtra("type", "forever");
+                            type = "forever";
+                            if (repeats_chips.getCheckedChipId() != R.id.repeat_weekly) {
+                                Reminders.add(new Reminder(t, AM_PM, thisday, title_input_layout.getEditText().getText().toString().trim(), "forever"));
+                                uploadReminders(currentUser);
+                            }
+
+                        } else if (repeat_spinner.getSelectedItemPosition() == 1) {
+                            myIntent.putExtra("type", "until");
+                            String day = untilCalendar.get(Calendar.DAY_OF_MONTH) + "/" + untilCalendar.get(Calendar.MONTH) + "/" + untilCalendar.get(Calendar.YEAR);
+                            myIntent.putExtra("until", day);
+                            type = "until";
+                            if (repeats_chips.getCheckedChipId() != R.id.repeat_weekly) {
+                                Reminders.add(new Reminder(t, AM_PM, thisday, title_input_layout.getEditText().getText().toString().trim(), "until", day));
+                                uploadReminders(currentUser);
+                            }
+
+                        } else if (repeat_spinner.getSelectedItemPosition() == 2) {
+                            if (for_num_of_events.getText().toString().trim().isEmpty()) {
+                                for_num_of_events.setError(getActivity().getResources().getString(R.string.empty));
+                            } else {
+                                Calendar c = (Calendar) calendar_selected_day.clone();
+                                int num_of_days = Integer.parseInt(repeat_number.getText().toString().trim()) * Integer.parseInt(for_num_of_events.getText().toString().trim());
+                                c.add(Calendar.DAY_OF_MONTH, num_of_days);
                                 myIntent.putExtra("type", "until");
-                                String day = untilCalendar.get(Calendar.DAY_OF_MONTH) + "/" + untilCalendar.get(Calendar.MONTH) + "/" + untilCalendar.get(Calendar.YEAR);
+                                String day = c.get(Calendar.DAY_OF_MONTH) + "/" + c.get(Calendar.MONTH) + "/" + c.get(Calendar.YEAR);
                                 myIntent.putExtra("until", day);
+                                for_num_of_events.setError(null);
                                 type = "until";
                                 if (repeats_chips.getCheckedChipId() != R.id.repeat_weekly) {
                                     Reminders.add(new Reminder(t, AM_PM, thisday, title_input_layout.getEditText().getText().toString().trim(), "until", day));
                                     uploadReminders(currentUser);
                                 }
 
-                            } else if (repeat_spinner.getSelectedItemPosition() == 2) {
-                                if (for_num_of_events.getText().toString().trim().isEmpty()) {
-                                    for_num_of_events.setError("Can't be empty");
-                                } else {
-                                    Calendar c = (Calendar) calendar_selected_day.clone();
-                                    int num_of_days = Integer.parseInt(repeat_number.getText().toString().trim()) * Integer.parseInt(for_num_of_events.getText().toString().trim());
-                                    c.add(Calendar.DAY_OF_MONTH, num_of_days);
-                                    myIntent.putExtra("type", "until");
-                                    String day = c.get(Calendar.DAY_OF_MONTH) + "/" + c.get(Calendar.MONTH) + "/" + c.get(Calendar.YEAR);
-                                    myIntent.putExtra("until", day);
-                                    for_num_of_events.setError(null);
-                                    type = "until";
-                                    if (repeats_chips.getCheckedChipId() != R.id.repeat_weekly) {
-                                        Reminders.add(new Reminder(t, AM_PM, thisday, title_input_layout.getEditText().getText().toString().trim(), "until", day));
-                                        uploadReminders(currentUser);
-                                    }
-
-                                }
-                            }
-
-                            if (repeats_chips.getCheckedChipId() == R.id.repeat_weekly) {
-                                myIntent.putExtra("week", true);
-                                boolean[] bb = new boolean[]{
-                                        days[0].isChecked(),
-                                        days[1].isChecked(),
-                                        days[2].isChecked(),
-                                        days[3].isChecked(),
-                                        days[4].isChecked(),
-                                        days[5].isChecked(),
-                                        days[6].isChecked()
-                                };
-
-                                ArrayList b = new ArrayList();
-                                b.add(days[0].isChecked());
-                                b.add(days[1].isChecked());
-                                b.add(days[2].isChecked());
-                                b.add(days[3].isChecked());
-                                b.add(days[4].isChecked());
-                                b.add(days[5].isChecked());
-                                b.add(days[6].isChecked());
-
-                                myIntent.putExtra("check", bb);
-                                Reminders.add(new Reminder(t, AM_PM, thisday, type, title_input_layout.getEditText().getText().toString().trim(), true, b));
-                                uploadReminders(currentUser);
-                            }
-
-                            if ((repeat_spinner.getSelectedItemPosition() == 2 && !for_num_of_events.getText().toString().trim().isEmpty()) || (repeat_spinner.getSelectedItemPosition() != 2)) {
-                                repeat_number.setError(null);
-                                PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-                                if (repeats_chips.getCheckedChipId() == R.id.repeat_daily)
-                                    alarmManager.setRepeating(AlarmManager.RTC, calendar_selected_day.getTimeInMillis(), (24 * Integer.parseInt(repeat_number.getText().toString().trim())) * 60 * 60 * 1000, pendingIntent);
-                                else if (repeats_chips.getCheckedChipId() == R.id.repeat_weekly)
-                                    alarmManager.setRepeating(AlarmManager.RTC, calendar_selected_day.getTimeInMillis(), 24 * 60 * 60 * 1000, pendingIntent);
-                                else if (repeats_chips.getCheckedChipId() == R.id.repeat_monthly)
-                                    alarmManager.setRepeating(AlarmManager.RTC, calendar_selected_day.getTimeInMillis(), (30 * Integer.parseInt(repeat_number.getText().toString().trim())) * 24 * 60 * 60 * 1000, pendingIntent);
-                                else if (repeats_chips.getCheckedChipId() == R.id.repeat_yearly)
-                                    alarmManager.setRepeating(AlarmManager.RTC, calendar_selected_day.getTimeInMillis(), (12 * Integer.parseInt(repeat_number.getText().toString().trim())) * 30 * 24 * 60 * 60 * 1000, pendingIntent);
-
-                                Toast.makeText(getContext(), "Done \uD83D\uDE0C♥️", Toast.LENGTH_SHORT).show();
                             }
                         }
+
+                        if (repeats_chips.getCheckedChipId() == R.id.repeat_weekly) {
+                            myIntent.putExtra("week", true);
+                            boolean[] bb = new boolean[]{
+                                    days[0].isChecked(),
+                                    days[1].isChecked(),
+                                    days[2].isChecked(),
+                                    days[3].isChecked(),
+                                    days[4].isChecked(),
+                                    days[5].isChecked(),
+                                    days[6].isChecked()
+                            };
+
+                            ArrayList b = new ArrayList();
+                            b.add(days[0].isChecked());
+                            b.add(days[1].isChecked());
+                            b.add(days[2].isChecked());
+                            b.add(days[3].isChecked());
+                            b.add(days[4].isChecked());
+                            b.add(days[5].isChecked());
+                            b.add(days[6].isChecked());
+
+                            myIntent.putExtra("check", bb);
+                            Reminders.add(new Reminder(t, AM_PM, thisday, type, title_input_layout.getEditText().getText().toString().trim(), true, b));
+                            uploadReminders(currentUser);
+                        }
+
+                        if ((repeat_spinner.getSelectedItemPosition() == 2 && !for_num_of_events.getText().toString().trim().isEmpty()) || (repeat_spinner.getSelectedItemPosition() != 2)) {
+                            repeat_number.setError(null);
+                            PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                            if (repeats_chips.getCheckedChipId() == R.id.repeat_daily)
+                                alarmManager.setRepeating(AlarmManager.RTC, calendar_selected_day.getTimeInMillis(), (24 * Integer.parseInt(repeat_number.getText().toString().trim())) * 60 * 60 * 1000, pendingIntent);
+                            else if (repeats_chips.getCheckedChipId() == R.id.repeat_weekly)
+                                alarmManager.setRepeating(AlarmManager.RTC, calendar_selected_day.getTimeInMillis(), 24 * 60 * 60 * 1000, pendingIntent);
+                            else if (repeats_chips.getCheckedChipId() == R.id.repeat_monthly)
+                                alarmManager.setRepeating(AlarmManager.RTC, calendar_selected_day.getTimeInMillis(), (30 * Integer.parseInt(repeat_number.getText().toString().trim())) * 24 * 60 * 60 * 1000, pendingIntent);
+                            else if (repeats_chips.getCheckedChipId() == R.id.repeat_yearly)
+                                alarmManager.setRepeating(AlarmManager.RTC, calendar_selected_day.getTimeInMillis(), (12 * Integer.parseInt(repeat_number.getText().toString().trim())) * 30 * 24 * 60 * 60 * 1000, pendingIntent);
+
+                            Toast.makeText(getContext(), getActivity().getResources().getString(R.string.done_toast), Toast.LENGTH_SHORT).show();
+                        }
                     }
-                    init();
                 }
+                init();
             }
         });
         return view;
@@ -605,23 +555,20 @@ public class CreateNewReminderFragment extends Fragment {
         int Cminute = calendar.get(Calendar.MINUTE);
         if (calendar.get(Calendar.AM_PM) == Calendar.PM)
             Chour += 12;
-        TimePickerDialog pickerDialog = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                calendar_selected_day.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                calendar_selected_day.set(Calendar.MINUTE, minute);
-                calendar_selected_day.set(Calendar.SECOND, 0);
-                calendar_selected_day.set(Calendar.MILLISECOND, 0);
-                time_chips.clearCheck();
-                String t = (calendar_selected_day.get(Calendar.HOUR) == 0 ? 12 : calendar_selected_day.get(Calendar.HOUR)) + ":" +
-                        (calendar_selected_day.get(Calendar.MINUTE) < 10 ? "0" + calendar_selected_day.get(Calendar.MINUTE) : calendar_selected_day.get(Calendar.MINUTE)) + " " + (calendar_selected_day.get(Calendar.AM_PM) == Calendar.AM ? "AM" : "PM");
-                time.setText(t);
-                if (hourOfDay < 7) {
-                    // you should be sleep
-                    shouldSleep();
-                }
-                calendar = (Calendar) calendar_selected_day.clone();
+        TimePickerDialog pickerDialog = new TimePickerDialog(getContext(), (view, hourOfDay, minute) -> {
+            calendar_selected_day.set(Calendar.HOUR_OF_DAY, hourOfDay);
+            calendar_selected_day.set(Calendar.MINUTE, minute);
+            calendar_selected_day.set(Calendar.SECOND, 0);
+            calendar_selected_day.set(Calendar.MILLISECOND, 0);
+            time_chips.clearCheck();
+            String t = (calendar_selected_day.get(Calendar.HOUR) == 0 ? 12 : calendar_selected_day.get(Calendar.HOUR)) + ":" +
+                    (calendar_selected_day.get(Calendar.MINUTE) < 10 ? "0" + calendar_selected_day.get(Calendar.MINUTE) : calendar_selected_day.get(Calendar.MINUTE)) + " " + (calendar_selected_day.get(Calendar.AM_PM) == Calendar.AM ? "AM" : "PM");
+            time.setText(t);
+            if (hourOfDay < 7) {
+                // you should be sleep
+                shouldSleep();
             }
+            calendar = (Calendar) calendar_selected_day.clone();
         }, Chour, Cminute, false);
         //getDatePicker().setMinDate(System.currentTimeMillis()-1000);
         pickerDialog.show();
@@ -636,27 +583,21 @@ public class CreateNewReminderFragment extends Fragment {
                 cancel = sleep_dialog.findViewById(R.id.cancel_dialog),
                 sl = sleep_dialog.findViewById(R.id.sltxt);
 
-        cancel.setText(R.string.ignore_sleep);
-        sl.setText(R.string.ok_sleep);
+        cancel.setText(R.string.ignore_i_wont_sleep);
+        sl.setText(R.string.you_should_be_sleep_at_this_time);
 
 
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), "Ok️\uD83D\uDE25", Toast.LENGTH_LONG).show();
-                dialog.dismiss();
-            }
+        cancel.setOnClickListener(v -> {
+            Toast.makeText(getContext(), getActivity().getResources().getString(R.string.ok_sleep), Toast.LENGTH_LONG).show();
+            dialog.dismiss();
         });
 
-        ok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        ok.setOnClickListener(v -> {
 
-                Toast.makeText(getContext(), "Love you ,babe\uD83D\uDE0D\uD83D\uDE48\uD83D\uDE48♥️", Toast.LENGTH_LONG).show();
-                choice_time();
+            Toast.makeText(getContext(), getActivity().getResources().getString(R.string.love_you), Toast.LENGTH_LONG).show();
+            choice_time();
 
-                dialog.dismiss();
-            }
+            dialog.dismiss();
         });
 
         builder.setView(sleep_dialog).setCancelable(false);
@@ -689,12 +630,12 @@ public class CreateNewReminderFragment extends Fragment {
         if (calendar_selected_day.get(Calendar.YEAR) == calendar.get(Calendar.YEAR) &&
                 calendar_selected_day.get(Calendar.MONTH) == calendar.get(Calendar.MONTH) &&
                 calendar_selected_day.get(Calendar.DAY_OF_MONTH) == calendar.get(Calendar.DAY_OF_MONTH))
-            today = "ToDay";
+            today = getActivity().getResources().getString(R.string.today);
         calendar.add(Calendar.DAY_OF_MONTH, 1);
         if (calendar_selected_day.get(Calendar.YEAR) == calendar.get(Calendar.YEAR) &&
                 calendar_selected_day.get(Calendar.MONTH) == calendar.get(Calendar.MONTH) &&
                 calendar_selected_day.get(Calendar.DAY_OF_MONTH) == calendar.get(Calendar.DAY_OF_MONTH))
-            today = "Tomorrow";
+            today = getActivity().getResources().getString(R.string.tomorrow);
 
         date.getEditText().setText(today);
         date.getEditText().setEnabled(false);
@@ -709,30 +650,27 @@ public class CreateNewReminderFragment extends Fragment {
         int year = calendar_selected_day.get(Calendar.YEAR);
         int month = calendar_selected_day.get(Calendar.MONTH);
         int day = calendar_selected_day.get(Calendar.DAY_OF_MONTH);
-        DatePickerDialog pickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                calendar_selected_day.set(Calendar.YEAR, year);
-                calendar_selected_day.set(Calendar.MONTH, month);
-                calendar_selected_day.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        DatePickerDialog pickerDialog = new DatePickerDialog(getContext(), (view, year1, month1, dayOfMonth) -> {
+            calendar_selected_day.set(Calendar.YEAR, year1);
+            calendar_selected_day.set(Calendar.MONTH, month1);
+            calendar_selected_day.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-                String thisday = calendar_selected_day.get(Calendar.DAY_OF_MONTH) + "/" + (calendar_selected_day.get(Calendar.MONTH) + 1) + "/" + calendar_selected_day.get(Calendar.YEAR);
-                Calendar calendar = Calendar.getInstance();
-                if (calendar_selected_day.get(Calendar.YEAR) == calendar.get(Calendar.YEAR) &&
-                        calendar_selected_day.get(Calendar.MONTH) == calendar.get(Calendar.MONTH) &&
-                        calendar_selected_day.get(Calendar.DAY_OF_MONTH) == calendar.get(Calendar.DAY_OF_MONTH))
-                    thisday = "ToDay";
-                calendar.add(Calendar.DAY_OF_MONTH, 1);
-                if (calendar_selected_day.get(Calendar.YEAR) == calendar.get(Calendar.YEAR) &&
-                        calendar_selected_day.get(Calendar.MONTH) == calendar.get(Calendar.MONTH) &&
-                        calendar_selected_day.get(Calendar.DAY_OF_MONTH) == calendar.get(Calendar.DAY_OF_MONTH))
-                    thisday = "Tomorrow";
+            String thisday = calendar_selected_day.get(Calendar.DAY_OF_MONTH) + "/" + (calendar_selected_day.get(Calendar.MONTH) + 1) + "/" + calendar_selected_day.get(Calendar.YEAR);
+            Calendar calendar = Calendar.getInstance();
+            if (calendar_selected_day.get(Calendar.YEAR) == calendar.get(Calendar.YEAR) &&
+                    calendar_selected_day.get(Calendar.MONTH) == calendar.get(Calendar.MONTH) &&
+                    calendar_selected_day.get(Calendar.DAY_OF_MONTH) == calendar.get(Calendar.DAY_OF_MONTH))
+                thisday = getActivity().getResources().getString(R.string.today);
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+            if (calendar_selected_day.get(Calendar.YEAR) == calendar.get(Calendar.YEAR) &&
+                    calendar_selected_day.get(Calendar.MONTH) == calendar.get(Calendar.MONTH) &&
+                    calendar_selected_day.get(Calendar.DAY_OF_MONTH) == calendar.get(Calendar.DAY_OF_MONTH))
+                thisday = getActivity().getResources().getString(R.string.tomorrow);
 
-                date.getEditText().setText(thisday);
+            date.getEditText().setText(thisday);
 
-                time_chips.clearCheck();
+            time_chips.clearCheck();
 
-            }
         }, year, month, day);
         pickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
         pickerDialog.show();

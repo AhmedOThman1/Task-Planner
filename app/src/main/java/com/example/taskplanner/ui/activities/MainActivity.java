@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
@@ -19,14 +20,18 @@ import android.widget.Toast;
 
 import com.example.taskplanner.R;
 import com.example.taskplanner.model.Activeprojects;
+import com.example.taskplanner.model.Challenge;
 import com.example.taskplanner.model.Reminder;
 import com.example.taskplanner.model.Target;
 import com.example.taskplanner.model.Tasks;
 import com.example.taskplanner.ui.fragments.CalendarFragment;
+import com.example.taskplanner.ui.fragments.ChallengesFragment;
+import com.example.taskplanner.ui.fragments.CreateNewChallengeFragment;
 import com.example.taskplanner.ui.fragments.CreateNewReminderFragment;
 import com.example.taskplanner.ui.fragments.CreateNewTargetFragment;
 import com.example.taskplanner.ui.fragments.CreateNewTaskFragment;
 import com.example.taskplanner.ui.fragments.HomeFragment;
+import com.example.taskplanner.ui.fragments.OneChallengeFragment;
 import com.example.taskplanner.ui.fragments.OneTargetFragment;
 import com.example.taskplanner.ui.fragments.RemindersFragment;
 import com.example.taskplanner.ui.fragments.TargetsFragment;
@@ -66,15 +71,14 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<Tasks> Done_tasks = new ArrayList<>();
     public static ArrayList<Target> Targets = new ArrayList<>();
     public static ArrayList<Reminder> Reminders = new ArrayList<>();
+    public static ArrayList<Challenge> Challenges = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        x = (222 * ((float) getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT));
-        y = (88 * ((float) getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT));
-        z = (10 * ((float) getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT));
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser == null) {
@@ -87,7 +91,22 @@ public class MainActivity extends AppCompatActivity {
         DatabaseReference DbRef = FirebaseDatabase.getInstance().getReference().child(currentUser.getUid() + "");
         DbRef.keepSynced(true);
 
+
+        x = (222 * ((float) getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT));
+        y = (88 * ((float) getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT));
+        z = (10 * ((float) getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT));
+
         init();
+
+        Configuration config = getResources().getConfiguration();
+
+        if(config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL) {
+            //in Right To Left layout
+            x = (-222 * ((float) getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT));
+            for (CardView cardItem : cardItems) {
+                cardItem.setTranslationX(z);
+            }
+        }
 
         if (savedInstanceState == null) //show the home fragment
             getSupportFragmentManager().beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out).replace(R.id.frameLayout, new HomeFragment()).commit();
@@ -108,6 +127,8 @@ public class MainActivity extends AppCompatActivity {
             setCheck(6, false, MainActivity.this);
         else if (currentFragment instanceof RemindersFragment)
             setCheck(7, false, MainActivity.this);
+        else if (currentFragment instanceof ChallengesFragment)
+            setCheck(8, false, MainActivity.this);
 
         cardItems[0].setOnClickListener(v -> {
             if (pos != 0)
@@ -142,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
 
         cardItems[5].setOnClickListener(v -> {
             if (pos != 5)
-                getSupportFragmentManager().beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out).replace(R.id.frameLayout, new HomeFragment()).commit();
+                getSupportFragmentManager().beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out).replace(R.id.frameLayout, new CreateNewChallengeFragment()).commit();
             setCheck(5, true, MainActivity.this);
         });
 
@@ -160,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
 
         cardItems[8].setOnClickListener(v -> {
             if (pos != 8)
-                getSupportFragmentManager().beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out).replace(R.id.frameLayout, new HomeFragment()).commit();
+                getSupportFragmentManager().beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out).replace(R.id.frameLayout, new ChallengesFragment()).commit();
             setCheck(8, true, MainActivity.this);
         });
 
@@ -289,6 +310,16 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
+        /* if the current fragment is the One Challenge fragment then back to the Challenges fragment */
+
+        if (currentFragment instanceof OneChallengeFragment) {
+            //show the home fragment
+            getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new ChallengesFragment()).commit();
+            //select the home icon in the drawer
+            setCheck(8, false, getApplicationContext());
+            return;
+        }
+
         /* if the current page isn't home page then go to home page **/
 
         if (!(currentFragment instanceof HomeFragment)) {
@@ -305,7 +336,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getResources().getString(R.string.please_click_back_again_to_exit), Toast.LENGTH_SHORT).show();
         new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
 
     }

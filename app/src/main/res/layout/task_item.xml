@@ -104,7 +104,7 @@
             android:layout_below="@id/task_name"
             android:layout_toStartOf="@id/end_time"
             android:fontFamily="@font/poppins"
-            android:text=" - -> "
+            android:text="@string/arrow"
             android:textColor="#FFF"
             android:textSize="14sp"
             android:visibility="visible" />

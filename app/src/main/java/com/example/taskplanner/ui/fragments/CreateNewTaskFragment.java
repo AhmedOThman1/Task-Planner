@@ -63,16 +63,12 @@ public class CreateNewTaskFragment extends Fragment {
     TextInputLayout date, title_input_layout, description;
     CollapsingToolbarLayout coolToolbar;
     AppBarLayout appBarLayout;
-    TextView start_time_tv, end_time_tv, start_am_pm, end_am_pm;
+    TextView start_time_tv, end_time_tv, start_am_pm, end_am_pm,title;
     ImageView startLineError, endLineError;
     public static Calendar calendar_selected_day, calendar, start_calender, end_calendar;
     boolean sleep1 = false, sleep2 = false;
     AlertDialog.Builder builder;
     AlertDialog dialog;
-
-    public static String[] months = new String[]{"January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December"};
-
 
     Tasks unSavedTask = new Tasks();
 
@@ -116,6 +112,7 @@ public class CreateNewTaskFragment extends Fragment {
         appBarLayout = view.findViewById(R.id.AppBarL);
         startLineError = view.findViewById(R.id.start_line_error);
         endLineError = view.findViewById(R.id.end_line_error);
+        title = view.findViewById(R.id.title);
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -159,13 +156,16 @@ public class CreateNewTaskFragment extends Fragment {
 
         appBarLayout.addOnOffsetChangedListener((appBarLayout, i) -> {
             if (Math.abs(i) == appBarLayout.getTotalScrollRange()) {
-                coolToolbar.setTitle("Create new task");
+                coolToolbar.setTitle(getActivity().getResources().getString(R.string.create_new_task_title));
+                title.setVisibility(View.VISIBLE);
                 appBarLayout.setBackgroundResource(R.drawable.background_toolbar2);
             } else if (Math.abs(i) < (appBarLayout.getTotalScrollRange()) / 2) {
                 coolToolbar.setTitle("");
+                title.setVisibility(View.INVISIBLE);
                 appBarLayout.setBackgroundResource(R.drawable.background_toolbar);
             } else {
-                coolToolbar.setTitle("Create new task");
+                coolToolbar.setTitle(getActivity().getResources().getString(R.string.create_new_task_title));
+                title.setVisibility(View.VISIBLE);
                 appBarLayout.setBackgroundResource(R.drawable.background_toolbar);
             }
         });
@@ -202,7 +202,7 @@ public class CreateNewTaskFragment extends Fragment {
             }
 
             if (title_input_layout.getEditText().getText().toString().trim().isEmpty()) {
-                title_input_layout.setError("Can't be empty");
+                title_input_layout.setError(getActivity().getResources().getString(R.string.empty));
                 title_input_layout.requestFocus();
                 open_keyboard(title_input_layout.getEditText());
                 appBarLayout.setExpanded(true);
@@ -218,7 +218,7 @@ public class CreateNewTaskFragment extends Fragment {
                 title_input_layout.setError(null);
 
                 startLineError.setImageResource(R.drawable.line_red);
-                Toast.makeText(getContext(), "Start time should be at least at " + calendar.get(Calendar.HOUR) + ":" + (calendar.get(Calendar.MINUTE) + 1 < 10 ? "0" + (calendar.get(Calendar.MINUTE) + 1) : (calendar.get(Calendar.MINUTE) + 1)) + (calendar.get(Calendar.AM_PM) == Calendar.AM ? " AM" : " PM"), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), getActivity().getResources().getString(R.string.start_time_should_be_at)+ " " + calendar.get(Calendar.HOUR) + ":" + (calendar.get(Calendar.MINUTE) + 1 < 10 ? "0" + (calendar.get(Calendar.MINUTE) + 1) : (calendar.get(Calendar.MINUTE) + 1)) + (calendar.get(Calendar.AM_PM) == Calendar.AM ? " AM" : " PM"), Toast.LENGTH_LONG).show();
 //                   TO DONE open dialog to choice start time
                 choice_start_time();
             } else if (end_calendar.before(calender_half_hour)) {
@@ -233,7 +233,7 @@ public class CreateNewTaskFragment extends Fragment {
                 startLineError.setImageResource(R.drawable.line);
 
                 endLineError.setImageResource(R.drawable.line_red);
-                Toast.makeText(getContext(), "End time should be at least at " + calender_half_hour.get(Calendar.HOUR) + ":" + (calender_half_hour.get(Calendar.MINUTE) + 1 < 10 ? "0" + (calender_half_hour.get(Calendar.MINUTE) + 1) : (calender_half_hour.get(Calendar.MINUTE) + 1)) + (calender_half_hour.get(Calendar.AM_PM) == Calendar.AM ? " AM" : " PM"), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), getActivity().getResources().getString(R.string.end_time_should_be_at) + " " + calender_half_hour.get(Calendar.HOUR) + ":" + (calender_half_hour.get(Calendar.MINUTE) + 1 < 10 ? "0" + (calender_half_hour.get(Calendar.MINUTE) + 1) : (calender_half_hour.get(Calendar.MINUTE) + 1)) + (calender_half_hour.get(Calendar.AM_PM) == Calendar.AM ? " AM" : " PM"), Toast.LENGTH_LONG).show();
 //                   TO DONE open dialog to choice end time
                 choice_end_time();
             } else if (Objects.requireNonNull(description.getEditText()).getText().toString().trim().isEmpty()) {
@@ -242,7 +242,7 @@ public class CreateNewTaskFragment extends Fragment {
                 startLineError.setImageResource(R.drawable.line);
                 endLineError.setImageResource(R.drawable.line);
 
-                description.setError("Can't be empty");
+                description.setError(getActivity().getResources().getString(R.string.empty) );
                 description.requestFocus();
                 open_keyboard(description.getEditText());
             } else if (chip == null) {
@@ -252,7 +252,7 @@ public class CreateNewTaskFragment extends Fragment {
                 endLineError.setImageResource(R.drawable.line);
                 description.setError(null);
 
-                Toast.makeText(getContext(), "should select Category !", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), getActivity().getResources().getString(R.string.should_select_category), Toast.LENGTH_LONG).show();
             } else if (checkTask != null) {
 
                 title_input_layout.setError(null);
@@ -260,7 +260,7 @@ public class CreateNewTaskFragment extends Fragment {
                 endLineError.setImageResource(R.drawable.line);
                 description.setError(null);
 
-                Toast.makeText(getContext(), "this task time is interrupt with " + checkTask.getTask_name() + " task time", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getActivity().getResources().getString(R.string.this_task_time_is_interrupt_with)+" " + checkTask.getTask_name() + " "+getActivity().getResources().getString(R.string.task_time), Toast.LENGTH_SHORT).show();
             } else if (!sleep1 && start_calender.get(Calendar.HOUR_OF_DAY) < 7) {
                 // you should be sleep
                 shouldSleep("start");
@@ -280,7 +280,7 @@ public class CreateNewTaskFragment extends Fragment {
 
                 Log.w("Lol2", "todo size before addTask " + ToDo_tasks.size());
                 add_task(projectName, taskName, start_calender, end_calendar, taskDescription);
-                Toast.makeText(getContext(), "Done \uD83D\uDE0C♥️", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getActivity().getResources().getString(R.string.done_toast), Toast.LENGTH_SHORT).show();
                 Log.w("Lol2", "todo size before upload " + ToDo_tasks.size());
                 uploadProject(currentUser);
                 Log.w("Lol2", "todo size after upload " + ToDo_tasks.size());
@@ -366,7 +366,7 @@ public class CreateNewTaskFragment extends Fragment {
                     selectChip(unSavedTask.getProjectName());
                 if (unSavedTask.getStart_calendar() != null && !((Calendar) StringToCalendar(unSavedTask.getStart_calendar()).clone()).before(Calendar.getInstance())) {
                     calendar_selected_day = (Calendar) StringToCalendar(unSavedTask.getStart_calendar()).clone();
-                    String thisday = days[calendar_selected_day.get(Calendar.DAY_OF_WEEK) - 1] + ", " + calendar_selected_day.get(Calendar.DAY_OF_MONTH) + " " + months[calendar_selected_day.get(Calendar.MONTH)];
+                    String thisday = getActivity().getResources().getStringArray(R.array.days)[calendar_selected_day.get(Calendar.DAY_OF_WEEK) - 1] + ", " + calendar_selected_day.get(Calendar.DAY_OF_MONTH) + " " + getActivity().getResources().getStringArray(R.array.months)[calendar_selected_day.get(Calendar.MONTH)];
                     Objects.requireNonNull(date.getEditText()).setText(thisday);
 
                     start_calender = (Calendar) StringToCalendar(unSavedTask.getStart_calendar()).clone();
@@ -432,8 +432,8 @@ public class CreateNewTaskFragment extends Fragment {
     private void init() {
         /// calculate date today
         calendar_selected_day = Calendar.getInstance();
-        String today = days[calendar_selected_day.get(Calendar.DAY_OF_WEEK) - 1] +
-                ", " + calendar_selected_day.get(Calendar.DAY_OF_MONTH) + " " + months[calendar_selected_day.get(Calendar.MONTH)];
+        String today = getActivity().getResources().getStringArray(R.array.days)[calendar_selected_day.get(Calendar.DAY_OF_WEEK) - 1] +
+                ", " + calendar_selected_day.get(Calendar.DAY_OF_MONTH) + " " + getActivity().getResources().getStringArray(R.array.months)[calendar_selected_day.get(Calendar.MONTH)];
         Objects.requireNonNull(date.getEditText()).setText(today);
         date.getEditText().setEnabled(false);
 
@@ -557,12 +557,12 @@ public class CreateNewTaskFragment extends Fragment {
                 cancel = sleep_dialog.findViewById(R.id.cancel_dialog),
                 sl = sleep_dialog.findViewById(R.id.sltxt);
 
-        cancel.setText(R.string.ignore_sleep);
-        sl.setText(R.string.ok_sleep);
+        cancel.setText(R.string.ignore_i_wont_sleep);
+        sl.setText(R.string.you_should_be_sleep_at_this_time);
 
 
         cancel.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Ok️\uD83D\uDE25", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), getActivity().getResources().getString(R.string.ok_sleep), Toast.LENGTH_LONG).show();
             if (time.equals("start"))
                 sleep1 = true;
             else sleep2 = true;
@@ -571,7 +571,7 @@ public class CreateNewTaskFragment extends Fragment {
 
         ok.setOnClickListener(v -> {
 
-            Toast.makeText(getContext(), "Love you ,babe\uD83D\uDE0D\uD83D\uDE48\uD83D\uDE48♥️", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), getActivity().getResources().getString(R.string.love_you), Toast.LENGTH_LONG).show();
             if (time.equals("start")) choice_start_time();
             else choice_end_time();
 
@@ -612,7 +612,7 @@ public class CreateNewTaskFragment extends Fragment {
                     uploadUnSavedTask();
                 }
 
-                String thisday = days[calendar_selected_day.get(Calendar.DAY_OF_WEEK) - 1] + ", " + calendar_selected_day.get(Calendar.DAY_OF_MONTH) + " " + months[calendar_selected_day.get(Calendar.MONTH)];
+                String thisday = getActivity().getResources().getStringArray(R.array.days)[calendar_selected_day.get(Calendar.DAY_OF_WEEK) - 1] + ", " + calendar_selected_day.get(Calendar.DAY_OF_MONTH) + " " + getActivity().getResources().getStringArray(R.array.months)[calendar_selected_day.get(Calendar.MONTH)];
                 Objects.requireNonNull(date.getEditText()).setText(thisday);
 
             }
@@ -640,9 +640,9 @@ public class CreateNewTaskFragment extends Fragment {
 
             String name = title.getEditText().getText().toString().trim();
             if (check_project_is_exist(name) != null)
-                title.setError("this Project already exist");
+                title.setError(getActivity().getResources().getString(R.string.this_project_already_exist));
             else if (name.isEmpty())
-                title.setError("can't be empty");
+                title.setError(getActivity().getResources().getString(R.string.empty));
             else {
 
                 Chip chip = (Chip) getLayoutInflater().inflate(R.layout.choice_chip, projects_chips, false);
@@ -653,7 +653,7 @@ public class CreateNewTaskFragment extends Fragment {
                 projects_chips.addView(chip, projects_chips.getChildCount() == 0 ? 0 : projects_chips.getChildCount() - 1);
                 projects_chips.clearCheck();
                 projects_chips.check((projects_chips.getChildCount() == 0 ? 0 : projects_chips.getChildCount() - 1));
-                Activeprojects project = new Activeprojects(0, name, "0 hours progress");
+                Activeprojects project = new Activeprojects(0, name, "0 ");
                 if (!Projects.contains(project))
                     Projects.add(project);
                 Log.w("Lol2", "project added , projects.size : " + Projects.size() + "project1 has " + Projects.get(0).getProject_tasks().size() + " tasks!!!");

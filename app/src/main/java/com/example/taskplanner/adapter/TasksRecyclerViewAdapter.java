@@ -17,8 +17,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import static com.example.taskplanner.ui.fragments.CreateNewTaskFragment.StringToCalendar;
-import static com.example.taskplanner.ui.fragments.CreateNewTaskFragment.months;
-import static com.example.taskplanner.ui.activities.TodayActivity.days;
 
 public class TasksRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -52,13 +50,13 @@ public class TasksRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
         ViewHolder.doindone.setText(currenttask.getToindone());
 
         Calendar start_calendar = (Calendar) StringToCalendar( currenttask.getStart_calendar() ).clone();
-        String date = days[start_calendar.get(Calendar.DAY_OF_WEEK) - 1] + ", " + start_calendar.get(Calendar.DAY_OF_MONTH) +
-                " " + months[start_calendar.get(Calendar.MONTH)] + " " + start_calendar.get(Calendar.YEAR);
+        String date = activity.getResources().getStringArray(R.array.days)[start_calendar.get(Calendar.DAY_OF_WEEK) - 1] + ", " + start_calendar.get(Calendar.DAY_OF_MONTH) +
+                " " + activity.getResources().getStringArray(R.array.months)[start_calendar.get(Calendar.MONTH)] + " " + start_calendar.get(Calendar.YEAR);
         ViewHolder.date.setText(date);
 
         Calendar end_calendar = (Calendar) StringToCalendar( currenttask.getEnd_calendar() ).clone();
-        String end_date = days[end_calendar.get(Calendar.DAY_OF_WEEK) - 1] + ", " + end_calendar.get(Calendar.DAY_OF_MONTH) +
-                " " + months[end_calendar.get(Calendar.MONTH)] + " " + end_calendar.get(Calendar.YEAR);
+        String end_date = activity.getResources().getStringArray(R.array.days)[end_calendar.get(Calendar.DAY_OF_WEEK) - 1] + ", " + end_calendar.get(Calendar.DAY_OF_MONTH) +
+                " " + activity.getResources().getStringArray(R.array.months)[end_calendar.get(Calendar.MONTH)] + " " + end_calendar.get(Calendar.YEAR);
         ViewHolder.end_date.setText(end_date);
 
         if(date.equals(end_date)){

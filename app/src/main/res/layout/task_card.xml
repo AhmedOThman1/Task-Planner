@@ -32,7 +32,7 @@
             android:layout_marginTop="8dp"
             android:fontFamily="@font/poppins_medium"
             android:autoLink="all"
-            tools:text="Make some taskes for the midical app"
+            tools:text="Make some taskes for the midical appMake some taskddddddddddddddddddddddddds for the midical appMake some taskes for the midical appMake some taskes for the midical appMake some taskes for the midical appMake some taskes for the midical appMake some taskes for the midical app"
             android:textColor="#FFF"
             android:textSize="13sp" />
 </RelativeLayout>

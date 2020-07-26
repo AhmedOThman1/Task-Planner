@@ -40,7 +40,6 @@ import java.util.Calendar;
 import static android.content.Context.MODE_PRIVATE;
 import static com.example.taskplanner.ui.fragments.CreateNewTaskFragment.CalendarToString;
 import static com.example.taskplanner.ui.fragments.CreateNewTaskFragment.StringToCalendar;
-import static com.example.taskplanner.ui.fragments.CreateNewTaskFragment.months;
 import static com.example.taskplanner.ui.fragments.HomeFragment.isDrawerOpen;
 import static com.example.taskplanner.ui.activities.Launcher.SHARED_PREF;
 import static com.example.taskplanner.ui.activities.Launcher.USER_NAME;
@@ -55,7 +54,7 @@ public class CalendarFragment extends Fragment {
 
     CalendarDaysRecyclerViewAdapter daysadapter;
     CollapsingToolbarLayout coolToolbar;
-    TextView addTask, hello, mon_year, oldName = null, oldNum = null;
+    TextView addTask, hello, mon_year, title, oldName = null, oldNum = null;
     RecyclerView calendar_days_recyclerview;
     Calendar calendar;
     ArrayList<ImageView> hours_arr_iv = new ArrayList<>();
@@ -65,7 +64,6 @@ public class CalendarFragment extends Fragment {
     ArrayList<Calendar> DaysCalendar = new ArrayList<>();
     int relCount = 0, oldPos = 0;
     public static int last_selected_day = 0;
-    public static String[] days = new String[]{"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
     AlertDialog.Builder builder;
     AlertDialog dialog;
 
@@ -105,15 +103,16 @@ public class CalendarFragment extends Fragment {
         addTask = view.findViewById(R.id.add_task);
         hello = view.findViewById(R.id.hello_name);
         mon_year = view.findViewById(R.id.mon_year);
+        title = view.findViewById(R.id.title);
         relativeLayout = view.findViewById(R.id.tasks_time_container);
 
         SharedPreferences share = getContext().getSharedPreferences(SHARED_PREF, MODE_PRIVATE);
         String[] name = share.getString(USER_NAME, "").split(" ");
-        String fname = "Productive Day, " + name[0];
+        String fname = getActivity().getResources().getString(R.string.productive_day)+" "+ name[0] +"\uD83D\uDE0D";
         hello.setText(fname);
 
         calendar = Calendar.getInstance();
-        mon_year.setText(months[calendar.get(Calendar.MONTH)] + ", " + calendar.get(Calendar.YEAR));
+        mon_year.setText(getActivity().getResources().getStringArray(R.array.months)[calendar.get(Calendar.MONTH)] + ", " + calendar.get(Calendar.YEAR));
 
         int cnt = 0;
         last_selected_day = 0;
@@ -136,7 +135,7 @@ public class CalendarFragment extends Fragment {
         calendar_days_recyclerview.addOnItemTouchListener(new RecyclerViewTouchListener(getContext(), calendar_days_recyclerview, new RecyclerViewTouchListener.RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
-                mon_year.setText(months[DaysCalendar.get(position).get(Calendar.MONTH)] + ", " + DaysCalendar.get(position).get(Calendar.YEAR));
+                mon_year.setText(getActivity().getResources().getStringArray(R.array.months)[DaysCalendar.get(position).get(Calendar.MONTH)] + ", " + DaysCalendar.get(position).get(Calendar.YEAR));
                 for (int i = 0; i < thisDayTasks.size(); i++) {
                     relativeLayout.removeView(thisDayTasks.get(i));
                 }
@@ -179,13 +178,16 @@ public class CalendarFragment extends Fragment {
 
         appBarLayout.addOnOffsetChangedListener((appBarLayout1, i) -> {
             if (Math.abs(i) == appBarLayout1.getTotalScrollRange()) {
-                coolToolbar.setTitle("Calendar");
+                coolToolbar.setTitle(getActivity().getResources().getString(R.string.calendar));
+                title.setVisibility(View.VISIBLE);
                 appBarLayout1.setBackgroundResource(R.drawable.background_toolbar2);
             } else if (Math.abs(i) < (appBarLayout1.getTotalScrollRange()) / 2) {
                 coolToolbar.setTitle("");
+                title.setVisibility(View.INVISIBLE);
                 appBarLayout1.setBackgroundResource(R.drawable.background_toolbar);
             } else {
-                coolToolbar.setTitle("Calendar");
+                coolToolbar.setTitle(getActivity().getResources().getString(R.string.calendar));
+                title.setVisibility(View.VISIBLE);
                 appBarLayout1.setBackgroundResource(R.drawable.background_toolbar);
             }
         });

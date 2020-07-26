@@ -11,7 +11,7 @@
         android:id="@+id/AppBarL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/yellowhite">
+        android:background="@drawable/background_toolbar">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/coolToolbar"
@@ -79,14 +79,33 @@
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin">
 
-                <ImageView
-                    android:id="@+id/open_drawer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="8dp"
-                    android:paddingEnd="8dp"
-                    android:paddingBottom="8dp"
-                    android:src="@drawable/ic_menu" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/open_drawer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:paddingTop="8dp"
+                        android:paddingEnd="8dp"
+                        android:paddingBottom="8dp"
+                        android:src="@drawable/ic_menu" />
+
+                    <TextView
+                        android:id="@+id/title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@id/open_drawer"
+                        android:fontFamily="@font/poppins_bold"
+                        android:textColor="@color/black"
+                        android:text="@string/calendar"
+                        android:visibility="invisible"
+                        tools:visibility="visible"/>
+                </RelativeLayout>
+
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
@@ -113,9 +132,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="October, 2019"
                     android:textColor="@color/black"
-                    android:textSize="21sp" />
+                    android:textSize="21sp"
+                    tools:text="October, 2019" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/calRecyclerView"
@@ -697,9 +716,9 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
                         android:fontFamily="@font/poppins_medium"
-                        android:text="Project Research"
                         android:textColor="#FFF"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        tools:text="Project Research" />
 
                     <TextView
                         android:id="@+id/task_description"
@@ -709,9 +728,9 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
                         android:fontFamily="@font/poppins_medium"
-                        android:text="Make some taskes for the midical app"
                         android:textColor="#FFF"
-                        android:textSize="13sp" />
+                        android:textSize="13sp"
+                        tools:text="Make some tasks for the medical app" />
                 </RelativeLayout>
 
             </RelativeLayout>

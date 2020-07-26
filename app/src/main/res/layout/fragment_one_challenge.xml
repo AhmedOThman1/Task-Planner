@@ -4,162 +4,301 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FAFAFA"
     tools:context=".ui.fragments.OneTargetFragment">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:elevation="10dp" />
-
-    <RelativeLayout
-        android:id="@+id/blue_relative"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/black">
-
-        <ProgressBar
-            android:id="@+id/mainProgressBar"
-            style="?android:progressBarStyleHorizontal"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
-            android:layout_centerHorizontal="true"
-            android:progress="80"
-            android:progressDrawable="@drawable/circle"
-            android:translationY="125dp" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/circle_challenge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/blue_relative"
-        android:layout_centerHorizontal="true"
-        android:translationY="-50dp">
-
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/background_redcircle" />
-
-        <TextView
-            android:id="@+id/challenge_days"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/poppins_bold"
-            android:text="37 / 90"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/challenge_days"
-            android:layout_centerHorizontal="true"
-            android:fontFamily="@font/poppins_medium"
-            android:text="Day"
-            android:textColor="@color/black" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/first_card"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@id/circle_challenge"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp">
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginEnd="-50dp"
-            android:layout_toEndOf="@+id/first_circle_day"
-            android:background="@drawable/background_req">
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="66dp"
-                android:fontFamily="@font/poppins_bold"
-                android:text="number of days to ..."
-                android:textColor="@color/black"
-                android:textSize="16sp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/first_circle_day"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignParentStart="true">
-
-            <ImageView
+            <RelativeLayout
+                android:id="@+id/blue_relative"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/background_blackcircle" />
+                android:layout_height="wrap_content"
+                android:background="#194371">
 
-            <TextView
+                <TextView
+                    android:id="@+id/challenge_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    tools:text="Challenge name"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="@font/poppins_bold"/>
+
+                <ProgressBar
+                    android:id="@+id/challengeProgressBar"
+                    style="?android:progressBarStyleHorizontal"
+                    android:layout_width="250dp"
+                    android:layout_height="250dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/circle_shape8dp"
+                    android:indeterminate="false"
+                    android:progressDrawable="@drawable/circular_progress_bar2"
+                    android:translationY="125dp"
+                    tools:max="180"
+                    tools:progress="57" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/circle_challenge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:fontFamily="@font/poppins_bold"
-                android:text="37"
-                android:textColor="@color/white" />
+                android:layout_below="@id/blue_relative"
+                android:layout_centerHorizontal="true"
+                android:translationY="-50dp">
 
-        </RelativeLayout>
-    </RelativeLayout>
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/background_redcircle" />
 
-    <RelativeLayout
-        android:id="@+id/second_card"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@id/first_card"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp">
+                <TextView
+                    android:id="@+id/challenge_days"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    tools:text="57 / 90" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginEnd="-50dp"
-            android:layout_toEndOf="@+id/second_circle_day"
-            android:background="@drawable/background_req">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="66dp"
-                android:fontFamily="@font/poppins_bold"
-                android:text="number of days lasts"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/second_circle_day"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignParentStart="true">
-
-            <ImageView
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/challenge_days"
+                    android:layout_centerHorizontal="true"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="@string/day2"
+                    android:textColor="@color/black" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/first_card"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/background_challenge_red_circle" />
+                android:layout_height="50dp"
+                android:layout_below="@id/circle_challenge"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp">
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="-50dp"
+                    android:layout_toEndOf="@+id/first_circle_day"
+                    android:background="@drawable/background_req">
+
+                    <TextView
+                        android:id="@+id/num_of_days_to"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="66dp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="@string/number_of_days"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/first_circle_day"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentStart="true">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/background_blackcircle" />
+
+                    <TextView
+                        android:id="@+id/num_of_days"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:fontFamily="@font/poppins_bold"
+                        android:textColor="@color/white"
+                        tools:text="57" />
+
+                </RelativeLayout>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/second_card"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@id/first_card"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="-50dp"
+                    android:layout_toEndOf="@+id/second_circle_day"
+                    android:background="@drawable/background_req">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="66dp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="@string/number_of_days_lasts"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/second_circle_day"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentStart="true">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/background_challenge_red_circle" />
+
+                    <TextView
+                        android:id="@+id/num_of_days2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:fontFamily="@font/poppins_bold"
+                        android:textColor="@color/white"
+                        tools:text="33" />
+
+                </RelativeLayout>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/bottom_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/second_card"
+                android:layout_marginTop="32dp"
+                android:background="#FFF">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@id/line">
+
+                    <TextView
+                        android:id="@+id/start_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="@string/challenge_start_at"
+                        android:textColor="#194371"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/challenge_start_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/start_tv"
+                        android:layout_centerHorizontal="true"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textColor="@color/black"
+                        tools:text="23/7/2020" />
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/line"
+                    android:layout_width="1dp"
+                    android:layout_height="48dp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="#194371" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_toEndOf="@id/line">
+
+                    <TextView
+                        android:id="@+id/end_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="@string/challenge_ended_at"
+                        android:textColor="#194371"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/challenge_end_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/end_tv"
+                        android:layout_centerHorizontal="true"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textColor="@color/black"
+                        tools:text="23/7/2020" />
+                </RelativeLayout>
+            </RelativeLayout>
+            <View
+                android:id="@+id/middle"
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                android:layout_centerInParent="true" />
             <TextView
+                android:id="@+id/stop_challenge_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:fontFamily="@font/poppins_bold"
-                android:text="53"
-                android:textColor="@color/white" />
+                android:layout_below="@id/bottom_info"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="32dp"
+                android:layout_toStartOf="@id/middle"
+                android:background="@drawable/background_redsq"
+                android:elevation="2dp"
+                android:gravity="center"
+                android:paddingStart="16dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="8dp"
+                android:text="@string/stop_counting"
+                android:textColor="#FFF"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/set_challenge_count_zero"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/bottom_info"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="16dp"
+                android:layout_toEndOf="@id/middle"
+                android:background="@drawable/background_dark_blue"
+                android:elevation="2dp"
+                android:gravity="center"
+                android:paddingStart="16dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="8dp"
+                android:text="@string/set_count_to_0"
+                android:textColor="#FFF"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
         </RelativeLayout>
-    </RelativeLayout>
-
+    </ScrollView>
 </RelativeLayout>

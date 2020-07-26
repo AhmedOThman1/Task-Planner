@@ -43,19 +43,16 @@ public class RemindersFragment extends Fragment {
 
         open_drawer = view.findViewById(R.id.open_drawer);
         isDrawerOpen = false;
-        open_drawer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isDrawerOpen) {
-                    hideNav();
-                    open_drawer.setImageResource(R.drawable.ic_menu);
-                    isDrawerOpen = false;
-                } else {
-                    close_keyboard();
-                    showNav();
-                    open_drawer.setImageResource(R.drawable.ic_back);
-                    isDrawerOpen = true;
-                }
+        open_drawer.setOnClickListener(v -> {
+            if (isDrawerOpen) {
+                hideNav();
+                open_drawer.setImageResource(R.drawable.ic_menu);
+                isDrawerOpen = false;
+            } else {
+                close_keyboard();
+                showNav();
+                open_drawer.setImageResource(R.drawable.ic_back);
+                isDrawerOpen = true;
             }
         });
 

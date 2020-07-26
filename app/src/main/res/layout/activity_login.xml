@@ -39,10 +39,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawablePadding="8dp"
-                    android:hint="Full name"
+                    android:hint="@string/full_name"
                     android:inputType="textCapWords"
-                    android:textColor="#000"
-                    android:textColorHint="#000" />
+                    android:textColor="#000"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -61,7 +60,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawablePadding="8dp"
-                    android:hint="Job"
+                    android:hint="@string/job"
                     android:inputType="text"
                     android:textColor="#000" />
             </com.google.android.material.textfield.TextInputLayout>

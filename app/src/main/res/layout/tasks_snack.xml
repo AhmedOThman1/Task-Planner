@@ -38,7 +38,7 @@
         android:layout_weight="1"
         android:fontFamily="@font/poppins_bold"
         android:gravity="center"
-        android:text="Remove"
+        android:text="@string/remove"
         android:textColor="@color/black"
         android:textSize="18sp" />
 </LinearLayout>

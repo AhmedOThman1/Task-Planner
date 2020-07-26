@@ -101,13 +101,7 @@ public class Launcher extends AppCompatActivity {
                                 editor.apply();
                             }
                         })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-
-                                Log.w("Log", "Fail " + e.getMessage());
-                            }
-                        });
+                        .addOnFailureListener(e -> Log.w("Log", "Fail " + e.getMessage()));
 
 //                Bitmap bitmap = ((BitmapDrawable) getResources().getDrawable(R.drawable.osman)).getBitmap();
 //                if (isStoragePermissionGranted(Launcher.this))
@@ -117,7 +111,7 @@ public class Launcher extends AppCompatActivity {
 //                    finish();
                 login();
             } else {
-                Toast.makeText(Launcher.this, "Welcome " + SP_FULL_NAME, Toast.LENGTH_LONG).show();
+                Toast.makeText(Launcher.this, getResources().getString(R.string.welcome)+" "+ SP_FULL_NAME, Toast.LENGTH_LONG).show();
 //            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 //            if (currentUser != null) {
 //                retrieveProject( currentUser);

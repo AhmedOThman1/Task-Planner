@@ -14,7 +14,6 @@ import com.example.taskplanner.R;
 import java.util.Calendar;
 import java.util.List;
 
-import static com.example.taskplanner.ui.fragments.CalendarFragment.days;
 import static com.example.taskplanner.ui.fragments.CalendarFragment.last_selected_day;
 
 public class CalendarDaysRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -42,7 +41,7 @@ public class CalendarDaysRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
         currentday = Days.get(position);
         ViewHolder = (dayViewHolder) holder;
 
-        ViewHolder.dayName.setText(days[currentday.get(Calendar.DAY_OF_WEEK) - 1]);
+        ViewHolder.dayName.setText(activity.getResources().getStringArray(R.array.days)[currentday.get(Calendar.DAY_OF_WEEK) - 1]);
         String num = "" + currentday.get(Calendar.DAY_OF_MONTH);
         ViewHolder.dayNum.setText(num);
 

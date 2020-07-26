@@ -39,7 +39,7 @@
                     android:layout_marginStart="16dp">
 
                     <ProgressBar
-                        android:id="@+id/mainProgressBar"
+                        android:id="@+id/challengeProgressBar"
                         style="?android:progressBarStyleHorizontal"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
@@ -51,9 +51,9 @@
                         android:layout_width="70dp"
                         android:layout_height="70dp"
                         android:layout_centerInParent="true"
-                        tools:src="@drawable/osman"
                         app:layout_collapseMode="parallax"
-                        app:layout_collapseParallaxMultiplier="0.5" />
+                        app:layout_collapseParallaxMultiplier="0.5"
+                        tools:src="@drawable/osman" />
                 </RelativeLayout>
 
                 <LinearLayout
@@ -69,10 +69,9 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/poppins_bold"
                         android:gravity="bottom"
-                        android:text="Ahmed Osman"
+                        tools:text="Ahmed Osman"
                         android:textColor="#000"
-                        android:textSize="21sp"
-                        android:visibility="invisible" />
+                        android:textSize="21sp" />
 
                     <TextView
                         android:id="@+id/job"
@@ -81,7 +80,7 @@
                         android:layout_weight="1"
                         android:gravity="top"
                         android:maxLines="1"
-                        android:text="Android developer"
+                        tools:text="Android developer"
                         android:textSize="16sp" />
                 </LinearLayout>
             </LinearLayout>
@@ -90,16 +89,36 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin">
+                app:layout_collapseMode="pin"
+                android:background="@android:color/transparent">
 
-                <ImageView
-                    android:id="@+id/open_drawer"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="8dp"
-                    android:paddingEnd="8dp"
-                    android:paddingBottom="8dp"
-                    android:src="@drawable/ic_menu" />
+                    android:background="@android:color/transparent">
+
+                    <ImageView
+                        android:id="@+id/open_drawer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:paddingTop="8dp"
+                        android:paddingEnd="8dp"
+                        android:paddingBottom="8dp"
+                        android:src="@drawable/ic_menu" />
+
+
+                    <TextView
+                        android:id="@+id/title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@id/open_drawer"
+                        android:fontFamily="@font/poppins_bold"
+                        android:textColor="@color/black"
+                        android:text="@string/calendar"
+                        tools:visibility="visible"/>
+                </RelativeLayout>
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
@@ -175,7 +194,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:text="5 tasks now . 1 started" />
+                            tools:text="5 tasks now . 1 started" />
 
                     </LinearLayout>
                 </LinearLayout>
@@ -221,7 +240,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:text="1 tasks now . 1 started" />
+                            tools:text="1 tasks now . 1 started" />
 
                     </LinearLayout>
                 </LinearLayout>
@@ -267,7 +286,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:text="18 tasks now . 18 completed" />
+                            tools:text="18 tasks now . 18 completed" />
 
                     </LinearLayout>
                 </LinearLayout>
@@ -325,8 +344,7 @@
                 android:layout_marginBottom="16dp"
                 android:divider="@android:color/transparent"
                 android:dividerHeight="8dp"
-                android:scrollbars="none"
-                />
+                android:scrollbars="none" />
 
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton

@@ -21,4 +21,5 @@
     <color name="image_border">#1100FF</color>
     <color name="no_image_border">#FF0000</color>
 
+    <color name="dark_blue">#194371</color>
 </resources>

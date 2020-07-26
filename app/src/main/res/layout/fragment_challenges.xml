@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".ui.fragments.TargetsFragment">
+    tools:context=".ui.fragments.ChallengesFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -19,32 +19,32 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
             <ImageView
                 android:id="@+id/open_drawer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
                 android:layout_marginEnd="16dp"
                 android:paddingTop="8dp"
+                android:layout_alignParentStart="true"
                 android:paddingEnd="8dp"
+                android:paddingStart="8dp"
                 android:paddingBottom="8dp"
                 android:src="@drawable/ic_menu" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_marginStart="16dp"
-                android:layout_toEndOf="@id/open_drawer"
                 android:fontFamily="@font/poppins_bold"
-                android:text="@string/targets"
-                android:textColor="@color/black" />
+                android:text="@string/challenges"
+                android:textColor="@color/black"
+                android:layout_toEndOf="@id/open_drawer"
+                android:layout_centerVertical="true"/>
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/grid_targets_recyclerview"
+        android:id="@+id/grid_challenges_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar"

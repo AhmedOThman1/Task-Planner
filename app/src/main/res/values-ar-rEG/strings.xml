@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="change_name">تغير الاسم</string>
+    <string name="change_job">تغيير الوظيفة</string>
+    <string name="change_name_job">تغيير الاسم / الوظيفة</string>
+    <string name="select_photo_from_gallery">اختيار صورة \'من المعرض\'</string>
+    <string name="take_photo_from_camera">إلتقاط صورة \'بالكاميرا\'</string>
+    <string name="change_profile_picture">تغيير صورة البروفايل</string>
+    <string name="view_profile_picture">عرض صورة البروفايل</string>
+
+    <string name="email">الايميل</string>
+    <string name="password">الباسورد</string>
+    <string name="login">تسجيل الدخول</string>
+    <string name="signup">مفيش عندك اكونت ؟ <b>سجل دلوقتي.</b></string>
+    <string name="full_name">الاسم بالكامل</string>
+    <string name="empty">مينفعش تسيبها فاضية</string>
+    <string name="not_valid">الايميل ده مش نافع</string>
+    <string name="pass_not_valid">الباسورد مش نافع</string>
+    <string name="len_less_6">الباسورد لازم يبقي من 6 حروف على الأقل</string>
+    <string name="reminder_notification">"قولت لي افكرك بـ  "</string>
+    <string name="reminder_notification_at">" في"</string>
+    <string name="home">الصفحة الرئيسية</string>
+    <string name = "calendar"> التقويم </string>
+    <string name = "create_new_task"> إنشاء تاسك جديد </string>
+    <string name = "create_new_target"> إنشاء تارجيت جديد </string>
+    <string name = "create_new_reminder"> إنشاء تذكير جديد </string>
+    <string name = "create_new_challenge"> إنشاء تحدي جديد </string>
+    <string name = "show_targets"> إظهار التارجيت</string>
+    <string name = "show_reminders"> إظهار التذكيرات </string>
+    <string name = "show_challenge"> إظهار التحديات </string>
+    <string name = "settings"> الإعدادات </string>
+    <string name = "logout"> تسجيل الخروج </string>
+    <string name = "name_of_the_new_project"> اسم المشروع الجديد 😌 </string>
+    <string name = "ok"> موافق </string>
+    <string name = "cancel"> إلغاء </string>
+    <string name = "add_task"> إضافة تاسك</string>
+    <string name = "productive_day"> يوم جميل زيك يا </string>
+    <string name = "create_new_target_title"> إنشاء تارجيت جديد </string>
+    <string name = "create_new_task_title"> إنشاء تاسك جديد </string>
+    <string name = "create_new_reminder_title"> إنشاء تذكير جديد </string>
+    <string name = "create_new_challenge_title"> إنشاء تحدي جديد </string>
+    <string name = "title"> العنوان </string>
+    <string name = "deadline"> الديدلاين </string>
+    <string name = "note"> ملاحظة </string>
+    <string name = "add_target_s_steps"> إضافة خطوات التارجيت</string>
+    <string name = "add_note"> إضافة ملاحظة </string>
+    <string name = "create_target"> إنشاء تارجيت</string>
+    <string name = "date"> التاريخ </string>
+    <string name = "start_time"> وقت البدء </string>
+    <string name = "pm"> مساءً </string>
+    <string name = "end_time"> وقت الانتهاء </string>
+    <string name = "description"> الوصف </string>
+    <string name = "category"> الفئة </string>
+    <string name = "add_category"> إضافة فئة </string>
+    <string name = "create_task"> إنشاء تاسك</string>
+    <string name = "reminder"> تذكير </string>
+    <string name = "time"> الوقت </string>
+    <string name = "morning"> الصبح</string>
+    <string name = "afternoon">بعد الظهر </string>
+    <string name = "evening"> مساءً </string>
+    <string name = "night"> الليل </string>
+    <string name = "set_time"> تحديد الوقت </string>
+    <string name = "repeats">التكرار</string>
+    <string name = "don_t_repeat"> لا تكرار </string>
+    <string name = "daily"> يوميًا </string>
+    <string name = "weekly"> أسبوعيًا </string>
+    <string name = "monthly"> شهريًا </string>
+    <string name = "yearly"> سنويًا </string>
+    <string name = "every"> كل </string>
+    <string name = "day"> يوم </string>
+    <string name = "events"> الأحداث </string>
+    <string name = "create_reminder"> إنشاء تذكير </string>
+    <string name = "my_tasks"> المهام الخاصة بي </string>
+    <string name = "to_do"> لكى يفعل</string>
+    <string name = "in_progress"> قيد التقدم </string>
+    <string name = "done"> تم </string>
+    <string name = "active_projects"> المشاريع النشطة </string>
+    <string name = "no_projects_found"> لسه مفيش مشاريع </string>
+    <string name = "reminders"> التذكيرات </string>
+    <string name = "targets"> التارجيت</string>
+    <string name = "you_should_be_sleep_at_this_time"> المفروض تبقي نايم دلوقتي! 🥺 </string>
+    <string name = "ok_i_will_sleep_change_the_time"> ماشي ، هنام ، غير الوقت ♥ ️ </string>
+    <string name = "ignore_i_wont_sleep"> فكك مش هنام انا دلوقتي 🥺 </string>
+    <string name = "back"> رجوع </string>
+    <string name = "delete"> مسح</string>
+    <string name = "profile_picture"> صورة البروفايل </string>
+    <string name = "number_of_days_lasts"> عدد الأيام المتبقية </string>
+    <string name = "challenge_start_at"> يبدأ التحدي من </string>
+    <string name = "challenge_ended_at"> ينتهى التحدي عند </string>
+    <string name = "stop_counting"> وقف العداد</string>
+    <string name = "set_count_to_0"> رجع العداد للصفر </string>
+    <string name = "number_of_days"> عدد الأيام </string>
+    <string name = "day2"> يوم </string>
+    <string name = "challenges"> التحديات </string>
+    <string name = "challenge_start_date"> تاريخ بدء التحدي </string>
+    <string name = "create_challenge"> إنشاء تحدي </string>
+    <string name="welcome">مرحبا</string>
+    <string name="please_pick_a_picture">من فضلك اختر صورة</string>
+    <string name="please_click_back_again_to_exit">اضغط رجوع مرة اخري للخروج</string>
+
+
+    <string name="are_you_sure_you_want_to_delete"> متأكد انك عايز تمسح </string>
+    <integer name="bold_index">20</integer>
+    <string name="challenge_question"/>
+    <string name="challenge_deleted">تم مسح التحدي 😍🙈🙈♥️</string>
+    <string name="ok_nothing_deleted">ماشي ♥️مفيش حاجه اتمسحت</string>
+    <string name="month">شهر</string>
+    <string name="year">سنة</string>
+    <string name="week">أسبوع</string>
+    <string name="please_select_the_time">من فضلك اختار الوقت</string>
+    <string name="reminder_in_the_past">التذكير مينفعش يكون في الماضي!</string>
+    <string name="done_toast">تم \uD83D\uDE0C♥️</string>
+    <string name="ok_sleep">ماشي ️😥</string>
+    <string name="love_you">ايوة كده بحبك يا بيبي 😍🙈🙈♥️</string>
+    <string name="today">انهاردة</string>
+    <string name="tomorrow">بكرة</string>
+    <string name="last_step_name_empty">املئ الاسم اللي في اخر خطوة</string>
+    <string name="last_step_description_empty">املئ الوصف اللي في اخر خطوة</string>
+    <string name="start_time_should_be_at"> وقت البدء لازم يكون علي الاقل </string>
+    <string name="end_time_should_be_at">وقت الانتهاء لازم يكون علي الاقل </string>
+    <string name="should_select_category">يرجي تحديد الفئة!</string>
+    <string name="this_task_time_is_interrupt_with">وقت التاسك ده بيتقاطع مع وقت </string>
+    <string name="task_time"/>
+    <string name="this_project_already_exist">المشروع ده موجود اصلا </string>
+    <string name="hours_progress">ساعه من ساعات العمل</string>
+    <string name="project">مشروع</string>
+    <string name="deleted">" اتمسح 😍🙈🙈♥️"</string>
+    <string name="tasks_now">تاسك دلوقتي .</string>
+    <string name="enter_your_name">"اكتب اسمك 😌 "</string>
+    <string name="enter_your_job">"اكتب وظيفتك 😌 "</string>
+    <string name="target_has_no_details">التارجيت ده مفيهوش تفاصيل عشان اعرضها.</string>
+    <string name="project_with_all_tasks_inside_it">المشروع ده بكل التاسكات اللي جواه (</string>
+    <string name="task_question">تاسك ) ؟</string>
+    <string name="target_with_all_steps_inside_it">التارجيت ده بكل الخطوات اللي جواه (</string>
+    <string name="step_question">خطوة ) ؟</string>
+    <string name="target_deleted">التارجيت ده اتمسح بنجاح 😍🙈🙈♥️</string>
+    <string name="todo">لكي تفعل</string>
+    <string name="project_name">إسم المشروع</string>
+    <string name="step_name">إسم الخطوة</string>
+    <string name="step_description">وصف الخطوة</string>
+    <string name="add_new_step">إضافة خطوة جديدة</string>
+    <string name="remove">مسح</string>
+    <string name="job">الوظيفة</string>
+    <string name="arrow"><![CDATA[" <- - "]]></string>
+    <string name="days">ايام</string>
+    <string name="or">او</string>
+    <string name="select_a_deadline_for_this_challenge">حدد ديدلاين للتحدي ده</string>
+    <string name="challenge_title">عنوان التحدي</string>
+    <string name="cant_be_zero">مينفعش يبقي صفر</string>
+
+
+    <string-array name = "for_until_array">
+        <item> للأبد </item>
+        <item> حتى </item>
+        <item> لـ </item>
+    </string-array>
+
+
+    <string-array name="days">
+        <item>الاحد</item>
+        <item>الاتنين</item>
+        <item>التلات</item>
+        <item>الاربع</item>
+        <item>الخميس</item>
+        <item>الجمعه</item>
+        <item>السبت</item>
+    </string-array>
+
+
+    <string-array name="months">
+        <item>يناير</item>
+        <item>فبراير</item>
+        <item>مارس</item>
+        <item>إبريل</item>
+        <item>مايو</item>
+        <item>يونيه</item>
+        <item>يوليه</item>
+        <item>اغسطس</item>
+        <item>سبتمبر</item>
+        <item>اكتوبر</item>
+        <item>نوفمبر</item>
+        <item>ديسمبر</item>
+    </string-array>
+</resources>

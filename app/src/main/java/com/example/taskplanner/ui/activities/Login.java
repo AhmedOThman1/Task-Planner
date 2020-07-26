@@ -154,7 +154,7 @@ public class Login extends AppCompatActivity {
     private boolean confirm_photo() {
         if (!p_image) {
             profile_image.setBorderColor(getResources().getColor(R.color.no_image_border));
-            Toast.makeText(this, "Please pick a picture", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,getResources().getString(R.string.please_pick_a_picture), Toast.LENGTH_SHORT).show();
             return false;
         }
         profile_image.setBorderColor(getResources().getColor(R.color.image_border));
@@ -214,28 +214,10 @@ public class Login extends AppCompatActivity {
                 // end of get image type
 
 
-                Pic_StorageRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Pic_StorageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                myDbRef.child(currentUser.getUid() + "/profile_pic").setValue(String.valueOf(uri)).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
+                Pic_StorageRef.putFile(imageUri).addOnSuccessListener(taskSnapshot -> Pic_StorageRef.getDownloadUrl().addOnSuccessListener(uri -> myDbRef.child(currentUser.getUid() + "/profile_pic").setValue(String.valueOf(uri)).addOnSuccessListener(aVoid -> {
+                }).addOnFailureListener(e -> {
 
-                                    }
-                                });
-
-                            }
-                        });
-
-                    }
-                });
+                })));
                 try {
 
                     InputStream is = getContentResolver().openInputStream(imageUri);

@@ -16,6 +16,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -63,10 +64,9 @@ public class CreateNewTargetFragment extends Fragment {
     //    ArrayList<Target.Step> ThisTargetSTEPS = new ArrayList<>();
     public static Calendar calendar_selected_day, calendar;
     public static StepAdapter stepAdapter;
+    TextView title;
     RecyclerView Steps_recycler;
     private FirebaseUser currentUser;
-    public static String[] months = new String[]{"January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December"};
 
     View view;
 
@@ -98,7 +98,7 @@ public class CreateNewTargetFragment extends Fragment {
         add_note = view.findViewById(R.id.add_note);
         add_target_steps = view.findViewById(R.id.add_target_steps);
         Steps_recycler = view.findViewById(R.id.steps_recycler);
-
+        title = view.findViewById(R.id.title);
         stepAdapter = new StepAdapter(getActivity());
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
 
@@ -165,13 +165,16 @@ public class CreateNewTargetFragment extends Fragment {
 
         appBarLayout.addOnOffsetChangedListener((appBarLayout, i) -> {
             if (Math.abs(i) == appBarLayout.getTotalScrollRange()) {
-                coolToolbar.setTitle("Create new target");
+                coolToolbar.setTitle(getActivity().getResources().getString(R.string.create_new_target_title));
+                title.setVisibility(View.VISIBLE);
                 appBarLayout.setBackgroundResource(R.drawable.background_toolbar2);
             } else if (Math.abs(i) < (appBarLayout.getTotalScrollRange()) / 2) {
                 coolToolbar.setTitle("");
+                title.setVisibility(View.INVISIBLE);
                 appBarLayout.setBackgroundResource(R.drawable.background_toolbar);
             } else {
-                coolToolbar.setTitle("Create new target");
+                coolToolbar.setTitle(getActivity().getResources().getString(R.string.create_new_target_title));
+                title.setVisibility(View.INVISIBLE);
                 appBarLayout.setBackgroundResource(R.drawable.background_toolbar);
             }
         });
@@ -191,7 +194,7 @@ public class CreateNewTargetFragment extends Fragment {
             calendar.add(Calendar.MINUTE, 9);
 
             if (title_input_layout.getEditText().getText().toString().trim().isEmpty()) {
-                title_input_layout.setError("Can't be empty");
+                title_input_layout.setError(getActivity().getResources().getString(R.string.empty));
                 title_input_layout.requestFocus();
                 open_keyboard(title_input_layout.getEditText());
                 appBarLayout.setExpanded(true);
@@ -202,9 +205,9 @@ public class CreateNewTargetFragment extends Fragment {
                         targetDescription = note.getEditText().getText().toString().trim();
 
                 if (Steps.size() > 0 && Steps.get(Steps.size() - 1).getName().equals(""))
-                    Toast.makeText(getContext(), "Last Step Name Can't be empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getActivity().getResources().getString(R.string.last_step_name_empty), Toast.LENGTH_SHORT).show();
                 else if (Steps.size() > 0 && Steps.get(Steps.size() - 1).getDescription().equals(""))
-                    Toast.makeText(getContext(), "Last Step Description Can't be empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getActivity().getResources().getString(R.string.last_step_description_empty), Toast.LENGTH_SHORT).show();
                 else {
                     Log.w("TESE", "before add");
 //                        test();
@@ -220,7 +223,7 @@ public class CreateNewTargetFragment extends Fragment {
                     unSavedTarget = null;
                     DatabaseReference DbRef = FirebaseDatabase.getInstance().getReference();
                     DbRef.child(currentUser.getUid() + "/UnSavedTarget").removeValue();
-                    Toast.makeText(getContext(), "Done \uD83D\uDE0C♥️", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getActivity().getResources().getString(R.string.done_toast), Toast.LENGTH_SHORT).show();
                     init();
                 }
             }
@@ -303,7 +306,7 @@ public class CreateNewTargetFragment extends Fragment {
                 }
                 if (unSavedTarget.getDay() != null && !((Calendar) StringToCalendar(unSavedTarget.getDay()).clone()).before(Calendar.getInstance())) {
                     calendar_selected_day = (Calendar) StringToCalendar(unSavedTarget.getDay()).clone();
-                    String thisday = days[calendar_selected_day.get(Calendar.DAY_OF_WEEK) - 1] + ", " + calendar_selected_day.get(Calendar.DAY_OF_MONTH) + " " + months[calendar_selected_day.get(Calendar.MONTH)];
+                    String thisday = getActivity().getResources().getStringArray(R.array.days)[calendar_selected_day.get(Calendar.DAY_OF_WEEK) - 1] + ", " + calendar_selected_day.get(Calendar.DAY_OF_MONTH) + " " + getActivity().getResources().getStringArray(R.array.months)[calendar_selected_day.get(Calendar.MONTH)];
                     Objects.requireNonNull(date.getEditText()).setText(thisday);
                 }
                 if (unSavedTarget.getSteps() != null ) {
@@ -420,8 +423,8 @@ public class CreateNewTargetFragment extends Fragment {
         appBarLayout.setExpanded(true);
         /// calculate date today
         calendar_selected_day = Calendar.getInstance();
-        String today = days[calendar_selected_day.get(Calendar.DAY_OF_WEEK) - 1] +
-                ", " + calendar_selected_day.get(Calendar.DAY_OF_MONTH) + " " + months[calendar_selected_day.get(Calendar.MONTH)];
+        String today = getActivity().getResources().getStringArray(R.array.days)[calendar_selected_day.get(Calendar.DAY_OF_WEEK) - 1] +
+                ", " + calendar_selected_day.get(Calendar.DAY_OF_MONTH) + " " + getActivity().getResources().getStringArray(R.array.months)[calendar_selected_day.get(Calendar.MONTH)];
         date.getEditText().setText(today);
         date.getEditText().setEnabled(false);
         title_input_layout.getEditText().setText("");
@@ -449,7 +452,7 @@ public class CreateNewTargetFragment extends Fragment {
                 unSavedTarget.setDay(CalendarToString(calendar_selected_day));
                 uploadUnSavedTarget(currentUser);
             }
-            String thisday = days[calendar_selected_day.get(Calendar.DAY_OF_WEEK) - 1] + ", " + calendar_selected_day.get(Calendar.DAY_OF_MONTH) + " " + months[calendar_selected_day.get(Calendar.MONTH)];
+            String thisday = getActivity().getResources().getStringArray(R.array.days)[calendar_selected_day.get(Calendar.DAY_OF_WEEK) - 1] + ", " + calendar_selected_day.get(Calendar.DAY_OF_MONTH) + " " + getActivity().getResources().getStringArray(R.array.months)[calendar_selected_day.get(Calendar.MONTH)];
             date.getEditText().setText(thisday);
 
         }, year, month, day);

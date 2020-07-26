@@ -38,8 +38,6 @@
     <string name="not_valid">email is not valid</string>
     <string name="pass_not_valid">password is not valid</string>
     <string name="len_less_6">password should be at least 6 characters long</string>
-    <string name="ignore_sleep">ignore i wont sleep \uD83D\uDE0F</string>
-    <string name="ok_sleep">you should be sleep at this time! \uD83D\uDE44</string>
     <string name="reminder_notification">"you told me to remind you to "</string>
     <string name="reminder_notification_at">" at "</string>
     <string name="home">Home</string>
@@ -57,7 +55,7 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="add_task">Add task</string>
-    <string name="productive_day">Productive Day, ####</string>
+    <string name="productive_day">Productive Day, </string>
     <string name="create_new_target_title">Create new target</string>
     <string name="create_new_task_title">Create new task</string>
     <string name="create_new_reminder_title">Create new reminder</string>
@@ -103,14 +101,100 @@
     <string name="targets">Targets</string>
     <string name="you_should_be_sleep_at_this_time">you should be sleep at this time! 🥺</string>
     <string name="ok_i_will_sleep_change_the_time">OK i will sleep ,change the time ♥️</string>
-    <string name="ignore_i_wont_sleep">ignore i wont sleep🥺</string>
+    <string name="ignore_i_wont_sleep">ignore, I won\'t sleep🥺</string>
     <string name="back">back</string>
     <string name="delete">delete</string>
     <string name="profile_picture">Profile Picture</string>
+    <string name="number_of_days_lasts">number of days lasts</string>
+    <string name="challenge_start_at">Challenge Start at</string>
+    <string name="challenge_ended_at">Challenge ended at</string>
+    <string name="stop_counting">Stop Counting</string>
+    <string name="set_count_to_0">Set count to 0</string>
+    <string name="number_of_days">number of days</string>
+    <string name="day2">Day</string>
+    <string name="challenges">Challenges</string>
+    <string name="challenge_start_date">Challenge start date</string>
+    <string name="create_challenge">Create challenge</string>
+    <string name="welcome">Welcome </string>
+    <string name="please_pick_a_picture">Please pick a picture</string>
+    <string name="please_click_back_again_to_exit">Please click BACK again to exit</string>
+    <string name="are_you_sure_you_want_to_delete">"Are you sure you want to delete "</string>
+    <integer name="bold_index">32</integer>
+    <string name="challenge_question">challenge ?</string>
+    <string name="challenge_deleted">challenge deleted 😍🙈🙈♥️</string>
+    <string name="ok_nothing_deleted">Ok ♥️nothing deleted</string>
+    <string name="month">month</string>
+    <string name="year">year</string>
+    <string name="week">week</string>
+    <string name="please_select_the_time">Please select the time</string>
+    <string name="reminder_in_the_past">Reminder can\'t be in the past!</string>
+    <string name="done_toast">Done \uD83D\uDE0C♥️</string>
+    <string name="ok_sleep">Ok️😥</string>
+    <string name="love_you">Love you ,babe😍🙈🙈♥️</string>
+    <string name="today">ToDay</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="last_step_name_empty">Last Step Name Can\'t be empty</string>
+    <string name="last_step_description_empty">Last Step Description Can\'t be empty</string>
+    <string name="start_time_should_be_at">"Start time should be at least at "</string>
+    <string name="end_time_should_be_at">End time should be at least at</string>
+    <string name="should_select_category">should select Category !</string>
+    <string name="this_task_time_is_interrupt_with">this task time is interrupt with</string>
+    <string name="task_time">task time.</string>
+    <string name="this_project_already_exist">this Project already exist</string>
+    <string name="hours_progress">hours progress</string>
+    <string name="project">Project</string>
+    <string name="deleted">" deleted 😍🙈🙈♥️"</string>
+    <string name="tasks_now">tasks now .</string>
+    <string name="enter_your_name">"Enter your name 😌 "</string>
+    <string name="enter_your_job">"Enter your job 😌 "</string>
+    <string name="target_has_no_details">This target has no details to show.</string>
+    <string name="project_with_all_tasks_inside_it">project with all tasks inside it(</string>
+    <string name="task_question">task ) ?</string>
+    <string name="target_with_all_steps_inside_it">target with all steps inside it(</string>
+    <string name="step_question">step ) ?</string>
+    <string name="target_deleted">target deleted 😍🙈🙈♥️</string>
+    <string name="todo">ToDo</string>
+    <string name="project_name">Project name</string>
+    <string name="step_name">Step Name</string>
+    <string name="step_description">Step description</string>
+    <string name="add_new_step">Add new step</string>
+    <string name="remove">Remove</string>
+    <string name="job">Job</string>
+    <string name="arrow"><![CDATA[" - -> "]]></string>
+    <string name="days">days</string>
+    <string name="or">Or</string>
+    <string name="select_a_deadline_for_this_challenge">Select a deadline for this Challenge</string>
+    <string name="challenge_title">Challenge title</string>
+    <string name="cant_be_zero">Can\'t be zero</string>
 
     <string-array name="for_until_array">
         <item>Forever</item>
         <item>Until</item>
         <item>For</item>
+    </string-array>
+
+    <string-array name="days">
+        <item>Sun</item>
+        <item>Mon</item>
+        <item>Tue</item>
+        <item>Wed</item>
+        <item>Thu</item>
+        <item>Fri</item>
+        <item>Sat</item>
+    </string-array>
+
+    <string-array name="months">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
     </string-array>
 </resources>

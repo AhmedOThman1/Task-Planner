@@ -25,34 +25,44 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.taskplanner.R;
 import com.example.taskplanner.RecyclerViewTouchListener;
+import com.example.taskplanner.adapter.ChallengesRecyclerViewAdapter;
 import com.example.taskplanner.adapter.TargetsRecyclerViewAdapter;
-import com.example.taskplanner.model.Target;
+import com.example.taskplanner.model.Challenge;
+import com.example.taskplanner.ui.viewModel.ChallengeViewModel;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 
-import static com.example.taskplanner.ui.activities.MainActivity.Projects;
-import static com.example.taskplanner.ui.fragments.CreateNewTargetFragment.uploadTarget;
+import static com.example.taskplanner.ui.activities.MainActivity.Challenges;
 import static com.example.taskplanner.ui.activities.MainActivity.Targets;
-import static com.example.taskplanner.ui.fragments.HomeFragment.calculateNoOfColumns;
-import static com.example.taskplanner.ui.fragments.HomeFragment.isDrawerOpen;
 import static com.example.taskplanner.ui.activities.MainActivity.hideNav;
 import static com.example.taskplanner.ui.activities.MainActivity.open_drawer;
 import static com.example.taskplanner.ui.activities.MainActivity.showNav;
+import static com.example.taskplanner.ui.fragments.CreateNewTargetFragment.uploadTarget;
+import static com.example.taskplanner.ui.fragments.CreateNewTaskFragment.CalendarToString;
+import static com.example.taskplanner.ui.fragments.HomeFragment.calculateNoOfColumns;
+import static com.example.taskplanner.ui.fragments.HomeFragment.isDrawerOpen;
 
-public class TargetsFragment extends Fragment {
+public class ChallengesFragment extends Fragment {
 
 
-    public static TargetsRecyclerViewAdapter adapter;
-    RecyclerView grid_targets_recyclerview;
+    public static ChallengesRecyclerViewAdapter adapter;
+    RecyclerView grid_challenges_recyclerview;
+    FirebaseUser currentUser;
 
-
-    public TargetsFragment() {
+    public ChallengesFragment() {
         // Required empty public constructor
     }
 
@@ -60,7 +70,26 @@ public class TargetsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_targets, container, false);
+        View view = inflater.inflate(R.layout.fragment_challenges, container, false);
+
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        Challenges.clear();
+
+//        Calendar c = Calendar.getInstance();
+//        c.add(Calendar.DAY_OF_MONTH,-75);
+//        Challenges.add(new Challenge("Stop watching corn", CalendarToString(c),"Without corn",100));
+//        c = Calendar.getInstance();
+//        c.add(Calendar.DAY_OF_MONTH,-45);
+//        Challenges.add(new Challenge("Stop doing corn", CalendarToString(c),"Without doing corn",90));
+//        c = Calendar.getInstance();
+//        c.add(Calendar.DAY_OF_MONTH,-85);
+//        Challenges.add(new Challenge("Stop watching corn3", CalendarToString(c),"Without corn3",90));
+//        c = Calendar.getInstance();
+//        c.add(Calendar.DAY_OF_MONTH,-25);
+//        Challenges.add(new Challenge("Stop watching corn4", CalendarToString(c),"Without corn4",100));
+//        c = Calendar.getInstance();
+//        Challenges.add(new Challenge("Stop watching corn5", CalendarToString(c),"Without corn4",10));
 
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
@@ -88,32 +117,24 @@ public class TargetsFragment extends Fragment {
             }
         });
 
-        grid_targets_recyclerview = view.findViewById(R.id.grid_targets_recyclerview);
-// sorting targets array list by target deadline
-        Collections.sort(Targets, Target.targetsComparator);
-
-        adapter = new TargetsRecyclerViewAdapter(getActivity());
-        adapter.setTargets(Targets);
+        grid_challenges_recyclerview = view.findViewById(R.id.grid_challenges_recyclerview);
+// sorting Challenges array list by challenge start time
+        Collections.sort(Challenges, Challenge.challengesComparator);
+        adapter = new ChallengesRecyclerViewAdapter(getActivity());
+        adapter.setChallenges(Challenges);
         StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(calculateNoOfColumns(getContext()), StaggeredGridLayoutManager.VERTICAL);
 
-        setTargetProgressBar();
+//        setTargetProgressBar();
 
-        grid_targets_recyclerview.addOnItemTouchListener(new RecyclerViewTouchListener(getContext(), grid_targets_recyclerview, new RecyclerViewTouchListener.RecyclerViewClickListener() {
+        grid_challenges_recyclerview.addOnItemTouchListener(new RecyclerViewTouchListener(getContext(), grid_challenges_recyclerview, new RecyclerViewTouchListener.RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
-                if (!Targets.get(position).getNote().equals("") || Targets.get(position).getSteps().size() != 0) {
+                Fragment one_challenge_fragment = new OneChallengeFragment();
+                Bundle bundle = new Bundle();
+                bundle.putInt("challenge pos", position);
+                one_challenge_fragment.setArguments(bundle);
+                getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out).replace(R.id.frameLayout, one_challenge_fragment).commit();
 
-                    Fragment one_target_fragment = new OneTargetFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("project pos", position);
-                    bundle.putInt("color", position % 4);
-                    one_target_fragment.setArguments(bundle);
-                    getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out).replace(R.id.frameLayout, one_target_fragment).commit();
-
-                } else {
-                    Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.target_has_no_details), Toast.LENGTH_SHORT).show();
-                    Log.w("Log", "pos : " + position + " , ste3p Size " + Targets.get(position).getSteps().size());
-                }
             }
 
             @Override
@@ -121,40 +142,48 @@ public class TargetsFragment extends Fragment {
                 CardView card = view.findViewById(R.id.active_projects_card);
                 if (card != null) {
                     card.setCardBackgroundColor(getResources().getColor(R.color.black));
-                    deleteTarget(position, card);
+                    deleteChallenge(position, card);
                 }
             }
         }));
-        grid_targets_recyclerview.setAdapter(adapter);
-        grid_targets_recyclerview.setLayoutManager(manager);
+        grid_challenges_recyclerview.setAdapter(adapter);
+        grid_challenges_recyclerview.setLayoutManager(manager);
 
-        grid_targets_recyclerview.addItemDecoration(new HomeFragment.ItemDecorationAlbumColumns(
+        grid_challenges_recyclerview.addItemDecoration(new HomeFragment.ItemDecorationAlbumColumns(
                 getResources().getDimensionPixelSize(R.dimen.photos_list_spacing), calculateNoOfColumns(getActivity())));
 
+
+        ChallengeViewModel challengeViewModel = new ViewModelProvider(this).get(ChallengeViewModel.class);
+        if(Challenges.isEmpty())
+            challengeViewModel.getChallenges(currentUser);
+        challengeViewModel.ChallengesMutableLiveData.observe(getActivity(), challenges -> {
+            Challenges.clear();
+            Challenges.addAll(challenges);
+            adapter.setChallenges(Challenges);
+            adapter.notifyDataSetChanged();
+        });
         return view;
     }
 
     AlertDialog.Builder builder;
     AlertDialog dialog;
 
-    private void deleteTarget(int position, CardView card) {
+    private void deleteChallenge(int position, CardView card) {
 
         builder = new AlertDialog.Builder(getContext());
-
         View delete_dialog = getLayoutInflater().inflate(R.layout.delete_dialog, null);
 
         TextView back = delete_dialog.findViewById(R.id.back_dialog),
                 delete = delete_dialog.findViewById(R.id.delete_dialog),
-        del_text = delete_dialog.findViewById(R.id.deltxt);
+                del_text = delete_dialog.findViewById(R.id.deltxt);
 
-        String s = getActivity().getResources().getString(R.string.are_you_sure_you_want_to_delete)+" " + Targets.get(position).getName()
-                + " "+getActivity().getResources().getString(R.string.target_with_all_steps_inside_it)+" " + Targets.get(position).getSteps().size() + " "+getActivity().getResources().getString(R.string.step_question);
+        String s = getActivity().getResources().getString(R.string.are_you_sure_you_want_to_delete ) +" "+ Challenges.get(position).getName()
+                +  getActivity().getResources().getString(R.string.challenge_question);
 
         SpannableString del_message = new SpannableString(s);
         StyleSpan boldSpan = new StyleSpan(Typeface.BOLD);
 
-        del_message.setSpan(boldSpan, getActivity().getResources().getInteger(R.integer.bold_index), getActivity().getResources().getInteger(R.integer.bold_index)+Targets.get(position).getName().length()+1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
+        del_message.setSpan(boldSpan, getActivity().getResources().getInteger(R.integer.bold_index), getActivity().getResources().getInteger(R.integer.bold_index) + Targets.get(position).getName().length() + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         del_text.setText(del_message);
 
         back.setOnClickListener(v -> {
@@ -163,10 +192,10 @@ public class TargetsFragment extends Fragment {
         });
 
         delete.setOnClickListener(v -> {
-            Targets.remove(position);
+            Challenges.remove(position);
             adapter.notifyDataSetChanged();
-            uploadTarget(FirebaseAuth.getInstance().getCurrentUser());
-            Toast.makeText(getContext(), getActivity().getResources().getString(R.string.target_deleted), Toast.LENGTH_LONG).show();
+            uploadChallenges(currentUser);
+            Toast.makeText(getContext(), getActivity().getResources().getString(R.string.challenge_deleted), Toast.LENGTH_LONG).show();
             dialog.dismiss();
         });
 
@@ -192,9 +221,16 @@ public class TargetsFragment extends Fragment {
     }
 
 
+    public static void uploadChallenges(FirebaseUser currentUser) {
+        DatabaseReference DbRef = FirebaseDatabase.getInstance().getReference();
+        DbRef.child(currentUser.getUid() + "/Challenges/").setValue(Challenges);
+        Log.w("Lol2", "-----------------create , End of upload Challenges -------------------");
+    }
+/*
+
     public static void setTargetProgressBar() {
         Log.w("Lol", "Targets.size() : " + Targets.size());
-        for (int i = 0; i < Targets.size(); i++) {
+        for (int i = 0; i < Challenges.size(); i++) {
             int process = 0;
             if (Targets.get(i).getSteps().size() != 0) {
                 for (int j = 0; j < Targets.get(i).getSteps().size(); j++) {
@@ -212,6 +248,7 @@ public class TargetsFragment extends Fragment {
         adapter.setTargets(Targets);
         adapter.notifyDataSetChanged();
     }
+*/
 
     @Override
     public void onResume() {

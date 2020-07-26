@@ -1,9 +1,9 @@
 package com.example.taskplanner.ui.fragments;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -115,7 +115,7 @@ public class HomeFragment extends Fragment {
     private final static int CODE1_PERMISSION = 1, CODE2_PERMISSION = 2, CODE2_CAM = 1, CODE3_GAL = 2;
     // el nas 12054
     public static ProjectsRecyclerViewAdapter adapter;
-    static TextView job_tv, todo_tasks_tv, inProgress_tasks_tv, done_tasks_tv;
+    static TextView job_tv, todo_tasks_tv, inProgress_tasks_tv, done_tasks_tv , name , title;
     private static RelativeLayout NoProjects;
     private CollapsingToolbarLayout coolToolbar;
     private static ProgressBar mainProgressBar;
@@ -189,7 +189,9 @@ public class HomeFragment extends Fragment {
         RecyclerView active_projects_recyclerview = view.findViewById(R.id.grid_active_projects);
         coolToolbar = view.findViewById(R.id.coolToolbar);
         job_tv = view.findViewById(R.id.job);
-        mainProgressBar = view.findViewById(R.id.mainProgressBar);
+        name = view.findViewById(R.id.name);
+        title = view.findViewById(R.id.title);
+        mainProgressBar = view.findViewById(R.id.challengeProgressBar);
         profile_image = view.findViewById(R.id.profile_image);
         LinearLayout profile = view.findViewById(R.id.profile);
         NoProjects = view.findViewById(R.id.no_projects);
@@ -205,12 +207,12 @@ public class HomeFragment extends Fragment {
         mainProgress = share.getInt(MAIN_PROGRESS, 0);
 
         retrieveProfilePicture();
-        coolToolbar.setTitle(username);
+        name.setText(username);
         job_tv.setText(userjob);
 
-        done_tasks_tv.setText(todo_tasks + " tasks now . ");
-        todo_tasks_tv.setText(done_tasks + " tasks now . ");
-        inProgress_tasks_tv.setText(inProgress_tasks + " tasks now . ");
+        done_tasks_tv.setText(todo_tasks + " "+getActivity().getResources().getString(R.string.tasks_now));
+        todo_tasks_tv.setText(done_tasks + " "+getActivity().getResources().getString(R.string.tasks_now));
+        inProgress_tasks_tv.setText(inProgress_tasks +" "+getActivity().getResources().getString(R.string.tasks_now));
 
         mainProgressBar.setProgress(mainProgress);
 
@@ -311,11 +313,27 @@ public class HomeFragment extends Fragment {
         AppBarLayout appBarLayout = view.findViewById(R.id.AppBarL);
         appBarLayout.addOnOffsetChangedListener((appBarLayout1, i) -> {
             if (Math.abs(i) == appBarLayout1.getTotalScrollRange()) {
+                coolToolbar.setTitle(username);
+                title.setText(username);
                 appBarLayout1.setBackgroundResource(R.drawable.background_toolbar2);
+            } else if (Math.abs(i) < (appBarLayout1.getTotalScrollRange()) / 2) {
+                coolToolbar.setTitle("");
+                title.setText("");
+                appBarLayout1.setBackgroundResource(R.drawable.background_toolbar);
             } else {
+                coolToolbar.setTitle(username);
+                title.setText(username);
                 appBarLayout1.setBackgroundResource(R.drawable.background_toolbar);
             }
         });
+
+//        appBarLayout.addOnOffsetChangedListener((appBarLayout1, i) -> {
+//            if (Math.abs(i) == appBarLayout1.getTotalScrollRange()) {
+//                appBarLayout1.setBackgroundResource(R.drawable.background_toolbar2);
+//            } else {
+//                appBarLayout1.setBackgroundResource(R.drawable.background_toolbar);
+//            }
+//        });
 
         projectViewModel = new ViewModelProvider(this).get(ProjectViewModel.class);
         targetViewModel = new ViewModelProvider(this).get(TargetViewModel.class);
@@ -333,7 +351,7 @@ public class HomeFragment extends Fragment {
 //            Projects.clear();
             Projects = projects;
             setProjectsProcess();
-            setProjectsTime();
+            setProjectsTime(getActivity());
 
             mainProgress = getMainProgress();
             if (Projects.size() != 0)
@@ -344,9 +362,9 @@ public class HomeFragment extends Fragment {
                 mainProgressBar.setProgress(mainProgress);
                 NoProjects.setVisibility(View.GONE);
                 getToInDone(context);
-                todo_tasks_tv.setText(ToDo_tasks.size() + " tasks now . ");
-                inProgress_tasks_tv.setText(InProgress_tasks.size() + " tasks now . ");
-                done_tasks_tv.setText(Done_tasks.size() + " tasks now . ");
+                todo_tasks_tv.setText(ToDo_tasks.size() +" "+getActivity().getResources().getString(R.string.tasks_now));
+                inProgress_tasks_tv.setText(InProgress_tasks.size() +" "+getActivity().getResources().getString(R.string.tasks_now));
+                done_tasks_tv.setText(Done_tasks.size() + " "+getActivity().getResources().getString(R.string.tasks_now));
                 if (Projects.size() == 0)
                     NoProjects.setVisibility(View.VISIBLE);
                 else
@@ -378,21 +396,21 @@ public class HomeFragment extends Fragment {
                 delete = delete_dialog.findViewById(R.id.delete_dialog),
                 del_text = delete_dialog.findViewById(R.id.deltxt);
 
-        String s = "Are you sure you want to delete " + Projects.get(position).getTitle()
-                + " project with all tasks inside it( " + Projects.get(position).getProject_tasks().size() + " task ) ?";
+        String s = getActivity().getResources().getString(R.string.are_you_sure_you_want_to_delete)+" " + Projects.get(position).getTitle()
+                + " "+getActivity().getResources().getString(R.string.project_with_all_tasks_inside_it)+" " + Projects.get(position).getProject_tasks().size() + " "+getActivity().getResources().getString(R.string.task_question);
         SpannableString del_message = new SpannableString(s);
         StyleSpan boldSpan = new StyleSpan(Typeface.BOLD);
 
-        del_message.setSpan(boldSpan, 32, 32+Projects.get(position).getTitle().length()+1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        del_message.setSpan(boldSpan, getActivity().getResources().getInteger(R.integer.bold_index), getActivity().getResources().getInteger(R.integer.bold_index) + Projects.get(position).getTitle().length() + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         del_text.setText(del_message);
         back.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Ok ♥️nothing deleted", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), getActivity().getResources().getString(R.string.ok_nothing_deleted), Toast.LENGTH_LONG).show();
             dialog.dismiss();
         });
 
         delete.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Project " + Projects.get(position).getTitle() + " deleted \uD83D\uDE0D\uD83D\uDE48\uD83D\uDE48♥️", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), getActivity().getResources().getString(R.string.project) + " " + Projects.get(position).getTitle() + " "+getActivity().getResources().getString(R.string.deleted), Toast.LENGTH_LONG).show();
             Projects.remove(position);
             adapter.notifyDataSetChanged();
             uploadProject(currentUser);
@@ -455,15 +473,15 @@ public class HomeFragment extends Fragment {
             mainProgress = mainProgress / Projects.size();
         if (adapter != null && mainProgressBar != null && NoProjects != null) {
             setProjectsProcess();
-            setProjectsTime();
+            setProjectsTime(getActivity());
             adapter.setProjects(Projects);
             adapter.notifyDataSetChanged();
             mainProgressBar.setProgress(mainProgress);
             NoProjects.setVisibility(View.GONE);
             getToInDone(context);
-            todo_tasks_tv.setText(ToDo_tasks.size() + " tasks now . ");
-            inProgress_tasks_tv.setText(InProgress_tasks.size() + " tasks now . ");
-            done_tasks_tv.setText(Done_tasks.size() + " tasks now . ");
+            todo_tasks_tv.setText(ToDo_tasks.size() + " "+getActivity().getResources().getString(R.string.tasks_now));
+            inProgress_tasks_tv.setText(InProgress_tasks.size() + " "+getActivity().getResources().getString(R.string.tasks_now));
+            done_tasks_tv.setText(Done_tasks.size() + " "+getActivity().getResources().getString(R.string.tasks_now));
             if (Projects.size() == 0)
                 NoProjects.setVisibility(View.VISIBLE);
             else
@@ -494,7 +512,7 @@ public class HomeFragment extends Fragment {
         adapter.notifyDataSetChanged();
     }
 
-    static void setProjectsTime() {
+    static void setProjectsTime(Activity activity) {
         for (int i = 0; i < Projects.size(); i++) {
             int hours = 0;
             for (int j = 0; j < Projects.get(i).getProject_tasks().size(); j++)
@@ -505,7 +523,7 @@ public class HomeFragment extends Fragment {
                     long diff = end.getTimeInMillis() - start.getTimeInMillis();
                     hours += (int) (diff / (1000 * 60 * 60));
                 }
-            Projects.get(i).setTime(hours + " hours progress");
+            Projects.get(i).setTime(hours +  " "+ activity.getResources().getString(R.string.hours_progress));
             Log.w("time", "Project " + i + " : " + hours + " hours progress");
 
         }
@@ -747,7 +765,7 @@ public class HomeFragment extends Fragment {
                 TextView ok = name_dialog.findViewById(R.id.ok_dialog),
                         cancel = name_dialog.findViewById(R.id.cancel_dialog);
 
-                title.setHint("Enter your name \uD83D\uDE0C ");
+                title.setHint(getActivity().getResources().getString(R.string.enter_your_name));
                 title.requestFocus();
                 open_keyboard(Objects.requireNonNull(title.getEditText()));
 
@@ -788,7 +806,7 @@ public class HomeFragment extends Fragment {
                 TextView ok_job = job_dialog.findViewById(R.id.ok_dialog),
                         cancel_job = job_dialog.findViewById(R.id.cancel_dialog);
 
-                job_title.setHint("Enter your job \uD83D\uDE0C ");
+                job_title.setHint(getActivity().getResources().getString(R.string.enter_your_job));
                 job_title.requestFocus();
                 open_keyboard(Objects.requireNonNull(job_title.getEditText()));
 
