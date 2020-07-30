@@ -54,12 +54,19 @@ public class ChallengesRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
         ViewHolder.time.setText(start.get(Calendar.DAY_OF_MONTH) + "/" + (start.get(Calendar.MONTH) + 1) + "/" + start.get(Calendar.YEAR));
         ViewHolder.progressBar.setMax(Challenges.get(position).getDuration());
         long difference = Calendar.getInstance().getTimeInMillis() - start.getTimeInMillis();
+        difference = (difference / 1000 / 60 / 60 / 24);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            ViewHolder.progressBar.setProgress((int) (difference / 1000 / 60 / 60 / 24), true);
+            ViewHolder.progressBar.setProgress((int) (difference), true);
         } else
-            ViewHolder.progressBar.setProgress((int) (difference / 1000 / 60 / 60 / 24));
+            ViewHolder.progressBar.setProgress((int) (difference));
 
-        ViewHolder.progress.setText( (int) ( ( (float)(difference / 1000 / 60 / 60 / 24)  / currentchallenge.getDuration()  ) *100 )+"%");
+        start.add(Calendar.DAY_OF_MONTH, currentchallenge.getDuration());
+        if (!start.after(Calendar.getInstance()))
+            ViewHolder.progress.setText("100%");
+        else if(difference>0)
+            ViewHolder.progress.setText((int) (((float) (difference) / currentchallenge.getDuration()) * 100) + "%");
+        else
+            ViewHolder.progress.setText("0%");
 
 
         if (position % 4 == 0) {

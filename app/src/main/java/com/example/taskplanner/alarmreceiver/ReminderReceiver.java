@@ -1,4 +1,4 @@
-package com.example.taskplanner;
+package com.example.taskplanner.alarmreceiver;
 
 import android.app.AlarmManager;
 import android.app.Notification;
@@ -20,9 +20,11 @@ import android.widget.Toast;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.example.taskplanner.R;
+
 import java.util.Calendar;
 
-public class AlarmReceiver extends BroadcastReceiver {
+public class ReminderReceiver extends BroadcastReceiver {
     String content, title;
 
     @Override

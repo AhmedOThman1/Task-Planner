@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/yellowhite"
     tools:context=".ui.fragments.CreateNewTargetFragment">
 
     <RelativeLayout
@@ -79,7 +80,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_medium"
+                    android:fontFamily="@font/poppins"
                     android:imeOptions="actionDone"
                     android:inputType="text"
                     android:textColor="@color/black" />
@@ -101,7 +102,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_medium"
+                    android:fontFamily="@font/poppins"
                     android:inputType="text"
                     android:textColor="@color/enable_false_color"
                     android:textColorHint="@color/enable_false_hintcolor"
@@ -131,8 +132,9 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_medium"
-                    android:inputType="text"
+                    android:fontFamily="@font/poppins"
+                    android:inputType="number"
+                    android:maxLength="3"
                     android:textColor="@color/enable_false_color"
                     android:textColorHint="@color/enable_false_hintcolor"
                     tools:text="0"
@@ -151,7 +153,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:enabled="false"
-                    android:fontFamily="@font/poppins_medium"
+                    android:fontFamily="@font/poppins"
                     android:inputType="text"
                     android:text="@string/days"
                     android:textColor="@color/enable_false_color"
@@ -171,7 +173,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_medium"
+                    android:fontFamily="@font/poppins"
                     android:inputType="text"
                     android:maxLines="1"
                     android:textColor="@color/enable_false_color"

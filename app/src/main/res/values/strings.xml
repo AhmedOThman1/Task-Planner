@@ -166,6 +166,14 @@
     <string name="select_a_deadline_for_this_challenge">Select a deadline for this Challenge</string>
     <string name="challenge_title">Challenge title</string>
     <string name="cant_be_zero">Can\'t be zero</string>
+    <string name="current_challenges">Current Challenges</string>
+    <string name="done_challenges">Done Challenges</string>
+    <string name="three_days_notification_title">Are you OK ?</string>
+    <string name="three_days_notification_content">"you haven't opened the app 3 days ago!😢\nAre you OK?😦 \nIs there a problem with me?😰"</string>
+    <string name="challenge_30_notification_content"> 30% من التحدي خلص عااش استمر 🤩</string>
+    <string name="challenge_50_notification_content">عاش يا بطل المفروض دلوقتي تكون خلصت نص التحدي 👏👏❤❤</string>
+    <string name="challenge_90_notification_content"> مش فاضل كتير ناقص 10% بس و تخلص التحدي ده انت قدها يا بطل 😍😘🎈</string>
+    <string name="challenge_100_notification_content"> عااش يا وحش خلصت التحدي بنجاااح 💪 يو ار ماي هيرو 😍😍💪</string>
 
     <string-array name="for_until_array">
         <item>Forever</item>

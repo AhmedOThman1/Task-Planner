@@ -10,9 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -48,7 +50,7 @@ public class CreateNewChallengeFragment extends Fragment {
 
     FirebaseUser currentUser;
     Calendar calendar_selected_day, deadline_calendar;
-    int num_days;
+    int num_days = 0;
     boolean touch = true;
 
     public CreateNewChallengeFragment() {
@@ -101,9 +103,29 @@ public class CreateNewChallengeFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (days_to_without.getEditText().getText().toString().trim().isEmpty() || touch) {
+                if (days_to_without.getEditText().getText().toString().trim().isEmpty())
+                    touch = true;
+                if (touch) {
                     days_to_without.getEditText().setText(s);
                 }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        days.getEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if (!s.toString().trim().isEmpty())
+                    num_days = Integer.parseInt(s.toString().trim());
             }
 
             @Override
@@ -115,26 +137,34 @@ public class CreateNewChallengeFragment extends Fragment {
         createChallenge.setOnClickListener(v -> {
             if (titleInputLayout.getEditText().getText().toString().trim().isEmpty()) {
                 titleInputLayout.setError(getActivity().getResources().getString(R.string.empty));
+                titleInputLayout.getEditText().requestFocus();
+                open_keyboard(titleInputLayout.getEditText());
             } else if (days.getEditText().getText().toString().trim().isEmpty()) {
                 titleInputLayout.setError("");
                 days.setError(getActivity().getResources().getString(R.string.empty));
+                days.getEditText().requestFocus();
+                open_keyboard(days.getEditText());
             } else if (days.getEditText().getText().toString().trim().equals("0")) {
                 titleInputLayout.setError("");
                 days.setError(getActivity().getResources().getString(R.string.cant_be_zero));
+                days.getEditText().requestFocus();
+                open_keyboard(days.getEditText());
             } else if (days_to_without.getEditText().getText().toString().trim().isEmpty()) {
                 titleInputLayout.setError("");
                 days.setError("");
                 days_to_without.setError(getActivity().getResources().getString(R.string.empty));
+                days_to_without.getEditText().requestFocus();
+                open_keyboard(days_to_without.getEditText());
             } else {
                 titleInputLayout.setError("");
                 days.setError("");
                 days_to_without.setError("");
 
                 String name = titleInputLayout.getEditText().getText().toString().trim(),
-                        d = days_to_without.getEditText().toString().trim();
+                        d = days_to_without.getEditText().getText().toString().trim();
                 Challenges.add(new Challenge(name, CalendarToString(calendar_selected_day), d, num_days));
                 uploadChallenges(currentUser);
-
+                Toast.makeText(getContext(), getActivity().getResources().getString(R.string.done_toast), Toast.LENGTH_SHORT).show();
                 init();
             }
         });
@@ -145,11 +175,16 @@ public class CreateNewChallengeFragment extends Fragment {
     private void init() {
         calendar_selected_day = Calendar.getInstance();
         deadline_calendar = Calendar.getInstance();
+        calendar_selected_day.set(Calendar.HOUR_OF_DAY, 20);
+        deadline_calendar.set(Calendar.HOUR_OF_DAY, 20);
+        calendar_selected_day.set(Calendar.MINUTE, 0);
+        deadline_calendar.set(Calendar.MINUTE, 0);
+        calendar_selected_day.set(Calendar.SECOND, 0);
+        deadline_calendar.set(Calendar.SECOND, 0);
+        calendar_selected_day.set(Calendar.MILLISECOND, 0);
+        deadline_calendar.set(Calendar.MILLISECOND, 0);
+
         deadline_calendar.add(Calendar.HOUR_OF_DAY, 3);
-        if (dateInputLayout == null)
-            Log.w("Null", "1");
-        if (dateInputLayout.getEditText() == null)
-            Log.w("Null", "2");
         dateInputLayout.getEditText().setText(getActivity().getResources().getString(R.string.today));
         dateInputLayout.getEditText().setEnabled(false);
         titleInputLayout.getEditText().setText("");
@@ -193,14 +228,14 @@ public class CreateNewChallengeFragment extends Fragment {
                 String thisday = deadline_calendar.get(Calendar.DAY_OF_MONTH) + "/" + (deadline_calendar.get(Calendar.MONTH) + 1) + "/" + deadline_calendar.get(Calendar.YEAR);
                 deadline_date.setText(thisday);
                 long diff = deadline_calendar.getTimeInMillis() - calendar_selected_day.getTimeInMillis();
-                num_days = (int) diff / 1000 / 60 / 60 / 24;
-                if(num_days<0) num_days =0;
+                num_days = (int) (diff / 1000 / 60 / 60 / 24);
+                Log.w("diff", diff + "/ 1000 / 60 / 60 / 24 = " + (diff / 1000 / 60 / 60 / 24));
+                if (num_days < 0) num_days = 0;
                 days.getEditText().setText("" + num_days);
 
             }
 
         }, year, month, day);
-        pickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
         pickerDialog.show();
     }
 
@@ -212,4 +247,10 @@ public class CreateNewChallengeFragment extends Fragment {
         }
     }
 
+    void open_keyboard(EditText textInputLayout) {
+        textInputLayout.requestFocus();     // editText.requestFocus();
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);     // Context.INPUT_METHOD_SERVICE
+        imm.showSoftInput(textInputLayout, InputMethodManager.SHOW_IMPLICIT); //    first param -> editText
+
+    }
 }

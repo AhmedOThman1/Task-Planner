@@ -24,18 +24,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.taskplanner.R;
 import com.example.taskplanner.RecyclerViewTouchListener;
 import com.example.taskplanner.adapter.ChallengesRecyclerViewAdapter;
-import com.example.taskplanner.adapter.TargetsRecyclerViewAdapter;
 import com.example.taskplanner.model.Challenge;
 import com.example.taskplanner.ui.viewModel.ChallengeViewModel;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -50,8 +49,7 @@ import static com.example.taskplanner.ui.activities.MainActivity.Targets;
 import static com.example.taskplanner.ui.activities.MainActivity.hideNav;
 import static com.example.taskplanner.ui.activities.MainActivity.open_drawer;
 import static com.example.taskplanner.ui.activities.MainActivity.showNav;
-import static com.example.taskplanner.ui.fragments.CreateNewTargetFragment.uploadTarget;
-import static com.example.taskplanner.ui.fragments.CreateNewTaskFragment.CalendarToString;
+import static com.example.taskplanner.ui.fragments.CreateNewTaskFragment.StringToCalendar;
 import static com.example.taskplanner.ui.fragments.HomeFragment.calculateNoOfColumns;
 import static com.example.taskplanner.ui.fragments.HomeFragment.isDrawerOpen;
 
@@ -61,6 +59,11 @@ public class ChallengesFragment extends Fragment {
     public static ChallengesRecyclerViewAdapter adapter;
     RecyclerView grid_challenges_recyclerview;
     FirebaseUser currentUser;
+    TabLayout challenges_tabs;
+
+    public static ArrayList<Challenge> DoneChallenges = new ArrayList<>();
+    public static ArrayList<Challenge> CurrentChallenges = new ArrayList<>();
+
 
     public ChallengesFragment() {
         // Required empty public constructor
@@ -117,6 +120,34 @@ public class ChallengesFragment extends Fragment {
             }
         });
 
+        challenges_tabs = view.findViewById(R.id.challenges_tabs);
+        challenges_tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int position = tab.getPosition();
+                switch (position) {
+
+                    case 0:
+                        adapter.setChallenges(CurrentChallenges);
+                        adapter.notifyDataSetChanged();
+                        break;
+                    case 1:
+                        adapter.setChallenges(DoneChallenges);
+                        adapter.notifyDataSetChanged();
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
         grid_challenges_recyclerview = view.findViewById(R.id.grid_challenges_recyclerview);
 // sorting Challenges array list by challenge start time
         Collections.sort(Challenges, Challenge.challengesComparator);
@@ -132,6 +163,7 @@ public class ChallengesFragment extends Fragment {
                 Fragment one_challenge_fragment = new OneChallengeFragment();
                 Bundle bundle = new Bundle();
                 bundle.putInt("challenge pos", position);
+                bundle.putInt("type", challenges_tabs.getSelectedTabPosition());
                 one_challenge_fragment.setArguments(bundle);
                 getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out).replace(R.id.frameLayout, one_challenge_fragment).commit();
 
@@ -154,16 +186,43 @@ public class ChallengesFragment extends Fragment {
 
 
         ChallengeViewModel challengeViewModel = new ViewModelProvider(this).get(ChallengeViewModel.class);
-        if(Challenges.isEmpty())
+        if (Challenges.isEmpty())
             challengeViewModel.getChallenges(currentUser);
         challengeViewModel.ChallengesMutableLiveData.observe(getActivity(), challenges -> {
             Challenges.clear();
             Challenges.addAll(challenges);
-            adapter.setChallenges(Challenges);
+            filterChallenges();
+            challenges_tabs.getTabAt(0).select();
+            adapter.setChallenges(CurrentChallenges);
             adapter.notifyDataSetChanged();
+
         });
         return view;
     }
+
+
+    void filterChallenges() {
+        CurrentChallenges.clear();
+        DoneChallenges.clear();
+        for (int i = 0; i < Challenges.size(); i++) {
+            Challenge challenge = Challenges.get(i);
+            Calendar c = (Calendar) StringToCalendar(challenge.getStartDate()).clone();
+            c.add(Calendar.DAY_OF_MONTH, challenge.getDuration());
+            Log.w("challenge:" + i, " " + challenge.getDuration() + "," + challenge.getStartDate());
+            if (c.after(Calendar.getInstance())) {
+                CurrentChallenges.add(challenge);
+            } else {
+                DoneChallenges.add(challenge);
+            }
+        }
+    }
+
+    void collectChallenges() {
+        Challenges.clear();
+        Challenges.addAll(CurrentChallenges);
+        Challenges.addAll(DoneChallenges);
+    }
+
 
     AlertDialog.Builder builder;
     AlertDialog dialog;
@@ -177,13 +236,23 @@ public class ChallengesFragment extends Fragment {
                 delete = delete_dialog.findViewById(R.id.delete_dialog),
                 del_text = delete_dialog.findViewById(R.id.deltxt);
 
-        String s = getActivity().getResources().getString(R.string.are_you_sure_you_want_to_delete ) +" "+ Challenges.get(position).getName()
-                +  getActivity().getResources().getString(R.string.challenge_question);
+        String s;
+        SpannableString del_message;
+        if (challenges_tabs.getSelectedTabPosition() == 0) {
+            s = getActivity().getResources().getString(R.string.are_you_sure_you_want_to_delete) + " " + CurrentChallenges.get(position).getName()
+                    + getActivity().getResources().getString(R.string.challenge_question);
+            del_message = new SpannableString(s);
+            StyleSpan boldSpan = new StyleSpan(Typeface.BOLD);
+            del_message.setSpan(boldSpan, getActivity().getResources().getInteger(R.integer.bold_index), getActivity().getResources().getInteger(R.integer.bold_index) + CurrentChallenges.get(position).getName().length() , Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        SpannableString del_message = new SpannableString(s);
-        StyleSpan boldSpan = new StyleSpan(Typeface.BOLD);
+        } else {
+            s = getActivity().getResources().getString(R.string.are_you_sure_you_want_to_delete) + " " + DoneChallenges.get(position).getName()
+                    + getActivity().getResources().getString(R.string.challenge_question);
+            del_message = new SpannableString(s);
+            StyleSpan boldSpan = new StyleSpan(Typeface.BOLD);
+            del_message.setSpan(boldSpan, getActivity().getResources().getInteger(R.integer.bold_index), getActivity().getResources().getInteger(R.integer.bold_index) + DoneChallenges.get(position).getName().length() , Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
 
-        del_message.setSpan(boldSpan, getActivity().getResources().getInteger(R.integer.bold_index), getActivity().getResources().getInteger(R.integer.bold_index) + Targets.get(position).getName().length() + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         del_text.setText(del_message);
 
         back.setOnClickListener(v -> {
@@ -192,8 +261,12 @@ public class ChallengesFragment extends Fragment {
         });
 
         delete.setOnClickListener(v -> {
-            Challenges.remove(position);
+            if (challenges_tabs.getSelectedTabPosition() == 0)
+                CurrentChallenges.remove(position);
+            else
+                DoneChallenges.remove(position);
             adapter.notifyDataSetChanged();
+            collectChallenges();
             uploadChallenges(currentUser);
             Toast.makeText(getContext(), getActivity().getResources().getString(R.string.challenge_deleted), Toast.LENGTH_LONG).show();
             dialog.dismiss();
@@ -254,6 +327,8 @@ public class ChallengesFragment extends Fragment {
     public void onResume() {
         super.onResume();
         Log.w("Log", "Resume");
+        challenges_tabs.getTabAt(0).select();
+        adapter.setChallenges(CurrentChallenges);
         adapter.notifyDataSetChanged();
     }
 

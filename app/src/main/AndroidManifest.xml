@@ -11,31 +11,29 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".TaskPlanner"
         android:allowBackup="true"
         android:icon="@drawable/logo"
         android:label="@string/app_name"
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
-        android:name=".TaskPlanner"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".ui.activities.PhotoActivity"/>
-        <activity android:name=".ui.activities.MainActivity" >
 
-        </activity>
-        <activity
-            android:name=".ui.activities.TodayActivity"/>
         <activity android:name=".ui.activities.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activities.Login" >
 
-        </activity>
-        <receiver android:name=".AlarmReceiver" />
+        <activity android:name=".ui.activities.PhotoActivity" />
+        <activity android:name=".ui.activities.MainActivity"/>
+        <activity android:name=".ui.activities.TodayActivity" />
+        <activity android:name=".ui.activities.Login"/>
+
+        <receiver android:name=".alarmreceiver.ReminderReceiver" />
+        <receiver android:name=".alarmreceiver.AppHasNotOpenReceiver" />
+
 
         <meta-data
             android:name="preloaded_fonts"

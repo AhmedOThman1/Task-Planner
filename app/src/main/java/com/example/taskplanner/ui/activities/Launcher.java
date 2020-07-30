@@ -3,6 +3,8 @@ package com.example.taskplanner.ui.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -14,11 +16,11 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.example.taskplanner.alarmreceiver.AppHasNotOpenReceiver;
 import com.example.taskplanner.R;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,6 +31,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -48,7 +51,8 @@ public class Launcher extends AppCompatActivity {
     public static final String IN_STARTED = "in_started";
     public static final String MAIN_PROGRESS = "main_progress";
     public static final String LOGIN_TYPE = "login_type";
-    public static final String PIC_PATH = "profile_pic";
+    public static final int HasNotOpenTheAppNotificationId = 3599;
+    public static final int ChallengesNotificationId = 30999;
 
     static public String SP_FULL_NAME = "";
     static public String SP_JOB = "";
@@ -65,7 +69,27 @@ public class Launcher extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lancher);
+
+        // if the app hasn't open for 3 days push this notification
+        Intent myIntent = new Intent(Launcher.this, AppHasNotOpenReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(Launcher.this, HasNotOpenTheAppNotificationId, myIntent, PendingIntent.FLAG_NO_CREATE);
+        boolean isWorking = pendingIntent != null;//just changed the flag
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        assert alarmManager != null;
+        if(isWorking) {
+            alarmManager.cancel(pendingIntent);
+            pendingIntent.cancel();
+        }
+        pendingIntent = PendingIntent.getBroadcast(Launcher.this, HasNotOpenTheAppNotificationId, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH,3);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+
+
+
         Log.w("Log", "Launcher<-----------------------");
+
+
         /* change status bar color **/
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();

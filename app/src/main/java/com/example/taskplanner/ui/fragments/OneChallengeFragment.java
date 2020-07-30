@@ -19,13 +19,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.taskplanner.R;
 import com.example.taskplanner.adapter.OneTargetStepAdapter;
+import com.example.taskplanner.model.Challenge;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Calendar;
+import java.util.Currency;
 import java.util.Objects;
 
-import static com.example.taskplanner.ui.activities.MainActivity.Challenges;
 import static com.example.taskplanner.ui.activities.MainActivity.Targets;
+import static com.example.taskplanner.ui.fragments.ChallengesFragment.CurrentChallenges;
+import static com.example.taskplanner.ui.fragments.ChallengesFragment.DoneChallenges;
+import static com.example.taskplanner.ui.fragments.ChallengesFragment.uploadChallenges;
 import static com.example.taskplanner.ui.fragments.CreateNewTaskFragment.CalendarToString;
 import static com.example.taskplanner.ui.fragments.CreateNewTaskFragment.StringToCalendar;
 
@@ -34,7 +40,9 @@ public class OneChallengeFragment extends Fragment {
     int position;
     private ProgressBar challengeProgressBar;
     private TextView stop_challenge_count, set_challenge_count_zero, challenge_start_date,
-            challenge_end_date, num_of_days2, num_of_days, num_of_days_to, challenge_days , challenge_name;
+            challenge_end_date, num_of_days2, num_of_days, num_of_days_to, challenge_days, challenge_name;
+    FirebaseUser currentUser;
+    Challenge challenge;
 
     public OneChallengeFragment() {
         // Required empty public constructor
@@ -46,6 +54,7 @@ public class OneChallengeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_one_challenge, container, false);
 
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
         challengeProgressBar = view.findViewById(R.id.challengeProgressBar);
         stop_challenge_count = view.findViewById(R.id.stop_challenge_count);
         set_challenge_count_zero = view.findViewById(R.id.set_challenge_count_zero);
@@ -64,6 +73,11 @@ public class OneChallengeFragment extends Fragment {
         Bundle bundle = getArguments();
         assert bundle != null;
         position = bundle.getInt("challenge pos", -1);
+        int t = bundle.getInt("type", -1);
+        if (t == 0)
+            challenge = CurrentChallenges.get(position);
+        else
+            challenge = DoneChallenges.get(position);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getActivity().getWindow();
@@ -71,7 +85,7 @@ public class OneChallengeFragment extends Fragment {
             window.setStatusBarColor(getResources().getColor(R.color.dark_blue));
         }
 
-        challenge_name.setText(Challenges.get(position).getName());
+        challenge_name.setText(challenge.getName());
 //        toolbar.setTitle(Challenges.get(position).getName());
         init();
 
@@ -81,7 +95,12 @@ public class OneChallengeFragment extends Fragment {
         set_challenge_count_zero.setOnClickListener(v -> {
 
             //TODO put it inside dialog alert
-            Challenges.get(position).setStartDate(CalendarToString(Calendar.getInstance()));
+            if (t == 0)
+                CurrentChallenges.get(position).setStartDate(CalendarToString(Calendar.getInstance()));
+            else
+                DoneChallenges.get(position).setStartDate(CalendarToString(Calendar.getInstance()));
+
+            uploadChallenges(currentUser);
             init();
         });
 
@@ -90,14 +109,17 @@ public class OneChallengeFragment extends Fragment {
 
     private void init() {
 
-        Calendar start = (Calendar) StringToCalendar(Challenges.get(position).getStartDate()).clone();
+        Calendar start = (Calendar) StringToCalendar(challenge.getStartDate()).clone();
         Calendar end = (Calendar) start.clone();
-        end.add(Calendar.DAY_OF_MONTH, Challenges.get(position).getDuration());
+        end.add(Calendar.DAY_OF_MONTH, challenge.getDuration());
         long difference = Calendar.getInstance().getTimeInMillis() - start.getTimeInMillis();
-        String diff = "" + (difference / 1000 / 60 / 60 / 24),
-                diff2 = "" + (Challenges.get(position).getDuration() - difference / 1000 / 60 / 60 / 24),
-                temp = diff + " / " + Challenges.get(position).getDuration(),
-                days_to_without = getActivity().getResources().getString(R.string.number_of_days) + " " + Challenges.get(position).getDays_to_without(),
+        difference = (difference / 1000 / 60 / 60 / 24);
+
+        String diff = "" + (difference > challenge.getDuration() ? challenge.getDuration() : difference  >= 0 ? difference : 0),
+                diff2 = "" + ((challenge.getDuration() - difference) > 0
+                        ? ( (difference) >= 0 ? (challenge.getDuration() - difference) : challenge.getDuration() ) : 0),
+                temp = diff + " / " + challenge.getDuration(),
+                days_to_without = getActivity().getResources().getString(R.string.number_of_days) + " " + challenge.getDays_to_without(),
                 start_time = start.get(Calendar.DAY_OF_MONTH) + "/" + (start.get(Calendar.MONTH) + 1) + "/" + start.get(Calendar.YEAR),
                 end_time = end.get(Calendar.DAY_OF_MONTH) + "/" + (end.get(Calendar.MONTH) + 1) + "/" + end.get(Calendar.YEAR);
         challenge_start_date.setText(start_time);
@@ -106,11 +128,11 @@ public class OneChallengeFragment extends Fragment {
         num_of_days2.setText(diff2);
         challenge_days.setText(temp);
         num_of_days_to.setText(days_to_without);
-        challengeProgressBar.setMax(2 * Challenges.get(position).getDuration());
+        challengeProgressBar.setMax(2 * challenge.getDuration());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            challengeProgressBar.setProgress((int) (difference / 1000 / 60 / 60 / 24), true);
+            challengeProgressBar.setProgress((int) (difference), true);
         } else
-            challengeProgressBar.setProgress((int) (difference / 1000 / 60 / 60 / 24));
+            challengeProgressBar.setProgress((int) (difference));
 
     }
 }

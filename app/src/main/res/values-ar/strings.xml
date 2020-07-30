@@ -4,7 +4,7 @@
     <string name="facebook_application_id">555101395154428</string>
     <string name="facebook_login_protocol_scheme">fb555101395154428</string>
 
-    <string name="change_name">تغير الاسم</string>
+    <string name="change_name">تغيير الاسم</string>
     <string name="change_job">تغيير الوظيفة</string>
     <string name="change_name_job">تغيير الاسم / الوظيفة</string>
     <string name="select_photo_from_gallery">اختيار صورة \'من المعرض\'</string>
@@ -84,7 +84,7 @@
     <string name = "targets"> الأهداف </string>
     <string name = "you_should_be_sleep_at_this_time"> يجب أن تنام في هذا الوقت! 🥺 </string>
     <string name = "ok_i_will_sleep_change_the_time"> حسنًا ، سوف أنام ، قم بتغيير الوقت ♥ ️ </string>
-    <string name = "ignore_i_wont_sleep"> تجاهل أنني لن أنام🥺 </string>
+    <string name = "ignore_i_wont_sleep"> تجاهل، لن أنام🥺 </string>
     <string name = "back"> رجوع </string>
     <string name = "delete"> حذف </string>
     <string name = "profile_picture"> صورة الملف الشخصي </string>
@@ -150,6 +150,14 @@
     <string name="select_a_deadline_for_this_challenge">تحديد الموعد النهائي لهذا التحدي</string>
     <string name="challenge_title">عنوان التحدي</string>
     <string name="cant_be_zero">يجب ان يكون اكبر من صفر</string>
+    <string name="current_challenges">التحديات الحالية</string>
+    <string name="done_challenges">التحديات المنجزة</string>
+    <string name="three_days_notification_title">هل انت بخير ؟🥺</string>
+    <string name="three_days_notification_content">"لم تفتح التطبيق منذ 3 ايام😢 \n هل انت بخير ؟😦 \n هل هناك مشكلة بي ؟😰 "</string>
+    <string name="challenge_30_notification_content">لقد انهيت 30% من التحدي ، استمر 🤩</string>
+    <string name="challenge_50_notification_content">من المفترض انك قد انهيت نصف التحدي 👏👏⁦⁦❤️⁩⁦❤️⁩</string>
+    <string name="challenge_90_notification_content"> لم يبقَ الكثير ، فقط 10% وتنجز هذا التحدي نحن نثق بك يا بطل 😍😘🎈</string>
+    <string name="challenge_100_notification_content">انتيهت التحدي بنجاح ننتظر منك تحقيق المزيد من التحديات 😍😍💪</string>
 
     <string-array name = "for_until_array">
         <item> للأبد </item>

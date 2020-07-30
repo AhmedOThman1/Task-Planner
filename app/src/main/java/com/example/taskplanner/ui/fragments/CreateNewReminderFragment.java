@@ -16,7 +16,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,14 +28,13 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
-import com.example.taskplanner.AlarmReceiver;
+import com.example.taskplanner.alarmreceiver.ReminderReceiver;
 import com.example.taskplanner.R;
 import com.example.taskplanner.model.Reminder;
 import com.google.android.material.appbar.AppBarLayout;
@@ -419,7 +417,7 @@ public class CreateNewReminderFragment extends Fragment {
             } else {
                 title_input_layout.setError(null);
                 AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(ALARM_SERVICE);
-                Intent myIntent = new Intent(getContext(), AlarmReceiver.class);
+                Intent myIntent = new Intent(getContext(), ReminderReceiver.class);
                 String thisday = calendar_selected_day.get(Calendar.DAY_OF_MONTH) + "/" + calendar_selected_day.get(Calendar.MONTH) + "/" + calendar_selected_day.get(Calendar.YEAR);
                 String t = calendar_selected_day.get(Calendar.HOUR_OF_DAY) + ":" + calendar_selected_day.get(Calendar.MINUTE), type = "", AM_PM = "";
                 myIntent.putExtra("Content", t);

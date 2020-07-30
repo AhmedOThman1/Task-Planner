@@ -33,6 +33,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -110,7 +111,7 @@ import static com.example.taskplanner.ui.activities.MainActivity.showNav;
 import static com.example.taskplanner.ui.activities.MainActivity.targetViewModel;
 import static com.example.taskplanner.ui.fragments.TasksFragment.getToInDone;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements PopupMenu.OnMenuItemClickListener{
 
     private final static int CODE1_PERMISSION = 1, CODE2_PERMISSION = 2, CODE2_CAM = 1, CODE3_GAL = 2;
     // el nas 12054
@@ -133,6 +134,7 @@ public class HomeFragment extends Fragment {
             button4Debounce = true,
             button5Debounce = true;
     public static boolean isDrawerOpen = false;
+    String username;
     static Context context;
 
     public HomeFragment() {
@@ -196,10 +198,16 @@ public class HomeFragment extends Fragment {
         LinearLayout profile = view.findViewById(R.id.profile);
         NoProjects = view.findViewById(R.id.no_projects);
 
-        registerForContextMenu(profile);
+//        registerForContextMenu(profile);
+        profile.setOnClickListener(v -> {
+            PopupMenu popupMenu = new PopupMenu(getContext(),v);
+            popupMenu.setOnMenuItemClickListener(this);
+            popupMenu.inflate(R.menu.profile_image_menu);
+            popupMenu.show();
+        });
 
         SharedPreferences share = getContext().getSharedPreferences(SHARED_PREF, MODE_PRIVATE);
-        String username = share.getString(USER_NAME, "");
+        username = share.getString(USER_NAME, "");
         String userjob = share.getString(USER_JOB, "");
         int todo_tasks = share.getInt(TODO_TASKS, 0),
                 inProgress_tasks = share.getInt(IN_TASKS, 0),
@@ -717,15 +725,131 @@ public class HomeFragment extends Fragment {
 //        });
 //
 //    }
+//
+//
+//    @Override
+//    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+//        super.onCreateContextMenu(menu, v, menuInfo);
+//        Objects.requireNonNull(getActivity()).getMenuInflater().inflate(R.menu.profile_image_menu, menu);
+//    }
+//    @Override
+//    public boolean onContextItemSelected(@NonNull MenuItem item) {
+//
+//        int id = item.getItemId();
+//        switch (id) {
+//            case R.id.view_image:
+//                startActivity(new Intent(getContext(), PhotoActivity.class));
+//                return true;
+//            case R.id.open_cam:
+//
+//                if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getContext()),
+//                        Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+//
+//                    ActivityCompat.requestPermissions(Objects.requireNonNull(getActivity()),
+//                            new String[]{Manifest.permission.CAMERA}, CODE1_PERMISSION);
+//                } else {
+//                    Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                    startActivityForResult(camera, CODE2_CAM);
+//                }
+//                return true;
+//            case R.id.open_gal:
+//                if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getContext()),
+//                        Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+//
+//                    ActivityCompat.requestPermissions(Objects.requireNonNull(getActivity()),
+//                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, CODE2_PERMISSION);
+//                } else {
+//                    Intent gal = new Intent().setType("image/*").setAction(Intent.ACTION_GET_CONTENT);
+//                    gal.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+//                    gal.putExtra(Intent.EXTRA_MIME_TYPES, new String[]{"image/*"});
+//                    startActivityForResult(Intent.createChooser(gal, "select media file"), CODE3_GAL);
+//                }
+//                return true;
+//            case R.id.change_name:
+//                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+//                View name_dialog = getLayoutInflater().inflate(R.layout.add_new_chip, null);
+//
+//                final TextInputLayout title = name_dialog.findViewById(R.id.new_chip_name);
+//                TextView ok = name_dialog.findViewById(R.id.ok_dialog),
+//                        cancel = name_dialog.findViewById(R.id.cancel_dialog);
+//
+//                title.setHint(getActivity().getResources().getString(R.string.enter_your_name));
+//                title.requestFocus();
+//                open_keyboard(Objects.requireNonNull(title.getEditText()));
+//
+//                cancel.setOnClickListener(v -> dialog.dismiss());
+//                ok.setOnClickListener(v -> {
+//
+//                    String name = title.getEditText().getText().toString().trim();
+//
+//                    coolToolbar.setTitle(name);
+//
+//                    myDbRef.child(currentUser.getUid() + "/name").setValue(name);
+//
+//                    SharedPreferences share = getContext().getSharedPreferences(SHARED_PREF, MODE_PRIVATE);
+//                    SharedPreferences.Editor editor = share.edit();
+//                    editor.putString(USER_NAME, name);
+//                    editor.apply();
+//
+//                    dialog.dismiss();
+//
+//
+//                });
+//
+//                builder.setView(name_dialog).setCancelable(false);
+//                dialog = builder.create();
+//                dialog.show();
+//                Window window = dialog.getWindow();
+//                //window.setLayout( ViewGroup.LayoutParams.MATCH_PARENT , ViewGroup.LayoutParams.WRAP_CONTENT);
+//                assert window != null;
+//                window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//
+//                return true;
+//
+//            case R.id.change_job:
+//                builder = new AlertDialog.Builder(getContext());
+//                View job_dialog = getLayoutInflater().inflate(R.layout.add_new_chip, null);
+//
+//                final TextInputLayout job_title = job_dialog.findViewById(R.id.new_chip_name);
+//                TextView ok_job = job_dialog.findViewById(R.id.ok_dialog),
+//                        cancel_job = job_dialog.findViewById(R.id.cancel_dialog);
+//
+//                job_title.setHint(getActivity().getResources().getString(R.string.enter_your_job));
+//                job_title.requestFocus();
+//                open_keyboard(Objects.requireNonNull(job_title.getEditText()));
+//
+//                cancel_job.setOnClickListener(v -> dialog.dismiss());
+//
+//                ok_job.setOnClickListener(v -> {
+//                            String job = job_title.getEditText().getText().toString().trim();
+//                            job_tv.setText(job);
+//                            myDbRef.child(currentUser.getUid() + "/job").setValue(job);
+//                            SharedPreferences share = Objects.requireNonNull(getContext()).getSharedPreferences(SHARED_PREF, MODE_PRIVATE);
+//                            SharedPreferences.Editor editor = share.edit();
+//                            editor.putString(USER_JOB, job);
+//                            editor.apply();
+//                            dialog.dismiss();
+//                        }
+//                );
+//
+//                builder.setView(job_dialog).setCancelable(false);
+//                dialog = builder.create();
+//                dialog.show();
+//                Window window2 = dialog.getWindow();
+//                //window.setLayout( ViewGroup.LayoutParams.MATCH_PARENT , ViewGroup.LayoutParams.WRAP_CONTENT);
+//                assert window2 != null;
+//                window2.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//                return true;
+//
+//            default:
+//                return super.onContextItemSelected(item);
+//
+//        }
+//
+//    }
 
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        Objects.requireNonNull(getActivity()).getMenuInflater().inflate(R.menu.profile_image_menu, menu);
-    }
-
-    @Override
-    public boolean onContextItemSelected(@NonNull MenuItem item) {
+    public boolean onMenuItemClick(MenuItem item) {
 
         int id = item.getItemId();
         switch (id) {
@@ -772,17 +896,19 @@ public class HomeFragment extends Fragment {
                 cancel.setOnClickListener(v -> dialog.dismiss());
                 ok.setOnClickListener(v -> {
 
-                    String name = title.getEditText().getText().toString().trim();
+                    String name_txt = title.getEditText().getText().toString().trim();
 
-                    coolToolbar.setTitle(name);
+                    coolToolbar.setTitle(name_txt);
 
                     myDbRef.child(currentUser.getUid() + "/name").setValue(name);
 
                     SharedPreferences share = getContext().getSharedPreferences(SHARED_PREF, MODE_PRIVATE);
                     SharedPreferences.Editor editor = share.edit();
-                    editor.putString(USER_NAME, name);
+                    editor.putString(USER_NAME, name_txt);
                     editor.apply();
 
+                    username = name_txt;
+                    name.setText(username);
                     dialog.dismiss();
 
 
@@ -951,6 +1077,7 @@ public class HomeFragment extends Fragment {
         float screenWidthDp = displayMetrics.widthPixels / displayMetrics.density;
         return (int) (screenWidthDp / 180);
     }
+
 
     public static class ItemDecorationAlbumColumns extends RecyclerView.ItemDecoration {
 

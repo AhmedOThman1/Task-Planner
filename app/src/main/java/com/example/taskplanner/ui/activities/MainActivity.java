@@ -3,7 +3,8 @@ package com.example.taskplanner.ui.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,8 +18,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.taskplanner.R;
+import com.example.taskplanner.alarmreceiver.AppHasNotOpenReceiver;
+import com.example.taskplanner.alarmreceiver.ChallengeReceiver;
 import com.example.taskplanner.model.Activeprojects;
 import com.example.taskplanner.model.Challenge;
 import com.example.taskplanner.model.Reminder;
@@ -43,9 +45,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.ArrayList;
-
+import java.util.Calendar;
+import static com.example.taskplanner.ui.activities.Launcher.ChallengesNotificationId;
 import static com.example.taskplanner.ui.fragments.HomeFragment.isDrawerOpen;
 import static com.example.taskplanner.ui.activities.Launcher.LOGIN_TYPE;
 import static com.example.taskplanner.ui.activities.Launcher.SHARED_PREF;
@@ -85,11 +87,21 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, Launcher.class));
             finish();
         }
-
-
         assert currentUser != null;
         DatabaseReference DbRef = FirebaseDatabase.getInstance().getReference().child(currentUser.getUid() + "");
         DbRef.keepSynced(true);
+
+        //Challenges notification
+        Intent myIntent = new Intent(MainActivity.this, ChallengeReceiver.class);
+        myIntent.putExtra("UID", currentUser.getUid());
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, ChallengesNotificationId, myIntent, PendingIntent.FLAG_NO_CREATE);
+        boolean isWorking = pendingIntent != null;//just changed the flag
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        assert alarmManager != null;
+        if(!isWorking) {
+            pendingIntent = PendingIntent.getBroadcast(MainActivity.this, ChallengesNotificationId, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,  Calendar.getInstance().getTimeInMillis(), 24 *  60 * 60 * 1000, pendingIntent);
+        }
 
 
         x = (222 * ((float) getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT));
@@ -191,6 +203,7 @@ public class MainActivity extends AppCompatActivity {
             setCheck(9, true, MainActivity.this);
         });
 
+        PendingIntent finalPendingIntent = pendingIntent;
         cardItems[10].setOnClickListener(v -> {
 
             Projects.clear();
@@ -199,7 +212,10 @@ public class MainActivity extends AppCompatActivity {
             Done_tasks.clear();
             Targets.clear();
             Reminders.clear();
-
+            if(isWorking) {
+                alarmManager.cancel(finalPendingIntent);
+                finalPendingIntent.cancel();
+            }
             AuthUI.getInstance()
                     .signOut(MainActivity.this)
                     .addOnCompleteListener(task -> {
